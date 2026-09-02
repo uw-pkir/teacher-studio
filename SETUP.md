@@ -35,18 +35,19 @@ The editor (Decap CMS) needs a small "OAuth proxy" to let it log in with GitHub.
 
 ## 2. Set up Show & Tell photo submissions
 
-1. **Create a Google Form** with three questions: *Name* (short answer), *Caption* (short answer), *Photo* (file upload — this requires the respondent to be signed in to a Google account).
-2. Open the Form's **Responses → linked Sheet**. This is the raw response sheet — leave it alone except for step 3.
-3. Add a column called **Approved** (a checkbox or plain TRUE/FALSE) at the end. This is where you moderate — check it for any photo you're OK showing publicly.
-4. Add a **second tab** to the spreadsheet (bottom tab bar → `+`), call it `Public`, and put this formula in cell A1 (adjust the sheet name `Form Responses 1` and column letters `A:F` to match your actual raw sheet):
+The form is already live: https://forms.gle/mYfvcYatq97hKuVz8 (set as `show_tell_form_url` in `data/site-settings.json`). What's left:
+
+1. Open the Form's **Responses → linked Sheet** (the raw response sheet — leave its existing columns alone except for step 2).
+2. Add a column called **Approved** (a checkbox or plain TRUE/FALSE) after the existing columns. This is where you moderate — check it for any photo you're OK showing publicly.
+3. Add a **second tab** to the spreadsheet (bottom tab bar → `+`), call it `Public`, and put a `QUERY()` formula in cell A1 that selects only the Timestamp/Name/Caption/Photo columns where Approved = TRUE, e.g.:
    ```
-   =QUERY('Form Responses 1'!A:F, "SELECT A, B, C, D WHERE F = TRUE LABEL A 'Timestamp', B 'Name', C 'Caption', D 'Photo'", 1)
+   =QUERY('Form Responses 1'!A:E, "SELECT A, B, C, D WHERE E = TRUE LABEL A 'Timestamp', B 'Name', C 'Caption', D 'Photo'", 1)
    ```
-   This tab now shows *only* the rows you've checked Approved, and only the columns needed for the site — no email addresses or unapproved submissions ever leave the raw sheet.
-5. **Publish only the `Public` tab**: File → Share → Publish to web → choose the `Public` sheet (not "Entire document") → CSV → Publish. Copy the resulting URL.
-6. In this GitHub repo: **Settings → Secrets and variables → Actions → Variables → New repository variable**, name it `SHOWCASE_CSV_URL`, and paste the URL.
-7. **Share the Form's upload folder publicly (view-only)**: open the Form → Responses → the folder icon (or find "Teacher Studio (File responses)" in your Drive) → Share → change to "Anyone with the link" → **Viewer**. Without this step, uploaded photos won't display on the site.
-8. Edit `show_tell_form_url` in `/admin` (Site Content → About Text & Misc Settings) to your new Form's URL.
+   The sheet name (`Form Responses 1`) and column letters (`A:E`, and which of B/C/D/E is Name vs. Caption vs. Photo vs. Approved) depend on the exact order your form questions were created in — **use the actual header row of your raw response sheet to get these right**, since the `SELECT` letters must point at the real Name/Caption/Photo/Approved columns.
+   This tab shows *only* approved rows, and only the columns the site needs — no email addresses or unapproved submissions ever leave the raw sheet.
+4. **Publish only the `Public` tab**: File → Share → Publish to web → choose the `Public` sheet (not "Entire document") → CSV → Publish. Copy the resulting URL.
+5. Paste that URL into `show_tell_csv_url` in `/admin` (Site Content → About Text & Misc Settings) — no GitHub access needed, it's just another CMS field. (Or edit `data/site-settings.json` directly if `/admin` isn't live yet.)
+6. **Share the Form's upload folder publicly (view-only)**: open the Form → Responses → the folder icon (or find "Teacher Studio (File responses)" in your Drive) → Share → change to "Anyone with the link" → **Viewer**. Without this step, uploaded photos won't display on the site.
 
 The sync runs automatically every 30 minutes (`.github/workflows/sync-showcase.yml`), or trigger it immediately from the repo's **Actions** tab → "Sync Show & Tell photos" → **Run workflow**.
 

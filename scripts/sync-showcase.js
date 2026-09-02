@@ -2,12 +2,17 @@
 // plain CSV URL, no auth) and rewrites data/showcase.json from it.
 // Run by .github/workflows/sync-showcase.yml — see ../SETUP.md for how the
 // sheet itself is set up so only moderator-approved rows ever reach this script.
+//
+// The CSV URL itself lives in data/site-settings.json (show_tell_csv_url)
+// rather than a GitHub secret/variable, so it's editable from /admin like
+// everything else — no GitHub Settings access needed.
 
 const fs = require('fs');
 const path = require('path');
 
-const CSV_URL = process.env.SHOWCASE_CSV_URL;
+const SETTINGS_PATH = path.join(__dirname, '..', 'data', 'site-settings.json');
 const OUTPUT_PATH = path.join(__dirname, '..', 'data', 'showcase.json');
+const CSV_URL = JSON.parse(fs.readFileSync(SETTINGS_PATH, 'utf8')).show_tell_csv_url;
 
 function parseCSV(text) {
     const rows = [];
@@ -53,7 +58,7 @@ function extractDriveFileId(url) {
 
 async function main() {
     if (!CSV_URL) {
-        console.log('SHOWCASE_CSV_URL is not set yet — skipping (see SETUP.md). Leaving data/showcase.json unchanged.');
+        console.log('show_tell_csv_url is not set yet in data/site-settings.json (see SETUP.md). Leaving data/showcase.json unchanged.');
         return;
     }
 

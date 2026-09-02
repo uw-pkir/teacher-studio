@@ -104,5 +104,6 @@ collections:
         file: "data/site-settings.json"
         fields:
           - { label: "Show & Tell submission form (Google Form URL)", name: "show_tell_form_url", widget: "string" }
+          - { label: "Show & Tell published CSV URL (from the response sheet's 'Public' tab — see SETUP.md)", name: "show_tell_csv_url", widget: "string", required: false }
           - { label: "About paragraph", name: "about_text", widget: "text" }
           - { label: "Organizers Emeriti (names)", name: "emeriti", widget: "list" }

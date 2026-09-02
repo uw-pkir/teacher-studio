@@ -19,8 +19,6 @@ jobs:
           node-version: 20
 
       - name: Sync approved photos from the response sheet
-        env:
-          SHOWCASE_CSV_URL: ${{ vars.SHOWCASE_CSV_URL }}
         run: node scripts/sync-showcase.js
 
       - name: Commit changes if any
