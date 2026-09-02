@@ -25,12 +25,13 @@
                 <span></span>
             </button>
             <ul class="nav-menu">
-                <li><a href="#workshops">Workshops</a></li>
+                <li><a href="#next-event">Next Workshop</a></li>
+                <li><a href="#workshops">Schedule</a></li>
                 <li><a href="#resources">Resources</a></li>
                 <li><a href="#hubs">Hub Sites</a></li>
                 <li><a href="#team">Our Team</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#register" class="btn btn-nav">Register Now</a></li>
+                <li><a href="#gallery">Show &amp; Tell</a></li>
+                <li><a href="#next-event" class="btn btn-nav">Register Now</a></li>
             </ul>
         </div>
     </nav>
@@ -44,19 +45,19 @@
             <div class="shape shape-4"></div>
         </div>
         <div class="hero-content">
-            <h1>Where Educators <span class="highlight">Make</span> & <span class="highlight">Learn</span> Together</h1>
+            <h1>Where Educators <span class="highlight">Make</span> &amp; <span class="highlight">Learn</span> Together</h1>
             <p class="hero-subtitle">A hybrid learning community for formal and informal educators interested in hands-on, maker-based learning. Gather monthly to create projects and exchange pedagogical strategies.</p>
             <div class="hero-cta">
-                <a href="#register" class="btn btn-primary">Join Our Next Workshop</a>
+                <a href="#next-event" class="btn btn-primary">See the Next Workshop</a>
                 <a href="#about" class="btn btn-secondary">Learn More</a>
             </div>
             <div class="hero-stats">
                 <div class="stat">
-                    <span class="stat-number">5</span>
+                    <span class="stat-number" id="stat-hubs">5</span>
                     <span class="stat-label">Hub Sites</span>
                 </div>
                 <div class="stat">
-                    <span class="stat-number">8</span>
+                    <span class="stat-number" id="stat-workshops">8</span>
                     <span class="stat-label">Workshops/Year</span>
                 </div>
                 <div class="stat">
@@ -67,6 +68,15 @@
         </div>
     </header>
 
+    <!-- Next Event Spotlight (updated monthly via /admin) -->
+    <section id="next-event" class="next-event">
+        <div class="container">
+            <div class="next-event-card" id="next-event-mount">
+                <p>Loading next workshop&hellip;</p>
+            </div>
+        </div>
+    </section>
+
     <!-- About Section -->
     <section id="about" class="about">
         <div class="container">
@@ -74,8 +84,7 @@
                 <div class="about-content">
                     <span class="section-tag">About Us</span>
                     <h2>Making is Learning</h2>
-                    <p>Teacher Studio brings together educators from classrooms, museums, libraries, and beyond to explore maker-based pedagogy through hands-on experiences.</p>
-                    <p>Each month, we gather—in person at hub locations or virtually via Zoom—to create something together, share strategies, and build a supportive community of practice.</p>
+                    <p id="about-text">Teacher Studio brings together educators from classrooms, museums, libraries, and beyond to explore maker-based pedagogy through hands-on experiences.</p>
                     <div class="about-features">
                         <div class="feature">
                             <span class="feature-icon">🎨</span>
@@ -114,139 +123,12 @@
     <section id="workshops" class="workshops">
         <div class="container">
             <div class="section-header">
-                <span class="section-tag">2025-2026 Schedule</span>
-                <h2>Upcoming Workshops</h2>
-                <p>Join us monthly on Thursdays from 4:30-5:30 PM CST</p>
+                <span class="section-tag">Season Schedule</span>
+                <h2>Workshop Schedule</h2>
+                <p>Join us monthly on Thursdays &mdash; topics are announced a few weeks before each gathering</p>
             </div>
-            <div class="workshop-grid">
-                <div class="workshop-card past">
-                    <div class="workshop-date">
-                        <span class="month">Oct</span>
-                        <span class="day">16</span>
-                    </div>
-                    <div class="workshop-info">
-                        <span class="workshop-status">Completed</span>
-                        <h3>Kickoff Workshop</h3>
-                        <p>Welcome session and introductions</p>
-                        <span class="workshop-time">4:30-5:30 PM CST</span>
-                    </div>
-                </div>
-                <div class="workshop-card past">
-                    <div class="workshop-date">
-                        <span class="month">Nov</span>
-                        <span class="day">20</span>
-                    </div>
-                    <div class="workshop-info">
-                        <span class="workshop-status">Completed</span>
-                        <h3>Fall Making</h3>
-                        <p>Seasonal maker projects</p>
-                        <span class="workshop-time">4:30-5:30 PM CST</span>
-                    </div>
-                </div>
-                <div class="workshop-card past">
-                    <div class="workshop-date">
-                        <span class="month">Dec</span>
-                        <span class="day">18</span>
-                    </div>
-                    <div class="workshop-info">
-                        <span class="workshop-status">Completed</span>
-                        <h3>Winter Creations</h3>
-                        <p>Holiday-themed making</p>
-                        <span class="workshop-time">4:30-5:30 PM CST</span>
-                    </div>
-                </div>
-                <div class="workshop-card featured">
-                    <div class="workshop-badge">Up Next!</div>
-                    <div class="workshop-date">
-                        <span class="month">Jan</span>
-                        <span class="day">15</span>
-                    </div>
-                    <div class="workshop-info">
-                        <span class="workshop-status upcoming">Upcoming</span>
-                        <h3>Weaving with Everyday Objects</h3>
-                        <p>Explore textile arts using accessible materials</p>
-                        <span class="workshop-time">4:30-5:30 PM CST</span>
-                        <a href="#register" class="btn btn-small">Register</a>
-                    </div>
-                </div>
-                <div class="workshop-card">
-                    <div class="workshop-date">
-                        <span class="month">Feb</span>
-                        <span class="day">19</span>
-                    </div>
-                    <div class="workshop-info">
-                        <span class="workshop-status upcoming">Upcoming</span>
-                        <h3>February Workshop</h3>
-                        <p>Topic to be announced</p>
-                        <span class="workshop-time">4:30-5:30 PM CST</span>
-                    </div>
-                </div>
-                <div class="workshop-card">
-                    <div class="workshop-date">
-                        <span class="month">Mar</span>
-                        <span class="day">19</span>
-                    </div>
-                    <div class="workshop-info">
-                        <span class="workshop-status upcoming">Upcoming</span>
-                        <h3>March Workshop</h3>
-                        <p>Topic to be announced</p>
-                        <span class="workshop-time">4:30-5:30 PM CST</span>
-                    </div>
-                </div>
-                <div class="workshop-card">
-                    <div class="workshop-date">
-                        <span class="month">Apr</span>
-                        <span class="day">16</span>
-                    </div>
-                    <div class="workshop-info">
-                        <span class="workshop-status upcoming">Upcoming</span>
-                        <h3>April Workshop</h3>
-                        <p>Topic to be announced</p>
-                        <span class="workshop-time">4:30-5:30 PM CST</span>
-                    </div>
-                </div>
-                <div class="workshop-card">
-                    <div class="workshop-date">
-                        <span class="month">May</span>
-                        <span class="day">21</span>
-                    </div>
-                    <div class="workshop-info">
-                        <span class="workshop-status upcoming">Upcoming</span>
-                        <h3>Year-End Celebration</h3>
-                        <p>Showcase and reflection</p>
-                        <span class="workshop-time">4:30-5:30 PM CST</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Registration Section -->
-    <section id="register" class="register">
-        <div class="container">
-            <div class="register-card">
-                <div class="register-content">
-                    <span class="section-tag">Join Us</span>
-                    <h2>Register for Teacher Studio</h2>
-                    <p>Sign up to receive the Zoom link and workshop materials. Let us know if you'll be joining virtually or at one of our hub locations!</p>
-                    <ul class="register-benefits">
-                        <li>✓ Monthly workshop access (in-person or virtual)</li>
-                        <li>✓ Materials list sent in advance</li>
-                        <li>✓ Connection with educator community</li>
-                        <li>✓ Access to resource archive</li>
-                    </ul>
-                    <a href="https://forms.gle/YOUR_FORM_ID_HERE" target="_blank" class="btn btn-primary btn-large">
-                        Register via Google Form
-                        <span class="btn-icon">→</span>
-                    </a>
-                    <p class="register-note">Registration is free! You'll receive a confirmation email with details.</p>
-                </div>
-                <div class="register-decoration">
-                    <div class="deco-circle deco-1"></div>
-                    <div class="deco-circle deco-2"></div>
-                    <div class="deco-circle deco-3"></div>
-                    <span class="deco-emoji">📝</span>
-                </div>
+            <div class="workshop-grid" id="workshop-grid">
+                <p>Loading schedule&hellip;</p>
             </div>
         </div>
     </section>
@@ -257,60 +139,10 @@
             <div class="section-header">
                 <span class="section-tag">Past Workshops</span>
                 <h2>Resource Archive</h2>
-                <p>Materials, guides, and inspiration from our previous sessions</p>
+                <p>Prompts, materials, and links from our previous sessions</p>
             </div>
-            <div class="resources-grid">
-                <div class="resource-card" data-resource="weaving">
-                    <div class="resource-icon">🧵</div>
-                    <h3>Weaving Basics</h3>
-                    <p>Introduction to simple loom weaving with cardboard and yarn</p>
-                    <div class="resource-meta">
-                        <span>January 2026</span>
-                    </div>
-                    <button class="resource-link">View Materials →</button>
-                </div>
-                <div class="resource-card" data-resource="cardboard">
-                    <div class="resource-icon">📦</div>
-                    <h3>Cardboard Engineering</h3>
-                    <p>Building structures and mechanisms from recycled cardboard</p>
-                    <div class="resource-meta">
-                        <span>Sample Resource</span>
-                    </div>
-                    <button class="resource-link">View Materials →</button>
-                </div>
-                <div class="resource-card" data-resource="circuits">
-                    <div class="resource-icon">🔌</div>
-                    <h3>Simple Circuits</h3>
-                    <p>Paper circuits and LED projects for beginners</p>
-                    <div class="resource-meta">
-                        <span>Sample Resource</span>
-                    </div>
-                    <button class="resource-link">View Materials →</button>
-                </div>
-                <div class="resource-card" data-resource="puppets">
-                    <div class="resource-icon">🎭</div>
-                    <h3>Puppet Making</h3>
-                    <p>Creating simple puppets from household materials</p>
-                    <div class="resource-meta">
-                        <span>Sample Resource</span>
-                    </div>
-                    <button class="resource-link">View Materials →</button>
-                </div>
-                <div class="resource-card" data-resource="printmaking">
-                    <div class="resource-icon">🖨️</div>
-                    <h3>Printmaking</h3>
-                    <p>Easy printmaking techniques without a press</p>
-                    <div class="resource-meta">
-                        <span>Sample Resource</span>
-                    </div>
-                    <button class="resource-link">View Materials →</button>
-                </div>
-                <div class="resource-card add-resource">
-                    <div class="resource-icon">➕</div>
-                    <h3>Share a Resource</h3>
-                    <p>Have something to contribute? We'd love to add it!</p>
-                    <a href="#" class="resource-link">Submit Resource →</a>
-                </div>
+            <div class="resources-grid" id="resources-grid">
+                <p>Loading resources&hellip;</p>
             </div>
         </div>
     </section>
@@ -319,9 +151,9 @@
     <section id="hubs" class="hubs">
         <div class="container">
             <div class="section-header">
-                <span class="section-tag">Meet In Person</span>
-                <h2>Our Hub Sites</h2>
-                <p>Join us locally at one of our five partner locations across the Midwest</p>
+                <span class="section-tag">Our Organizing Partners</span>
+                <h2>Meet In Person at a Hub Site</h2>
+                <p>Teacher Studio is a partnership across five organizations in the Midwest</p>
             </div>
 
             <!-- Interactive Map -->
@@ -330,7 +162,7 @@
             </div>
 
             <div class="hubs-cta">
-                <p>Click a pin on the map for details, or <strong>join us virtually via Zoom!</strong> Register to receive the link.</p>
+                <p>Click a pin on the map for details, or <strong>join us virtually via Zoom!</strong> Register above to receive the link.</p>
             </div>
         </div>
     </section>
@@ -343,88 +175,28 @@
                 <h2>Our Organizers</h2>
                 <p>The educators behind Teacher Studio</p>
             </div>
-            <div class="team-grid">
-                <div class="team-card">
-                    <img class="team-avatar-img" src="images/BETHV.jpg" alt="Beth Vanderloop">
-                    <h3>Beth Vanderloop</h3>
-                    <p class="team-org">Building for Kids Children's Museum</p>
-                </div>
-                <div class="team-card">
-                    <img class="team-avatar-img" src="images/DavidW.png" alt="David Wells">
-                    <h3>David Wells</h3>
-                    <p class="team-org">Independent Rogue</p>
-                </div>
-                <div class="team-card">
-                    <img class="team-avatar-img" src="images/Judy.jpg" alt="Judy Bowling">
-                    <h3>Judy Bowling</h3>
-                    <p class="team-org">Wayne RESA</p>
-                </div>
-                <div class="team-card">
-                    <img class="team-avatar-img" src="images/Laura.jpg" alt="Laura Gabrion">
-                    <h3>Laura Gabrion</h3>
-                    <p class="team-org">Wayne RESA</p>
-                </div>
-                <div class="team-card">
-                    <img class="team-avatar-img" src="images/Lisa.jpg" alt="Lisa Ogiemwonyi">
-                    <h3>Lisa Ogiemwonyi</h3>
-                    <p class="team-org">Wayne RESA</p>
-                </div>
-                <div class="team-card">
-                    <img class="team-avatar-img" src="images/Mari.jpg" alt="Mari Oates">
-                    <h3>Mari Oates</h3>
-                    <p class="team-org">Fermilab MakerSpace</p>
-                </div>
-                <div class="team-card">
-                    <img class="team-avatar-img" src="images/PeterK.jpg" alt="Peter Kirschmann">
-                    <h3>Peter Kirschmann</h3>
-                    <p class="team-org">UW-Madison Computer Sciences</p>
-                </div>
-                <div class="team-card">
-                    <img class="team-avatar-img" src="images/PeterW.jpg" alt="Peter Wardrip">
-                    <h3>Peter Wardrip</h3>
-                    <p class="team-org">UW-Madison Curriculum & Instruction</p>
-                </div>
-                <div class="team-card">
-                    <img class="team-avatar-img" src="images/RebeccaM.jpg" alt="Rebecca Millerjohn">
-                    <h3>Rebecca Millerjohn</h3>
-                    <p class="team-org">UW-Madison Computer, Data & Information Sciences</p>
-                </div>
-                <div class="team-card">
-                    <img class="team-avatar-img" src="images/SaraM.jpg" alt="Sara Milewski">
-                    <h3>Sara Milewski</h3>
-                    <p class="team-org">Henderson Elementary Fablab - Madison, WI</p>
-                </div>
+            <div class="team-grid" id="team-grid">
+                <p>Loading team&hellip;</p>
             </div>
 
             <!-- Organizers Emeriti -->
             <div class="emeriti">
                 <h3>Organizers Emeriti</h3>
-                <div class="emeriti-list">
-                    <span>Abby Krueger</span>
-                    <span>Bill Pariso</span>
-                    <span>Emily Schindler</span>
-                    <span>Tori Pagel</span>
-                </div>
+                <div class="emeriti-list" id="emeriti-list"></div>
             </div>
 
             <div class="partners">
                 <h3>Partner Organizations</h3>
-                <div class="partners-list">
-                    <span>UW-Madison PLACE</span>
-                    <span>Wayne RESA</span>
-                    <span>Building For Kids Children's Museum</span>
-                    <span>Madison Public Library</span>
-                    <span>Fermilab Office of Education and Public Engagement</span>
-                </div>
+                <div class="partners-list" id="partners-list"></div>
             </div>
         </div>
     </section>
 
-    <!-- Gallery / Photo Upload Section -->
+    <!-- Gallery / Show & Tell Section -->
     <section id="gallery" class="gallery">
         <div class="container">
             <div class="section-header">
-                <span class="section-tag">Show & Tell</span>
+                <span class="section-tag">Show &amp; Tell</span>
                 <h2>Share What You Made</h2>
                 <p>Upload photos of your creations to inspire others!</p>
             </div>
@@ -432,29 +204,17 @@
                 <div class="upload-card">
                     <div class="upload-icon">📸</div>
                     <h3>Share Your Creations</h3>
-                    <p>Made something awesome at a workshop? We want to see it! Upload your photos to our shared gallery.</p>
-                    <a href="https://photos.app.goo.gl/p1p5rpCQrxdX71Vc9" target="_blank" class="btn btn-primary">
-                        Upload to Google Photos
+                    <p>Made something awesome at a workshop? We want to see it! Submit a photo and a facilitator will add it to the wall below.</p>
+                    <a href="#" id="show-tell-form-link" target="_blank" class="btn btn-primary">
+                        Submit a Photo
                         <span class="btn-icon">↑</span>
                     </a>
-                    <p class="upload-note">Opens Google Photos shared album. You may need to request access.</p>
+                    <p class="upload-note">Opens a short Google Form. Photos are reviewed before they appear here.</p>
                 </div>
             </div>
             <div class="gallery-preview">
                 <h3>Recent Creations</h3>
-                <div class="gallery-grid">
-                    <div class="gallery-placeholder">
-                        <span>🧶</span>
-                        <p>Weaving project</p>
-                    </div>
-                    <div class="gallery-placeholder">
-                        <span>🎨</span>
-                        <p>Art creation</p>
-                    </div>
-                    <div class="gallery-placeholder">
-                        <span>🔧</span>
-                        <p>Maker project</p>
-                    </div>
+                <div class="gallery-grid" id="showcase-grid">
                     <div class="gallery-placeholder">
                         <span>✨</span>
                         <p>Your photo here!</p>
@@ -476,10 +236,10 @@
                 <div class="footer-links">
                     <div class="footer-column">
                         <h4>Quick Links</h4>
-                        <a href="#workshops">Workshops</a>
+                        <a href="#workshops">Schedule</a>
                         <a href="#resources">Resources</a>
                         <a href="#hubs">Hub Sites</a>
-                        <a href="#register">Register</a>
+                        <a href="#next-event">Register</a>
                     </div>
                     <div class="footer-column">
                         <h4>Connect</h4>
@@ -490,7 +250,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>© 2025-2026 Teacher Studio. Made with ❤️ by educators, for educators.</p>
+                <p>© 2025-2026 Teacher Studio. Made with ❤️ by educators, for educators. <a href="admin/">Site admin</a></p>
             </div>
         </div>
     </footer>
@@ -500,7 +260,7 @@
         <div class="modal-overlay"></div>
         <div class="modal-content">
             <button class="modal-close" aria-label="Close modal">&times;</button>
-            <div class="modal-icon"></div>
+            <p class="modal-eyebrow"></p>
             <h2 class="modal-title"></h2>
             <p class="modal-description"></p>
             <div class="modal-materials">
@@ -508,7 +268,8 @@
                 <ul class="materials-list"></ul>
             </div>
             <div class="modal-links">
-                <a href="#" class="btn btn-primary modal-download" target="_blank">Download Guide</a>
+                <h4>Shared Resources</h4>
+                <ul class="modal-links-list"></ul>
             </div>
         </div>
     </div>

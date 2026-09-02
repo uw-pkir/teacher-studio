@@ -1,387 +1,384 @@
 // Teacher Studio Website JavaScript
+// Content sections are loaded at runtime from the JSON files in /data — those
+// files are what organizers edit via /admin (Decap CMS). This script only
+// renders whatever is in them.
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Mobile Navigation Toggle
+document.addEventListener('DOMContentLoaded', function () {
+    initNav();
+    initModal();
+    loadAndRenderAll();
+});
+
+// ===== Navigation =====
+function initNav() {
     const navToggle = document.querySelector('.nav-toggle');
     const navMenu = document.querySelector('.nav-menu');
 
     if (navToggle) {
-        navToggle.addEventListener('click', function() {
+        navToggle.addEventListener('click', function () {
             navMenu.classList.toggle('active');
             navToggle.classList.toggle('active');
         });
     }
 
-    // Close mobile menu when clicking a link
-    const navLinks = document.querySelectorAll('.nav-menu a');
-    navLinks.forEach(link => {
-        link.addEventListener('click', function() {
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+        link.addEventListener('click', function () {
             navMenu.classList.remove('active');
             navToggle.classList.remove('active');
         });
     });
 
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                const headerOffset = 80;
-                const elementPosition = target.getBoundingClientRect().top;
-                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-                window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'smooth'
-                });
-            }
-        });
+    document.addEventListener('click', function (e) {
+        const anchor = e.target.closest('a[href^="#"]');
+        if (!anchor) return;
+        const target = document.querySelector(anchor.getAttribute('href'));
+        if (!target) return;
+        e.preventDefault();
+        const headerOffset = 80;
+        const elementPosition = target.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
     });
 
-    // Navbar background on scroll
     const navbar = document.querySelector('.navbar');
-    let lastScrollY = window.scrollY;
-
-    window.addEventListener('scroll', function() {
-        if (window.scrollY > 50) {
-            navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
-        } else {
-            navbar.style.boxShadow = 'none';
-        }
-        lastScrollY = window.scrollY;
-    });
-
-    // Animate elements on scroll
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animate-in');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-
-    // Observe all cards and sections
-    const animateElements = document.querySelectorAll(
-        '.workshop-card, .resource-card, .hub-card, .team-card, .feature, .stat'
-    );
-
-    animateElements.forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(20px)';
-        el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-        observer.observe(el);
-    });
-
-    // Add animate-in class styles
-    const style = document.createElement('style');
-    style.textContent = `
-        .animate-in {
-            opacity: 1 !important;
-            transform: translateY(0) !important;
-        }
-    `;
-    document.head.appendChild(style);
-
-    // Stagger animation for grid items
-    const grids = document.querySelectorAll('.workshop-grid, .resources-grid, .hubs-grid, .team-grid');
-    grids.forEach(grid => {
-        const items = grid.children;
-        Array.from(items).forEach((item, index) => {
-            item.style.transitionDelay = `${index * 0.1}s`;
-        });
-    });
-
-    // Initialize Resource Modal
-    initResourceModal();
-
-    // Initialize Hub Map
-    initHubMap();
-
-    // Highlight current/next workshop
-    highlightCurrentWorkshop();
-});
-
-// ===== Resource Modal =====
-const resourceData = {
-    weaving: {
-        icon: '🧵',
-        title: 'Weaving Basics',
-        description: 'Learn the fundamentals of simple loom weaving using accessible materials. Perfect for introducing textile arts to learners of all ages.',
-        materials: [
-            'Cardboard (cereal boxes work great)',
-            'Yarn or string in various colors',
-            'Scissors',
-            'Ruler',
-            'Tapestry needle (optional)',
-            'Decorative items (beads, feathers, ribbon)'
-        ],
-        downloadUrl: '#'
-    },
-    cardboard: {
-        icon: '📦',
-        title: 'Cardboard Engineering',
-        description: 'Explore structural engineering principles through hands-on building with recycled cardboard. Learn about joints, reinforcement, and creative problem-solving.',
-        materials: [
-            'Cardboard boxes (various sizes)',
-            'Box cutter or scissors',
-            'Ruler and pencil',
-            'Hot glue gun or tape',
-            'Brass fasteners',
-            'Paint or markers (optional)'
-        ],
-        downloadUrl: '#'
-    },
-    circuits: {
-        icon: '🔌',
-        title: 'Simple Circuits',
-        description: 'Create illuminated paper circuits and LED projects. A gentle introduction to electrical concepts perfect for makerspaces and classrooms.',
-        materials: [
-            'Copper tape',
-            'LED lights (various colors)',
-            'Coin cell batteries (CR2032)',
-            'Cardstock or paper',
-            'Binder clips',
-            'Scissors and pencil'
-        ],
-        downloadUrl: '#'
-    },
-    puppets: {
-        icon: '🎭',
-        title: 'Puppet Making',
-        description: 'Bring stories to life by creating simple puppets from everyday household materials. Great for literacy connections and dramatic play.',
-        materials: [
-            'Paper bags or socks',
-            'Felt scraps',
-            'Googly eyes',
-            'Yarn for hair',
-            'Markers and crayons',
-            'Glue sticks',
-            'Craft sticks (for stick puppets)'
-        ],
-        downloadUrl: '#'
-    },
-    printmaking: {
-        icon: '🖨️',
-        title: 'Printmaking',
-        description: 'Discover printmaking techniques that require no special equipment. Create beautiful prints using foam, cardboard, and found objects.',
-        materials: [
-            'Foam sheets or meat trays',
-            'Pencil or ballpoint pen',
-            'Block printing ink or tempera paint',
-            'Brayer (roller)',
-            'Paper',
-            'Found objects for texture'
-        ],
-        downloadUrl: '#'
-    }
-};
-
-function initResourceModal() {
-    const modal = document.getElementById('resource-modal');
-    if (!modal) return;
-
-    const overlay = modal.querySelector('.modal-overlay');
-    const closeBtn = modal.querySelector('.modal-close');
-    const modalIcon = modal.querySelector('.modal-icon');
-    const modalTitle = modal.querySelector('.modal-title');
-    const modalDescription = modal.querySelector('.modal-description');
-    const materialsList = modal.querySelector('.materials-list');
-    const downloadLink = modal.querySelector('.modal-download');
-
-    // Click handlers for resource cards
-    document.querySelectorAll('.resource-card[data-resource]').forEach(card => {
-        card.addEventListener('click', function() {
-            const resourceId = this.dataset.resource;
-            const resource = resourceData[resourceId];
-
-            if (resource) {
-                modalIcon.textContent = resource.icon;
-                modalTitle.textContent = resource.title;
-                modalDescription.textContent = resource.description;
-
-                materialsList.innerHTML = resource.materials
-                    .map(item => `<li>${item}</li>`)
-                    .join('');
-
-                downloadLink.href = resource.downloadUrl;
-
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-        });
-    });
-
-    // Close modal handlers
-    function closeModal() {
-        modal.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-
-    closeBtn.addEventListener('click', closeModal);
-    overlay.addEventListener('click', closeModal);
-
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && modal.classList.contains('active')) {
-            closeModal();
-        }
+    window.addEventListener('scroll', function () {
+        navbar.style.boxShadow = window.scrollY > 50 ? '0 2px 20px rgba(0, 0, 0, 0.1)' : 'none';
     });
 }
 
-// ===== Hub Map =====
-const hubLocations = [
-    {
-        name: 'The Bubbler @ Madison Public Library',
-        location: 'Madison, WI',
-        description: "Madison's creative hub offering free maker programming for all ages.",
-        website: 'https://madisonbubbler.org',
-        icon: '📚',
-        coords: [43.0731, -89.4012]
-    },
-    {
-        name: 'Building for Kids Children\'s Museum',
-        location: 'Appleton, WI',
-        description: 'A hands-on children\'s museum focused on play-based learning.',
-        website: 'https://buildingforkids.org',
-        icon: '🏛️',
-        coords: [44.2619, -88.4154]
-    },
-    {
-        name: 'Fermilab MakerSpace',
-        location: 'Batavia, IL',
-        description: 'Making and STEM education at America\'s particle physics laboratory.',
-        website: 'https://education.fnal.gov/makerspace',
-        icon: '⚛️',
-        coords: [41.8421, -88.2583]
-    },
-    {
-        name: 'Wayne RESA',
-        location: 'Wayne, MI',
-        description: 'Regional educational service agency supporting schools across Wayne County.',
-        website: 'https://resa.net',
-        icon: '🎓',
-        coords: [42.2808, -83.2433]
-    },
-    {
-        name: 'UW-Madison PLACE',
-        location: 'Madison, WI',
-        description: 'Playful Learning Across the Curriculum of Education at UW-Madison.',
-        website: 'https://education.wisc.edu',
-        icon: '🔬',
-        coords: [43.0766, -89.4125]
+// ===== Fade-in-on-scroll (applied to any card, including ones added after load) =====
+const fadeObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('animate-in');
+            fadeObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+function observeFadeIn(container, selector) {
+    const items = container.querySelectorAll(selector);
+    items.forEach((el, index) => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        el.style.transitionDelay = `${Math.min(index, 10) * 0.08}s`;
+        fadeObserver.observe(el);
+    });
+}
+
+const animateInStyle = document.createElement('style');
+animateInStyle.textContent = `.animate-in { opacity: 1 !important; transform: translateY(0) !important; }`;
+document.head.appendChild(animateInStyle);
+
+// ===== Data loading =====
+async function loadJSON(path) {
+    const res = await fetch(path, { cache: 'no-cache' });
+    if (!res.ok) throw new Error(`Failed to load ${path}: ${res.status}`);
+    return res.json();
+}
+
+async function loadAndRenderAll() {
+    const [nextEvent, schedule, resources, hubs, organizers, settings, showcase] = await Promise.all([
+        loadJSON('data/next-event.json').catch(() => null),
+        loadJSON('data/schedule.json').catch(() => []),
+        loadJSON('data/resources.json').catch(() => []),
+        loadJSON('data/hubs.json').catch(() => []),
+        loadJSON('data/organizers.json').catch(() => []),
+        loadJSON('data/site-settings.json').catch(() => ({})),
+        loadJSON('data/showcase.json').catch(() => [])
+    ]);
+
+    if (nextEvent) renderNextEvent(nextEvent);
+    renderSchedule(schedule);
+    renderResources(resources);
+    renderHubs(hubs);
+    renderTeam(organizers, settings);
+    renderPartners(hubs);
+    renderShowcase(showcase);
+
+    if (settings.about_text) {
+        document.getElementById('about-text').textContent = settings.about_text;
     }
-];
+    if (settings.show_tell_form_url) {
+        document.getElementById('show-tell-form-link').href = settings.show_tell_form_url;
+    }
 
-function initHubMap() {
+    document.getElementById('stat-hubs').textContent = hubs.length;
+    document.getElementById('stat-workshops').textContent = schedule.length;
+}
+
+// Parses a "YYYY-MM-DD" string as a local date (avoids UTC off-by-one).
+function parseLocalDate(isoDate) {
+    const [y, m, d] = isoDate.split('-').map(Number);
+    return new Date(y, m - 1, d);
+}
+
+function formatLongDate(isoDate) {
+    return parseLocalDate(isoDate).toLocaleDateString('en-US', {
+        weekday: 'long', month: 'long', day: 'numeric', year: 'numeric'
+    });
+}
+
+// ===== Next Event spotlight =====
+function renderNextEvent(event) {
+    const mount = document.getElementById('next-event-mount');
+    mount.innerHTML = `
+        <div class="next-event-info">
+            <span class="section-tag">Next Workshop</span>
+            <h2>${escapeHTML(event.title)}</h2>
+            <p class="next-event-when"><strong>When:</strong> ${formatLongDate(event.date)}, ${escapeHTML(event.time)}</p>
+            <p class="next-event-description">${escapeHTML(event.description)}</p>
+            <a href="${escapeAttr(event.register_url)}" target="_blank" class="btn btn-primary btn-large">
+                Register for ${parseLocalDate(event.date).toLocaleDateString('en-US', { month: 'long' })}
+                <span class="btn-icon">→</span>
+            </a>
+            <p class="next-event-location">${escapeHTML(event.location_note || '')}</p>
+        </div>
+    `;
+}
+
+// ===== Workshop schedule =====
+function renderSchedule(schedule) {
+    const grid = document.getElementById('workshop-grid');
+    if (!schedule.length) {
+        grid.innerHTML = '<p>Schedule coming soon.</p>';
+        return;
+    }
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    // The "Up Next!" badge is derived from the schedule itself (the earliest
+    // date that hasn't passed yet) rather than from next-event.json, so the
+    // two files can never contradict each other if one is updated without the other.
+    const sorted = [...schedule].sort((a, b) => a.date.localeCompare(b.date));
+    const nextItem = sorted.find(item => parseLocalDate(item.date) >= today);
+    const nextDate = nextItem ? nextItem.date : null;
+
+    grid.innerHTML = schedule.map(item => {
+        const itemDate = parseLocalDate(item.date);
+        const isPast = itemDate < today;
+        const isFeatured = !isPast && item.date === nextDate;
+        const month = itemDate.toLocaleDateString('en-US', { month: 'short' });
+        const day = itemDate.getDate();
+
+        return `
+            <div class="workshop-card ${isPast ? 'past' : ''} ${isFeatured ? 'featured' : ''}">
+                ${isFeatured ? '<div class="workshop-badge">Up Next!</div>' : ''}
+                <div class="workshop-date">
+                    <span class="month">${month}</span>
+                    <span class="day">${day}</span>
+                </div>
+                <div class="workshop-info">
+                    <span class="workshop-status ${isPast ? '' : 'upcoming'}">${isPast ? 'Completed' : 'Upcoming'}</span>
+                    <h3>${escapeHTML(item.title)}</h3>
+                    <p>${escapeHTML(item.description || '')}</p>
+                    <span class="workshop-time">${escapeHTML(item.time)}</span>
+                    ${isFeatured ? '<a href="#next-event" class="btn btn-small">Register</a>' : ''}
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    observeFadeIn(grid, '.workshop-card');
+}
+
+// ===== Resources / past workshop archive =====
+let resourceData = [];
+
+function renderResources(resources) {
+    resourceData = resources;
+    const grid = document.getElementById('resources-grid');
+    if (!resources.length) {
+        grid.innerHTML = '<p>Resources coming soon.</p>';
+        return;
+    }
+
+    grid.innerHTML = resources.map((r, index) => `
+        <div class="resource-card" data-resource-index="${index}">
+            <div class="resource-icon">🧩</div>
+            <h3>${escapeHTML(r.title)}</h3>
+            <p>${escapeHTML(r.prompt || r.description || '')}</p>
+            <div class="resource-meta">
+                <span>${escapeHTML(formatMonthYear(r.date))}${r.facilitator ? ' · ' + escapeHTML(r.facilitator) : ''}</span>
+            </div>
+            <button class="resource-link">View Details →</button>
+        </div>
+    `).join('');
+
+    document.querySelectorAll('.resource-card[data-resource-index]').forEach(card => {
+        card.addEventListener('click', () => openResourceModal(resourceData[Number(card.dataset.resourceIndex)]));
+    });
+
+    observeFadeIn(grid, '.resource-card');
+}
+
+function formatMonthYear(yyyyMm) {
+    const [y, m] = yyyyMm.split('-').map(Number);
+    return new Date(y, m - 1, 1).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+}
+
+// ===== Modal (shared by resource cards) =====
+function initModal() {
+    const modal = document.getElementById('resource-modal');
+    if (!modal) return;
+    modal.querySelector('.modal-overlay').addEventListener('click', closeResourceModal);
+    modal.querySelector('.modal-close').addEventListener('click', closeResourceModal);
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) closeResourceModal();
+    });
+}
+
+function openResourceModal(resource) {
+    const modal = document.getElementById('resource-modal');
+    modal.querySelector('.modal-eyebrow').textContent =
+        `${formatMonthYear(resource.date)}${resource.facilitator ? ' · Facilitated by ' + resource.facilitator : ''}`;
+    modal.querySelector('.modal-title').textContent = resource.title;
+    modal.querySelector('.modal-description').textContent = resource.prompt || resource.description || '';
+
+    const materialsBlock = modal.querySelector('.modal-materials');
+    const materialsList = modal.querySelector('.materials-list');
+    if (resource.materials && resource.materials.length) {
+        materialsList.innerHTML = resource.materials.map(m => `<li>${escapeHTML(m)}</li>`).join('');
+        materialsBlock.style.display = '';
+    } else {
+        materialsBlock.style.display = 'none';
+    }
+
+    const linksBlock = modal.querySelector('.modal-links');
+    const linksList = modal.querySelector('.modal-links-list');
+    if (resource.links && resource.links.length) {
+        linksList.innerHTML = resource.links
+            .map(l => `<li><a href="${escapeAttr(l.url)}" target="_blank" rel="noopener">${escapeHTML(l.label)}</a></li>`)
+            .join('');
+        linksBlock.style.display = '';
+    } else {
+        linksBlock.style.display = 'none';
+    }
+
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeResourceModal() {
+    document.getElementById('resource-modal').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// ===== Hub sites map =====
+function renderHubs(hubs) {
     const mapContainer = document.getElementById('hubs-map');
-    if (!mapContainer || typeof L === 'undefined') return;
+    if (!mapContainer || typeof L === 'undefined' || !hubs.length) return;
 
-    // Center the map on the midwest
-    const map = L.map('hubs-map', {
-        scrollWheelZoom: false
-    }).setView([42.5, -87.5], 6);
+    const map = L.map('hubs-map', { scrollWheelZoom: false }).setView([42.5, -87.5], 6);
 
-    // Add a clean, modern tile layer
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
         subdomains: 'abcd',
         maxZoom: 19
     }).addTo(map);
 
-    // Create custom icon
-    const createCustomIcon = (emoji) => {
-        return L.divIcon({
-            className: 'custom-marker-container',
-            html: `<div class="custom-hub-marker">${emoji}</div>`,
-            iconSize: [36, 36],
-            iconAnchor: [18, 18],
-            popupAnchor: [0, -20]
-        });
-    };
-
-    // Add markers for each hub
-    hubLocations.forEach(hub => {
-        const marker = L.marker(hub.coords, {
-            icon: createCustomIcon(hub.icon)
-        }).addTo(map);
-
-        const popupContent = `
-            <div class="hub-popup">
-                <h3>${hub.name}</h3>
-                <span class="hub-popup-location">${hub.location}</span>
-                <p>${hub.description}</p>
-                <a href="${hub.website}" target="_blank" class="hub-popup-link">
-                    Visit Website →
-                </a>
-            </div>
-        `;
-
-        marker.bindPopup(popupContent, {
-            maxWidth: 300,
-            className: 'hub-popup-wrapper'
-        });
+    const createCustomIcon = (emoji) => L.divIcon({
+        className: 'custom-marker-container',
+        html: `<div class="custom-hub-marker">${emoji}</div>`,
+        iconSize: [36, 36],
+        iconAnchor: [18, 18],
+        popupAnchor: [0, -20]
     });
 
-    // Fit map to show all markers
-    const group = L.featureGroup(hubLocations.map(hub => L.marker(hub.coords)));
+    const markers = hubs.map(hub => {
+        const marker = L.marker([hub.lat, hub.lng], { icon: createCustomIcon(hub.icon) }).addTo(map);
+        marker.bindPopup(`
+            <div class="hub-popup">
+                <h3>${escapeHTML(hub.name)}</h3>
+                <span class="hub-popup-location">${escapeHTML(hub.location)}</span>
+                <p>${escapeHTML(hub.description)}</p>
+                <a href="${escapeAttr(hub.website)}" target="_blank" class="hub-popup-link">Visit Website →</a>
+            </div>
+        `, { maxWidth: 300, className: 'hub-popup-wrapper' });
+        return marker;
+    });
+
+    const group = L.featureGroup(markers);
     map.fitBounds(group.getBounds().pad(0.1));
 
-    // Enable scroll zoom only when map is focused
     map.on('focus', () => map.scrollWheelZoom.enable());
     map.on('blur', () => map.scrollWheelZoom.disable());
 }
 
-function highlightCurrentWorkshop() {
-    const workshopCards = document.querySelectorAll('.workshop-card');
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    // Workshop dates for 2025-2026
-    const workshopDates = [
-        { month: 'Oct', day: 16, year: 2025 },
-        { month: 'Nov', day: 20, year: 2025 },
-        { month: 'Dec', day: 18, year: 2025 },
-        { month: 'Jan', day: 15, year: 2026 },
-        { month: 'Feb', day: 19, year: 2026 },
-        { month: 'Mar', day: 19, year: 2026 },
-        { month: 'Apr', day: 16, year: 2026 },
-        { month: 'May', day: 21, year: 2026 }
-    ];
-
-    const monthMap = {
-        'Jan': 0, 'Feb': 1, 'Mar': 2, 'Apr': 3, 'May': 4, 'Jun': 5,
-        'Jul': 6, 'Aug': 7, 'Sep': 8, 'Oct': 9, 'Nov': 10, 'Dec': 11
-    };
-
-    workshopCards.forEach((card, index) => {
-        if (index < workshopDates.length) {
-            const workshop = workshopDates[index];
-            const workshopDate = new Date(workshop.year, monthMap[workshop.month], workshop.day);
-
-            if (workshopDate < today) {
-                card.classList.add('past');
-                const status = card.querySelector('.workshop-status');
-                if (status) {
-                    status.textContent = 'Completed';
-                    status.classList.remove('upcoming');
-                }
-            }
-        }
-    });
+function renderPartners(hubs) {
+    const list = document.getElementById('partners-list');
+    list.innerHTML = hubs.map(h => `<span>${escapeHTML(h.name)}</span>`).join('');
 }
 
-// Optional: Add confetti effect for celebrations
+// ===== Team =====
+function renderTeam(organizers, settings) {
+    const grid = document.getElementById('team-grid');
+    grid.innerHTML = organizers.map(person => `
+        <div class="team-card">
+            <img class="team-avatar-img" src="${escapeAttr(person.photo)}" alt="${escapeAttr(person.name)}">
+            <h3>${escapeHTML(person.name)}</h3>
+            <p class="team-org">${escapeHTML(person.org)}</p>
+        </div>
+    `).join('');
+    observeFadeIn(grid, '.team-card');
+
+    const emeritiList = document.getElementById('emeriti-list');
+    const emeriti = (settings && settings.emeriti) || [];
+    emeritiList.innerHTML = emeriti.map(name => `<span>${escapeHTML(name)}</span>`).join('');
+}
+
+// ===== Show & Tell =====
+function renderShowcase(items) {
+    const grid = document.getElementById('showcase-grid');
+    if (!items || !items.length) {
+        grid.innerHTML = `
+            <div class="gallery-placeholder">
+                <span>✨</span>
+                <p>Your photo here!</p>
+            </div>
+        `;
+        return;
+    }
+
+    grid.innerHTML = items.map(item => `
+        <figure class="showcase-card">
+            <img src="${escapeAttr(item.image_url)}" alt="${escapeAttr(item.caption || 'Teacher Studio creation')}" loading="lazy">
+            <figcaption>
+                ${item.caption ? `<p>${escapeHTML(item.caption)}</p>` : ''}
+                ${item.name ? `<span class="showcase-name">${escapeHTML(item.name)}</span>` : ''}
+            </figcaption>
+        </figure>
+    `).join('');
+
+    observeFadeIn(grid, '.showcase-card');
+}
+
+// ===== Small helpers =====
+function escapeHTML(str) {
+    if (str === undefined || str === null) return '';
+    const div = document.createElement('div');
+    div.textContent = String(str);
+    return div.innerHTML;
+}
+
+function escapeAttr(str) {
+    return escapeHTML(str);
+}
+
+// Easter egg: press "c" for confetti!
+document.addEventListener('keydown', function (e) {
+    if (e.key.toLowerCase() === 'c' && !e.ctrlKey && !e.metaKey) {
+        if (document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+            createConfetti();
+        }
+    }
+});
+
 function createConfetti() {
     const colors = ['#6366f1', '#f472b6', '#fbbf24', '#34d399', '#fb923c'];
-    const confettiCount = 50;
-
-    for (let i = 0; i < confettiCount; i++) {
+    for (let i = 0; i < 50; i++) {
         const confetti = document.createElement('div');
         confetti.style.cssText = `
             position: fixed;
@@ -398,30 +395,14 @@ function createConfetti() {
             border-radius: ${Math.random() > 0.5 ? '50%' : '0'};
         `;
         document.body.appendChild(confetti);
-
         setTimeout(() => confetti.remove(), 5000);
     }
 }
 
-// Add confetti animation
 const confettiStyle = document.createElement('style');
 confettiStyle.textContent = `
     @keyframes confetti-fall {
-        to {
-            transform: translateY(100vh) rotate(720deg);
-            opacity: 0;
-        }
+        to { transform: translateY(100vh) rotate(720deg); opacity: 0; }
     }
 `;
 document.head.appendChild(confettiStyle);
-
-// Easter egg: Press "c" for confetti!
-document.addEventListener('keydown', function(e) {
-    if (e.key.toLowerCase() === 'c' && !e.ctrlKey && !e.metaKey) {
-        // Don't trigger if user is typing in an input field
-        if (document.activeElement.tagName !== 'INPUT' &&
-            document.activeElement.tagName !== 'TEXTAREA') {
-            createConfetti();
-        }
-    }
-});

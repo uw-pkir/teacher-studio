@@ -1,0 +1,104 @@
+backend:
+  name: github
+  repo: uw-pkir/teacher-studio
+  branch: main
+  # This must point at the OAuth proxy Peter deploys per SETUP.md.
+  # Example: https://teacher-studio-cms-auth.your-subdomain.workers.dev
+  base_url: https://REPLACE_WITH_YOUR_OAUTH_WORKER_URL
+
+media_folder: "images/uploads"
+public_folder: "images/uploads"
+
+collections:
+  - name: "content"
+    label: "Site Content"
+    files:
+      - name: "next_event"
+        label: "🟣 Next Workshop (the monthly header)"
+        file: "data/next-event.json"
+        description: "The most important thing to keep current — this powers the big banner on the homepage."
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Date", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
+          - { label: "Time", name: "time", widget: "string", hint: "e.g. 4:30-5:30 PM CST" }
+          - { label: "Description", name: "description", widget: "text" }
+          - { label: "Registration link (Google Form URL)", name: "register_url", widget: "string" }
+          - { label: "Location note", name: "location_note", widget: "text" }
+
+      - name: "schedule"
+        label: "Season Schedule"
+        file: "data/schedule.json"
+        description: "The full-season calendar grid shown below the next-event banner."
+        fields:
+          - label: "Workshops"
+            name: "schedule"
+            widget: "list"
+            summary: "{{title}} — {{date}}"
+            fields:
+              - { label: "Date", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
+              - { label: "Time", name: "time", widget: "string" }
+              - { label: "Title / Topic", name: "title", widget: "string" }
+              - { label: "Description", name: "description", widget: "text", required: false }
+
+      - name: "resources"
+        label: "Past Workshops / Resources"
+        file: "data/resources.json"
+        description: "One entry per past session. Newest should be added at the top."
+        fields:
+          - label: "Sessions"
+            name: "resources"
+            widget: "list"
+            summary: "{{title}} — {{date}}"
+            fields:
+              - { label: "Month (YYYY-MM)", name: "date", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Facilitator", name: "facilitator", widget: "string", required: false }
+              - { label: "Activity prompt", name: "prompt", widget: "text", required: false }
+              - { label: "Extra description", name: "description", widget: "text", required: false }
+              - { label: "Materials", name: "materials", widget: "list", required: false }
+              - label: "Links"
+                name: "links"
+                widget: "list"
+                required: false
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "URL", name: "url", widget: "string" }
+
+      - name: "hubs"
+        label: "Hub Sites / Organizing Partners"
+        file: "data/hubs.json"
+        description: "Shown on the map and used to build the partners list automatically."
+        fields:
+          - label: "Hubs"
+            name: "hubs"
+            widget: "list"
+            summary: "{{name}}"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "City, State", name: "location", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+              - { label: "Website", name: "website", widget: "string" }
+              - { label: "Icon (an emoji)", name: "icon", widget: "string" }
+              - { label: "Latitude", name: "lat", widget: "number", value_type: "float" }
+              - { label: "Longitude", name: "lng", widget: "number", value_type: "float" }
+
+      - name: "organizers"
+        label: "Organizers"
+        file: "data/organizers.json"
+        fields:
+          - label: "Organizers"
+            name: "organizers"
+            widget: "list"
+            summary: "{{name}}"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Organization", name: "org", widget: "string" }
+              - { label: "Photo", name: "photo", widget: "image" }
+
+      - name: "settings"
+        label: "About Text & Misc Settings"
+        file: "data/site-settings.json"
+        fields:
+          - { label: "Show & Tell submission form (Google Form URL)", name: "show_tell_form_url", widget: "string" }
+          - { label: "About paragraph", name: "about_text", widget: "text" }
+          - { label: "Organizers Emeriti (names)", name: "emeriti", widget: "list" }

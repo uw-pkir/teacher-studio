@@ -1409,8 +1409,41 @@ img {
     font-weight: bold;
 }
 
-.modal-links {
+.modal-eyebrow {
     text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: var(--space-sm);
+}
+
+.modal-links {
+    border-top: 1px solid var(--gray-200);
+    padding-top: var(--space-lg);
+}
+
+.modal-links h4 {
+    font-size: 1rem;
+    margin-bottom: var(--space-md);
+    color: var(--dark);
+}
+
+.modal-links-list {
+    list-style: none;
+    display: grid;
+    gap: var(--space-sm);
+}
+
+.modal-links-list a {
+    color: var(--primary);
+    text-decoration: none;
+    font-size: 0.9375rem;
+}
+
+.modal-links-list a:hover {
+    text-decoration: underline;
 }
 
 /* Leaflet popup overrides */
@@ -1435,4 +1468,105 @@ img {
     .modal-content {
         padding: var(--space-lg);
     }
+}
+
+/* ===== Next Event Spotlight ===== */
+.next-event {
+    padding: var(--space-2xl) 0 var(--space-3xl);
+    background: var(--bg-primary);
+}
+
+.next-event-card {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    border-radius: var(--radius-xl);
+    padding: var(--space-3xl);
+    color: var(--white);
+    box-shadow: var(--shadow-lg);
+}
+
+.next-event-info .section-tag {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--white);
+}
+
+.next-event-info h2 {
+    color: var(--white);
+    font-size: 2.25rem;
+    margin: var(--space-sm) 0 var(--space-md);
+}
+
+.next-event-when {
+    font-size: 1.125rem;
+    margin-bottom: var(--space-md);
+    opacity: 0.95;
+}
+
+.next-event-description {
+    max-width: 640px;
+    opacity: 0.9;
+    margin-bottom: var(--space-lg);
+}
+
+.next-event-info .btn-primary {
+    background: var(--white);
+    color: var(--primary);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.next-event-info .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.3);
+}
+
+.next-event-location {
+    margin-top: var(--space-lg) !important;
+    font-size: 0.9375rem;
+    opacity: 0.85;
+    max-width: 640px;
+}
+
+@media (max-width: 768px) {
+    .next-event-card {
+        padding: var(--space-xl);
+    }
+
+    .next-event-info h2 {
+        font-size: 1.75rem;
+    }
+}
+
+/* ===== Show & Tell gallery photos ===== */
+.showcase-card {
+    aspect-ratio: 1;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    position: relative;
+    box-shadow: var(--shadow-sm);
+}
+
+.showcase-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.showcase-card figcaption {
+    position: absolute;
+    inset: auto 0 0 0;
+    background: linear-gradient(to top, rgba(30, 27, 75, 0.85), transparent);
+    color: var(--white);
+    padding: var(--space-md) var(--space-sm) var(--space-sm);
+}
+
+.showcase-card figcaption p {
+    font-size: 0.875rem;
+    margin: 0;
+}
+
+.showcase-name {
+    display: block;
+    font-size: 0.75rem;
+    opacity: 0.8;
+    margin-top: 2px;
 }

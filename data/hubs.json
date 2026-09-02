@@ -1,0 +1,47 @@
+[
+  {
+    "name": "The Bubbler @ Madison Public Library",
+    "location": "Madison, WI",
+    "description": "Madison's creative hub offering free maker programming for all ages.",
+    "website": "https://madisonbubbler.org",
+    "icon": "📚",
+    "lat": 43.0731,
+    "lng": -89.4012
+  },
+  {
+    "name": "Building for Kids Children's Museum",
+    "location": "Appleton, WI",
+    "description": "A hands-on children's museum focused on play-based learning.",
+    "website": "https://buildingforkids.org",
+    "icon": "🏛️",
+    "lat": 44.2619,
+    "lng": -88.4154
+  },
+  {
+    "name": "Fermilab MakerSpace",
+    "location": "Batavia, IL",
+    "description": "Making and STEM education at America's particle physics laboratory.",
+    "website": "https://education.fnal.gov/makerspace",
+    "icon": "⚛️",
+    "lat": 41.8421,
+    "lng": -88.2583
+  },
+  {
+    "name": "Wayne RESA",
+    "location": "Wayne, MI",
+    "description": "Regional educational service agency supporting schools across Wayne County.",
+    "website": "https://resa.net",
+    "icon": "🎓",
+    "lat": 42.2808,
+    "lng": -83.2433
+  },
+  {
+    "name": "UW-Madison PLACE",
+    "location": "Madison, WI",
+    "description": "Playful Learning Across the Curriculum of Education at UW-Madison.",
+    "website": "https://education.wisc.edu",
+    "icon": "🔬",
+    "lat": 43.0766,
+    "lng": -89.4125
+  }
+]

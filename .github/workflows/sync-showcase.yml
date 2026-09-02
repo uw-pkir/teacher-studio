@@ -1,0 +1,36 @@
+name: Sync Show & Tell photos
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Sync approved photos from the response sheet
+        env:
+          SHOWCASE_CSV_URL: ${{ vars.SHOWCASE_CSV_URL }}
+        run: node scripts/sync-showcase.js
+
+      - name: Commit changes if any
+        run: |
+          if git diff --quiet -- data/showcase.json; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git config user.name "teacher-studio-bot"
+          git config user.email "actions@github.com"
+          git add data/showcase.json
+          git commit -m "Sync approved Show & Tell photos"
+          git push
