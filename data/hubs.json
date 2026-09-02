@@ -6,7 +6,8 @@
     "website": "https://madisonbubbler.org",
     "icon": "📚",
     "lat": 43.0731,
-    "lng": -89.4012
+    "lng": -89.4012,
+    "physical_hub": true
   },
   {
     "name": "Building for Kids Children's Museum",
@@ -15,7 +16,8 @@
     "website": "https://buildingforkids.org",
     "icon": "🏛️",
     "lat": 44.2619,
-    "lng": -88.4154
+    "lng": -88.4154,
+    "physical_hub": true
   },
   {
     "name": "Fermilab MakerSpace",
@@ -24,7 +26,8 @@
     "website": "https://education.fnal.gov/makerspace",
     "icon": "⚛️",
     "lat": 41.8421,
-    "lng": -88.2583
+    "lng": -88.2583,
+    "physical_hub": false
   },
   {
     "name": "Wayne RESA",
@@ -33,15 +36,17 @@
     "website": "https://resa.net",
     "icon": "🎓",
     "lat": 42.2808,
-    "lng": -83.2433
+    "lng": -83.2433,
+    "physical_hub": true
   },
   {
-    "name": "UW-Madison PLACE",
+    "name": "UW-Madison",
     "location": "Madison, WI",
     "description": "Playful Learning Across the Curriculum of Education at UW-Madison.",
     "website": "https://education.wisc.edu",
     "icon": "🔬",
     "lat": 43.0766,
-    "lng": -89.4125
+    "lng": -89.4125,
+    "physical_hub": true
   }
 ]

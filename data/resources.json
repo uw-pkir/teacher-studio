@@ -1,6 +1,7 @@
 [
   {
     "date": "2025-04",
+    "icon": "📖",
     "title": "Hack a Magazine with Octostudio",
     "facilitator": "PK @ UW",
     "prompt": "Take a magazine and combine it with OctoStudio to create something magical.",
@@ -15,6 +16,7 @@
   },
   {
     "date": "2025-03",
+    "icon": "🧭",
     "title": "Making & Tinkering as a pathway for Ambiguity Tolerance",
     "facilitator": "David Wells",
     "prompt": "Use your materials to create a way for your figure to get from Here to There. Your figure is \"Here\" and you need to get it \"There.\"",
@@ -26,6 +28,7 @@
   },
   {
     "date": "2025-02",
+    "icon": "📓",
     "title": "(How to) Zines",
     "facilitator": "Rebecca @ UW",
     "prompt": "Create a single sheet \"How-to\" zine.",
@@ -47,6 +50,7 @@
   },
   {
     "date": "2025-01",
+    "icon": "🧻",
     "title": "Tinkering with Tubes",
     "facilitator": "Lisa @ Wayne RESA",
     "prompt": "Create something with tubes that is: something that represents your favorite vacation destination; a familiar landmark from your state or community; or a scene from your favorite story/picture book.",
@@ -61,6 +65,7 @@
   },
   {
     "date": "2024-12",
+    "icon": "🎨",
     "title": "Getting Creative with Canva",
     "facilitator": "Mari @ Fermilab",
     "prompt": "Design an alternative cover for your current favorite book, album, or movie.",
@@ -76,6 +81,7 @@
   },
   {
     "date": "2024-11",
+    "icon": "🔗",
     "title": "Tinkering with Zip Ties",
     "facilitator": "Peter @ UW-Madison",
     "prompt": "This activity is meant to be a tinkering activity where we learn more about how we can use zip ties: make something that is ambitious, make something that is useful, make something that consists mostly of zip-ties.",
@@ -91,6 +97,7 @@
   },
   {
     "date": "2024-10",
+    "icon": "🐱",
     "title": "Scratch 10 Blocks",
     "facilitator": "PK @ UW-Madison",
     "prompt": "What can you create with only 10 Scratch Blocks?",
@@ -102,6 +109,7 @@
   },
   {
     "date": "2024-04",
+    "icon": "🧶",
     "title": "Weave It",
     "facilitator": "Peter Wardrip @ UW-Madison",
     "prompt": "Explore weaving as an accessible making activity.",
@@ -113,6 +121,7 @@
   },
   {
     "date": "2024-02",
+    "icon": "🔮",
     "title": "Octostudio Kaleidoscope",
     "facilitator": "PK @ UW-Madison",
     "prompt": "Let's explore a new, accessible coding tool by exploring movement, symmetry, and reflection.",
@@ -126,6 +135,7 @@
   },
   {
     "date": "2023-11",
+    "icon": "⛵",
     "title": "Trash Boats for the Bubbler Regatta",
     "facilitator": "Rebecca Millerjohn @ The Bubbler",
     "prompt": "Create a boat that is wind powered.",
@@ -137,6 +147,7 @@
   },
   {
     "date": "2023-10",
+    "icon": "🎡",
     "title": "Art & Motion",
     "facilitator": "Bill & Tori @ Betty Brinn",
     "prompt": "How can we make art with motion? How can we make art making machines?",
@@ -146,6 +157,7 @@
   },
   {
     "date": "2023-05",
+    "icon": "🧵",
     "title": "Threads and Things",
     "facilitator": "Mari Oates @ Fermilab",
     "prompt": "How can we use textiles to tell a story?",
@@ -155,6 +167,7 @@
   },
   {
     "date": "2023-04",
+    "icon": "🔧",
     "title": "Pliers and Wires",
     "facilitator": "David Wells",
     "prompt": "Create a one-line drawing and then build it with wire.",
@@ -170,6 +183,7 @@
   },
   {
     "date": "2023-03",
+    "icon": "🛟",
     "title": "Will It Float?",
     "facilitator": "Bill Pariso & Tori Pagel @ Betty Brinn Children's Museum",
     "prompt": "Can we make something float that also moves on its own? Can we make floating sculptures?",
@@ -179,6 +193,7 @@
   },
   {
     "date": "2023-02",
+    "icon": "🌓",
     "title": "Shadow Remix",
     "facilitator": "Peter Kirschmann @ UW-Madison",
     "prompt": "What stories, images, and characters do you see in the shadows?",
@@ -193,6 +208,7 @@
   },
   {
     "date": "2023-01",
+    "icon": "🐱",
     "title": "Scratch Programming",
     "facilitator": "Mari Oates @ Fermilab",
     "prompt": "Let's write some code that does something unexpected!",
@@ -211,6 +227,7 @@
   },
   {
     "date": "2022-11",
+    "icon": "💨",
     "title": "Wind Powered Vehicles",
     "facilitator": "Abby Krueger @ Building for Kids Children's Museum",
     "prompt": "What are some different vehicles or objects that move using air?",
@@ -224,6 +241,7 @@
   },
   {
     "date": "2022-10",
+    "icon": "📦",
     "title": "Cardboard Making",
     "facilitator": "Bill Pariso @ Betty Brinn Children's Museum",
     "prompt": "What is your alter ego? If you were to become a superhero, what would it be and what would your superpower be?",

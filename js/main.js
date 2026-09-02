@@ -104,7 +104,7 @@ async function loadAndRenderAll() {
         document.getElementById('show-tell-form-link').href = settings.show_tell_form_url;
     }
 
-    document.getElementById('stat-hubs').textContent = hubs.length;
+    document.getElementById('stat-hubs').textContent = hubs.filter(h => h.physical_hub !== false).length;
     document.getElementById('stat-workshops').textContent = schedule.length;
 }
 
@@ -172,7 +172,7 @@ function renderSchedule(schedule) {
                 </div>
                 <div class="workshop-info">
                     <span class="workshop-status ${isPast ? '' : 'upcoming'}">${isPast ? 'Completed' : 'Upcoming'}</span>
-                    <h3>${escapeHTML(item.title)}</h3>
+                    <h3>${item.icon ? `<span class="workshop-icon">${escapeHTML(item.icon)}</span> ` : ''}${escapeHTML(item.title)}</h3>
                     <p>${escapeHTML(item.description || '')}</p>
                     <span class="workshop-time">${escapeHTML(item.time)}</span>
                     ${isFeatured ? '<a href="#next-event" class="btn btn-small">Register</a>' : ''}
@@ -197,7 +197,7 @@ function renderResources(resources) {
 
     grid.innerHTML = resources.map((r, index) => `
         <div class="resource-card" data-resource-index="${index}">
-            <div class="resource-icon">🧩</div>
+            <div class="resource-icon">${escapeHTML(r.icon || '🧩')}</div>
             <h3>${escapeHTML(r.title)}</h3>
             <p>${escapeHTML(r.prompt || r.description || '')}</p>
             <div class="resource-meta">
@@ -269,14 +269,19 @@ function closeResourceModal() {
 // ===== Hub sites map =====
 function renderHubs(hubs) {
     const mapContainer = document.getElementById('hubs-map');
-    if (!mapContainer || typeof L === 'undefined' || !hubs.length) return;
+    // Only hubs marked as physical gathering locations get a pin — a hub can
+    // still be a partner (shown in the Partner Organizations list) without
+    // being an in-person site.
+    const physicalHubs = hubs.filter(hub => hub.physical_hub !== false);
+    if (!mapContainer || typeof L === 'undefined' || !physicalHubs.length) return;
 
     const map = L.map('hubs-map', { scrollWheelZoom: false }).setView([42.5, -87.5], 6);
 
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-        subdomains: 'abcd',
-        maxZoom: 19
+    // Esri's free "Light Gray Base" tiles — no API key required, unlike
+    // Carto's basemaps which now show an "API key required" watermark.
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+        maxZoom: 16
     }).addTo(map);
 
     const createCustomIcon = (emoji) => L.divIcon({
@@ -287,7 +292,7 @@ function renderHubs(hubs) {
         popupAnchor: [0, -20]
     });
 
-    const markers = hubs.map(hub => {
+    const markers = physicalHubs.map(hub => {
         const marker = L.marker([hub.lat, hub.lng], { icon: createCustomIcon(hub.icon) }).addTo(map);
         marker.bindPopup(`
             <div class="hub-popup">
@@ -309,7 +314,9 @@ function renderHubs(hubs) {
 
 function renderPartners(hubs) {
     const list = document.getElementById('partners-list');
-    list.innerHTML = hubs.map(h => `<span>${escapeHTML(h.name)}</span>`).join('');
+    list.innerHTML = hubs.map(h =>
+        `<a href="${escapeAttr(h.website)}" target="_blank" rel="noopener">${escapeHTML(h.name)}</a>`
+    ).join('');
 }
 
 // ===== Team =====

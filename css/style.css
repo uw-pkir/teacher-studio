@@ -271,6 +271,7 @@ img {
     min-height: 100vh;
     display: flex;
     align-items: center;
+    justify-content: center;
     padding: 120px var(--space-lg) var(--space-3xl);
     overflow: hidden;
     background: linear-gradient(180deg, var(--bg-primary) 0%, #fff 100%);
@@ -565,6 +566,10 @@ img {
 .workshop-info h3 {
     font-size: 1.125rem;
     margin-bottom: var(--space-xs);
+}
+
+.workshop-icon {
+    font-size: 1.125rem;
 }
 
 .workshop-info p {
@@ -891,12 +896,19 @@ img {
     gap: var(--space-md);
 }
 
-.partners-list span {
+.partners-list a {
     background: var(--gray-100);
     color: var(--gray-700);
     padding: var(--space-sm) var(--space-md);
     border-radius: var(--radius-full);
     font-size: 0.875rem;
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.partners-list a:hover {
+    background: var(--primary);
+    color: var(--white);
 }
 
 /* Organizers Emeriti */

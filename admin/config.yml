@@ -19,6 +19,7 @@ collections:
         description: "The most important thing to keep current — this powers the big banner on the homepage."
         fields:
           - { label: "Title", name: "title", widget: "string" }
+          - { label: "Icon (an emoji — carries over to the resource archive entry once you write one up)", name: "icon", widget: "string", required: false }
           - { label: "Date", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
           - { label: "Time", name: "time", widget: "string", hint: "e.g. 4:30-5:30 PM CST" }
           - { label: "Description", name: "description", widget: "text" }
@@ -38,6 +39,7 @@ collections:
               - { label: "Date", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
               - { label: "Time", name: "time", widget: "string" }
               - { label: "Title / Topic", name: "title", widget: "string" }
+              - { label: "Icon (an emoji — carry it over to the resource archive entry once you write one up)", name: "icon", widget: "string", required: false }
               - { label: "Description", name: "description", widget: "text", required: false }
 
       - name: "resources"
@@ -52,6 +54,7 @@ collections:
             fields:
               - { label: "Month (YYYY-MM)", name: "date", widget: "string" }
               - { label: "Title", name: "title", widget: "string" }
+              - { label: "Icon (an emoji — reuse the one from the season schedule entry)", name: "icon", widget: "string", required: false }
               - { label: "Facilitator", name: "facilitator", widget: "string", required: false }
               - { label: "Activity prompt", name: "prompt", widget: "text", required: false }
               - { label: "Extra description", name: "description", widget: "text", required: false }
@@ -79,8 +82,9 @@ collections:
               - { label: "Description", name: "description", widget: "text" }
               - { label: "Website", name: "website", widget: "string" }
               - { label: "Icon (an emoji)", name: "icon", widget: "string" }
-              - { label: "Latitude", name: "lat", widget: "number", value_type: "float" }
-              - { label: "Longitude", name: "lng", widget: "number", value_type: "float" }
+              - { label: "Physical hub site? (uncheck if this is an organizing partner only, not a gathering location — it still appears in the Partner Organizations list either way)", name: "physical_hub", widget: "boolean", default: true }
+              - { label: "Latitude (only used if it's a physical hub)", name: "lat", widget: "number", value_type: "float", required: false }
+              - { label: "Longitude (only used if it's a physical hub)", name: "lng", widget: "number", value_type: "float", required: false }
 
       - name: "organizers"
         label: "Organizers"
