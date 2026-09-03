@@ -9,6 +9,9 @@ document.addEventListener('DOMContentLoaded', function () {
     initHeroLogo();
     randomizeFlourishes();
     loadAndRenderAll();
+
+    const shuffleBtn = document.getElementById('resources-shuffle');
+    if (shuffleBtn) shuffleBtn.addEventListener('click', renderResourceSample);
 });
 
 // All quilt-patch flourish variants -- also used as the random fallback
@@ -328,17 +331,29 @@ function renderSchedule(upcoming, settings) {
 }
 
 // ===== Resources / past workshop archive =====
-let resourceData = [];
+// Shows 3 random cards from the full archive at a time; the shuffle button
+// re-samples a fresh 3 without reloading anything.
+const RESOURCE_SAMPLE_SIZE = 3;
+let resourceArchive = [];
+let visibleResources = [];
 
 function renderResources(resources) {
-    resourceData = resources;
+    resourceArchive = resources;
+    const shuffleBtn = document.getElementById('resources-shuffle');
+    if (shuffleBtn) shuffleBtn.style.display = resources.length > RESOURCE_SAMPLE_SIZE ? '' : 'none';
+    renderResourceSample();
+}
+
+function renderResourceSample() {
     const grid = document.getElementById('resources-grid');
-    if (!resources.length) {
+    if (!resourceArchive.length) {
         grid.innerHTML = '<p>Resources coming soon.</p>';
         return;
     }
 
-    grid.innerHTML = resources.map((r, index) => `
+    visibleResources = sampleRandom(resourceArchive, Math.min(RESOURCE_SAMPLE_SIZE, resourceArchive.length));
+
+    grid.innerHTML = visibleResources.map((r, index) => `
         <div class="resource-card" data-resource-index="${index}">
             <div class="resource-icon">${renderIcon(r.icon)}</div>
             <h3>${escapeHTML(r.title)}</h3>
@@ -351,10 +366,20 @@ function renderResources(resources) {
     `).join('');
 
     document.querySelectorAll('.resource-card[data-resource-index]').forEach(card => {
-        card.addEventListener('click', () => openResourceModal(resourceData[Number(card.dataset.resourceIndex)]));
+        card.addEventListener('click', () => openResourceModal(visibleResources[Number(card.dataset.resourceIndex)]));
     });
 
     observeFadeIn(grid, '.resource-card');
+}
+
+// Fisher-Yates, then take the first n.
+function sampleRandom(arr, n) {
+    const copy = [...arr];
+    for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy.slice(0, n);
 }
 
 function formatMediumDate(isoDate) {

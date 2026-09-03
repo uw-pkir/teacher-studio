@@ -150,6 +150,10 @@ img {
     font-size: 1.125rem;
 }
 
+#resources-shuffle {
+    margin-top: var(--space-lg);
+}
+
 /* ===== Buttons ===== */
 .btn {
     display: inline-flex;
@@ -247,18 +251,22 @@ img {
 }
 
 /* Always a dropdown menu (toggled by the hamburger below), on every screen
-   size -- not just mobile. */
+   size -- not just mobile. Constrained to the same max-width/centering as
+   .nav-container so its right edge -- and the right-justified links inside
+   it -- line up with the hamburger button above. */
 .nav-menu {
     list-style: none;
     position: fixed;
     top: 70px;
     left: 0;
     right: 0;
+    max-width: 1200px;
+    margin: 0 auto;
     background: var(--white);
     display: flex;
     flex-direction: column;
-    padding: var(--space-lg);
-    gap: var(--space-md);
+    padding: var(--space-sm) 0;
+    gap: 0;
     border-bottom: 1px solid var(--gray-200);
     transform: translateY(-100%);
     opacity: 0;
@@ -273,13 +281,18 @@ img {
 }
 
 .nav-menu a {
+    display: block;
+    text-align: right;
+    padding: var(--space-sm) var(--space-lg);
     font-weight: 500;
     color: var(--gray-600);
-    transition: color var(--transition-fast);
+    transition: background-color var(--transition-fast), color var(--transition-fast);
 }
 
-.nav-menu a:hover {
-    color: var(--primary);
+.nav-menu a:hover,
+.nav-menu a:focus-visible {
+    background-color: var(--primary);
+    color: var(--white);
 }
 
 .nav-toggle {
@@ -1363,6 +1376,8 @@ img {
 }
 
 .next-event-card {
+    max-width: 700px;
+    margin: 0 auto;
     background: linear-gradient(135deg, var(--primary), var(--primary-dark));
     border-radius: var(--radius-xl);
     padding: var(--space-3xl);
@@ -1404,6 +1419,7 @@ img {
 .next-event-materials h4 {
     font-size: 0.9375rem;
     margin-bottom: var(--space-sm);
+    color: var(--white);
     opacity: 0.95;
 }
 
