@@ -3,7 +3,8 @@
     {
       "lng": -89.3124965,
       "name": "Fablab @ Henderson Elementary",
-      "physical_hub": true,
+      "is_hub": true,
+      "is_partner": true,
       "address": "1201 Tompkins Dr, Madison, WI 53716",
       "location": "Madison, WI",
       "icon": "🏫",
@@ -14,7 +15,8 @@
     {
       "lng": -88.407147,
       "name": "Building for Kids Children's Museum",
-      "physical_hub": true,
+      "is_hub": true,
+      "is_partner": true,
       "address": "200 N Appleton St, Appleton, WI 54911",
       "location": "Appleton, WI",
       "icon": "🏛️",
@@ -30,12 +32,14 @@
       "icon": "⚛️",
       "lat": 41.8421,
       "lng": -88.2583,
-      "physical_hub": false
+      "is_hub": false,
+      "is_partner": true
     },
     {
       "lng": -83.3638634,
       "name": "Wayne RESA",
-      "physical_hub": true,
+      "is_hub": true,
+      "is_partner": true,
       "address": "5454 Venoy Rd, Wayne, MI 48184",
       "location": "Wayne, MI",
       "icon": "🎓",
@@ -51,7 +55,8 @@
       "icon": "🔬",
       "lat": 43.0766,
       "lng": -89.4125,
-      "physical_hub": false
+      "is_hub": false,
+      "is_partner": true
     }
   ]
 }

@@ -511,10 +511,10 @@ function closeResourceModal() {
 // ===== Hub sites map =====
 function renderHubs(hubs) {
     const mapContainer = document.getElementById('hubs-map');
-    // Only hubs marked as physical gathering locations get a pin — a hub can
-    // still be a partner (shown in the Partner Organizations list) without
-    // being an in-person site.
-    const physicalHubs = hubs.filter(hub => hub.physical_hub !== false);
+    // "Hub" and "Partner" are independent flags -- some entries are only a
+    // meeting location (a hub with no organizing-partner role), some are
+    // only an organizing partner (no map pin), and some are both.
+    const physicalHubs = hubs.filter(hub => hub.is_hub !== false);
 
     // Text equivalent of the map, for screen-reader/keyboard users and
     // anyone whose browser can't or won't load Leaflet/the map tiles.
@@ -574,7 +574,7 @@ function renderHubs(hubs) {
 
 function renderPartners(hubs) {
     const list = document.getElementById('partners-list');
-    list.innerHTML = hubs.map(h =>
+    list.innerHTML = hubs.filter(h => h.is_partner !== false).map(h =>
         `<a href="${escapeAttr(h.website)}" target="_blank" rel="noopener">${escapeHTML(h.name)}</a>`
     ).join('');
 }

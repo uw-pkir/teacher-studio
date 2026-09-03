@@ -38,7 +38,7 @@ Then open http://localhost:8090/.
 - Show & Tell is **moderated** (organizer approves via checkbox), not instant/unmoderated.
 - Both sync scripts read their source-sheet URLs from `data/site-settings.json`, not GitHub Actions secrets/variables — simpler, no GitHub Settings access needed, editable from `/admin`.
 - Esri Light Gray Base tiles for the hub map (Carto's free tier now requires an API key).
-- Fermilab MakerSpace is a partner (shown in Partner Organizations) but not a physical hub site (no map pin) — see `physical_hub: false` in `data/hubs.json`.
+- Hub sites use two independent booleans, `is_hub` and `is_partner` (in `data/hubs.json` / the CMS) — a location can be a meeting spot (map pin), an organizing partner (Partner Organizations list), both, or neither field forced to match the other. Fermilab MakerSpace is `is_hub: false, is_partner: true` (partner only, no map pin).
 - **Workshops moved from `/admin`-edited JSON to a Google Form/Sheet** (this session's main change) — one row per workshop, date decides upcoming vs. archived, no more manually copying data between a schedule file and an archive file. The 18 hand-migrated legacy archive entries from the original Google Sites import were retired in favor of this — the archive is now 100% sheet-driven, per explicit instruction.
 - Missing emoji (blank cell, or a synthesized season-date placeholder) always falls back to 🧩.
 - Archive resource-card layout stayed compact-grid-plus-modal (not redesigned into fuller inline cards) — modal just grew a second material list.

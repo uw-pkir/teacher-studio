@@ -194,7 +194,8 @@ img {
 }
 
 #resources-shuffle {
-    margin-top: var(--space-lg);
+    display: block;
+    margin: var(--space-lg) auto 0;
 }
 
 /* ===== Buttons ===== */
@@ -1012,21 +1013,16 @@ img {
     margin-bottom: var(--space-lg);
 }
 
-.gallery-preview h3 {
-    text-align: center;
-    font-size: 1.5rem;
-    margin-bottom: var(--space-md);
-}
-
-#showcase-shuffle {
-    display: block;
-    margin: 0 auto var(--space-xl);
-}
-
 .showcase-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: var(--space-lg);
+    margin-bottom: var(--space-lg);
+}
+
+#showcase-shuffle {
+    display: block;
+    margin: 0 auto;
 }
 
 .gallery-placeholder {
