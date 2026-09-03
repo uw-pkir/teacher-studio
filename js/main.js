@@ -107,9 +107,6 @@ async function loadAndRenderAll() {
     if (settings.show_tell_form_url) {
         document.getElementById('show-tell-form-link').href = settings.show_tell_form_url;
     }
-
-    document.getElementById('stat-hubs').textContent = hubs.filter(h => h.physical_hub !== false).length;
-    document.getElementById('stat-workshops').textContent = archive.length;
 }
 
 // Turns "a, b, c" into ["a", "b", "c"] rendered as <li> items.
