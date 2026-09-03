@@ -14,7 +14,7 @@ collections:
       # Workshops (the Next Workshop banner, the schedule grid, and the
       # resource archive) are no longer edited here — they're entirely
       # driven by the published Google Sheets set in workshops_tsv_url /
-      # season_dates_tsv_url below. See SETUP.md.
+      # season_dates_tsv_url under Misc Settings. See SETUP.md.
       - name: "hubs"
         label: "Hub Sites / Organizing Partners"
         file: "data/hubs.json"
@@ -48,8 +48,64 @@ collections:
               - { label: "Organization", name: "org", widget: "string" }
               - { label: "Photo", name: "photo", widget: "image" }
 
+  - name: "section_text"
+    label: "Update Section Text"
+    files:
+      - name: "section_text"
+        label: "Section Headlines & Descriptions"
+        file: "data/section-text.json"
+        description: "The headline and description shown at the top of each section of the site. (The small label above each headline, like \"Hubs\" or \"Organizers\", isn't editable here.)"
+        fields:
+          - label: "About Us"
+            name: "about"
+            widget: "object"
+            fields:
+              - { label: "Headline", name: "headline", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+              - label: "Icon/title/description rows"
+                name: "features"
+                widget: "list"
+                summary: "{{title}}"
+                fields:
+                  - { label: "Icon (an emoji)", name: "icon", widget: "string" }
+                  - { label: "Title", name: "title", widget: "string" }
+                  - { label: "Description", name: "description", widget: "text" }
+          - label: "Schedule"
+            name: "schedule"
+            widget: "object"
+            fields:
+              - { label: "Headline", name: "headline", widget: "string" }
+              - { label: "Description", name: "description", widget: "text", hint: "Include the token {{time}} wherever the workshop time (set in Misc Settings) should be inserted, e.g. \"...on Thursdays{{time}} — topics are...\"." }
+          - label: "Past Workshops (Resource Archive)"
+            name: "resources"
+            widget: "object"
+            fields:
+              - { label: "Headline", name: "headline", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+          - label: "Hubs"
+            name: "hubs"
+            widget: "object"
+            fields:
+              - { label: "Headline", name: "headline", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+          - label: "Organizers"
+            name: "team"
+            widget: "object"
+            fields:
+              - { label: "Headline", name: "headline", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+          - label: "Show & Tell"
+            name: "gallery"
+            widget: "object"
+            fields:
+              - { label: "Headline", name: "headline", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+
+  - name: "settings"
+    label: "Misc Settings"
+    files:
       - name: "settings"
-        label: "About Text & Misc Settings"
+        label: "Registration, Timing & Sheet Links"
         file: "data/site-settings.json"
         fields:
           - { label: "Workshops sheet (published TSV URL — see SETUP.md)", name: "workshops_tsv_url", widget: "string" }
@@ -59,13 +115,4 @@ collections:
           - { label: "Location note", name: "location_note", widget: "text" }
           - { label: "Show & Tell submission form (Google Form URL)", name: "show_tell_form_url", widget: "string" }
           - { label: "Show & Tell published CSV URL (from the response sheet's 'Public' tab — see SETUP.md)", name: "show_tell_csv_url", widget: "string", required: false }
-          - { label: "About paragraph", name: "about_text", widget: "text" }
-          - label: "About page: icon/title/description rows"
-            name: "about_features"
-            widget: "list"
-            summary: "{{title}}"
-            fields:
-              - { label: "Icon (an emoji)", name: "icon", widget: "string" }
-              - { label: "Title", name: "title", widget: "string" }
-              - { label: "Description", name: "description", widget: "text" }
           - { label: "Organizers Emeriti (names)", name: "emeriti", widget: "list" }

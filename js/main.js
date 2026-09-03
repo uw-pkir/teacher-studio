@@ -183,12 +183,13 @@ async function loadJSON(path) {
 }
 
 async function loadAndRenderAll() {
-    const [workshops, hubs, organizers, settings, showcase] = await Promise.all([
+    const [workshops, hubs, organizers, settings, showcase, sectionText] = await Promise.all([
         loadJSON('data/workshops.json').catch(() => []),
         loadJSON('data/hubs.json').then(d => d.hubs || []).catch(() => []),
         loadJSON('data/organizers.json').then(d => d.organizers || []).catch(() => []),
         loadJSON('data/site-settings.json').catch(() => ({})),
-        loadJSON('data/showcase.json').catch(() => [])
+        loadJSON('data/showcase.json').catch(() => []),
+        loadJSON('data/section-text.json').catch(() => ({}))
     ]);
 
     // A workshop's date vs. today is the only thing that decides whether
@@ -197,26 +198,51 @@ async function loadAndRenderAll() {
     const upcoming = workshops.filter(w => w.date >= todayISO).sort((a, b) => a.date.localeCompare(b.date));
     const archive = workshops.filter(w => w.date < todayISO).sort((a, b) => b.date.localeCompare(a.date));
 
+    renderSectionText(sectionText, settings);
     renderNextEvent(upcoming[0] || null, settings);
-    renderSchedule(upcoming, settings);
+    renderSchedule(upcoming);
     renderResources(archive);
     renderHubs(hubs);
     renderTeam(organizers, settings);
     renderPartners(hubs);
     renderShowcase(showcase);
+    renderAboutFeatures((sectionText.about || {}).features);
 
-    if (settings.about_text) {
-        document.getElementById('about-text').textContent = settings.about_text;
-    }
-    renderAboutFeatures(settings.about_features);
     if (settings.show_tell_form_url) {
         document.getElementById('show-tell-form-link').href = settings.show_tell_form_url;
     }
 }
 
+// Each section's headline + description text -- editable via /admin
+// (Update Section Text) instead of being hardcoded here. The schedule
+// section's description carries a "{{time}}" token that gets swapped for
+// the workshop time from Misc Settings, matching how it's phrased
+// elsewhere (nothing shown at all if no time is set).
+function renderSectionText(sectionText, settings) {
+    const timeStr = settings.workshop_time ? `, ${settings.workshop_time}` : '';
+    const sections = {
+        about: sectionText.about,
+        schedule: sectionText.schedule,
+        resources: sectionText.resources,
+        hubs: sectionText.hubs,
+        team: sectionText.team,
+        gallery: sectionText.gallery
+    };
+
+    Object.entries(sections).forEach(([key, text]) => {
+        if (!text) return;
+        const headlineEl = document.getElementById(`${key}-headline`);
+        const descriptionEl = document.getElementById(`${key}-description`);
+        if (headlineEl && text.headline) headlineEl.textContent = text.headline;
+        if (descriptionEl && text.description) {
+            descriptionEl.textContent = text.description.replace('{{time}}', timeStr);
+        }
+    });
+}
+
 // The 3 icon/title/description rows under the About paragraph -- editable
-// via /admin (Site Content -> About Text & Misc Settings) like the rest of
-// this section, rather than being hardcoded in index.html.
+// via /admin (Update Section Text -> About Us) like the rest of this
+// section, rather than being hardcoded in index.html.
 function renderAboutFeatures(features) {
     const container = document.getElementById('about-features');
     if (!container || !features || !features.length) return;
@@ -315,10 +341,7 @@ function renderMaterialsBlock(item, wrapperClass) {
 // ===== Workshop schedule: a condensed calendar of every upcoming date =====
 // Full detail on whichever one is next already lives in the Next Workshop
 // spotlight above, so this is intentionally just the dates.
-function renderSchedule(upcoming, settings) {
-    const timeNote = document.getElementById('schedule-time-note');
-    if (timeNote) timeNote.textContent = settings.workshop_time ? `, ${settings.workshop_time}` : '';
-
+function renderSchedule(upcoming) {
     const list = document.getElementById('schedule-dates');
     if (!upcoming.length) {
         list.innerHTML = '<p>Information coming soon.</p>';

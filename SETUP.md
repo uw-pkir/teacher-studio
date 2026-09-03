@@ -42,7 +42,7 @@ The Next Workshop banner, the schedule grid, and the resource archive are **not 
 - `season_dates_tsv_url` — a *second*, minimal Google Sheet with just one column of dates (any header text works — the first column is always read as the date), listing the season's workshop dates (`M/D/YY` or `M/D/YYYY`). Update it once a year when the new season's dates are announced — no Form needed, just paste the dates directly into the sheet, then re-publish (File → Share → Publish to web → CSV; if you'd already published it once, use "Republish now" so the same URL picks up the edit). Any season date without a matching row in the workshops sheet yet shows as a placeholder ("Topic announced a few weeks before the gathering") in the schedule's date calendar, so the full season is always visible even before each topic is decided. Clear this field and the schedule just shows whatever's actually been submitted to the main sheet.
 - `workshop_time` — the same time slot shown for every workshop, e.g. "4:30-5:30 PM CST". Shown in the Next Workshop spotlight and stated once in the schedule section's intro text (not repeated per date).
 
-All three are editable from `/admin` → Site Content → About Text & Misc Settings, or directly in `data/site-settings.json`.
+All three are editable from `/admin` → Misc Settings, or directly in `data/site-settings.json`.
 
 The sync runs hourly, or trigger it immediately from the repo's **Actions** tab → "Sync workshop schedule & archive" → **Run workflow** (handy right after submitting a new workshop). Resource-link page titles for archived workshops are cached in `data/link-title-cache.json` so re-runs don't keep re-fetching the same links.
 
@@ -61,7 +61,7 @@ The form is already live: https://forms.gle/mYfvcYatq97hKuVz8 (set as `show_tell
    The sheet name (`Form Responses 1`) and column letters (`A:E`, and which of B/C/D/E is Name vs. Caption vs. Photo vs. Approved) depend on the exact order your form questions were created in — **use the actual header row of your raw response sheet to get these right**, since the `SELECT` letters must point at the real Name/Caption/Photo/Approved columns.
    This tab shows *only* approved rows, and only the columns the site needs — no email addresses or unapproved submissions ever leave the raw sheet.
 4. **Publish only the `Public` tab**: File → Share → Publish to web → choose the `Public` sheet (not "Entire document") → CSV → Publish. Copy the resulting URL.
-5. Paste that URL into `show_tell_csv_url` in `/admin` (Site Content → About Text & Misc Settings) — no GitHub access needed, it's just another CMS field. (Or edit `data/site-settings.json` directly if `/admin` isn't live yet.)
+5. Paste that URL into `show_tell_csv_url` in `/admin` (Misc Settings) — no GitHub access needed, it's just another CMS field. (Or edit `data/site-settings.json` directly if `/admin` isn't live yet.)
 6. **Share the Form's upload folder publicly (view-only)**: open the Form → Responses → the folder icon (or find "Teacher Studio (File responses)" in your Drive) → Share → change to "Anyone with the link" → **Viewer**. Without this step, uploaded photos won't display on the site.
 
 The sync runs automatically every 30 minutes (`.github/workflows/sync-showcase.yml`), or trigger it immediately from the repo's **Actions** tab → "Sync Show & Tell photos" → **Run workflow**.
@@ -70,7 +70,7 @@ The sync runs automatically every 30 minutes (`.github/workflows/sync-showcase.y
 
 **Entering a new workshop:** fill out the workshops Google Form (title, emoji, description, materials, and — once it's happened — resource links). That's it; no `/admin`, no git. It shows up as the Next Workshop banner automatically once its date is nearest, and moves itself into the archive once the date passes.
 
-**Everything else** (hub sites, organizers, the About paragraph, Show & Tell settings) is still edited at `https://uw-pkir.github.io/teacher-studio/admin/` — no code, no git.
+**Everything else** (hub sites, organizers, every section's headline/description text, Show & Tell settings) is still edited at `https://uw-pkir.github.io/teacher-studio/admin/` — no code, no git. `/admin` has three sections: **Site Content** (hub sites, organizers), **Update Section Text** (the headline and description at the top of each section — About Us, Schedule, Past Workshops, Hubs, Organizers, Show & Tell), and **Misc Settings** (the registration link, workshop time, location note, Show & Tell links, and the two published-sheet URLs from sections 2–3 above).
 
 ## 5. Hub site map pins
 

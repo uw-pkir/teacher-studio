@@ -1,0 +1,43 @@
+{
+  "about": {
+    "headline": "Making is Learning",
+    "description": "Teacher Studio is a hybrid learning community for formal and informal educators interested in hands-on, maker-based learning. Each month, participants make something together and share ideas for supporting maker-based learning in their own settings. The Teacher Studio is made up of school-based and out-of-school-based educators from a variety of hub locations, and is a partnership between UW-Madison, Wayne RESA, Building For Kids Children's Museum, The Bubbler @ Madison Public Library, and Fermilab MakerSpace.",
+    "features": [
+      {
+        "icon": "🎨",
+        "title": "Hands-On Projects",
+        "description": "Create alongside fellow educators with guided maker activities"
+      },
+      {
+        "icon": "💡",
+        "title": "Pedagogical Exchange",
+        "description": "Share strategies for bringing making into your learning spaces"
+      },
+      {
+        "icon": "🌐",
+        "title": "Hybrid Community",
+        "description": "Join in-person at a hub site or connect virtually via Zoom"
+      }
+    ]
+  },
+  "schedule": {
+    "headline": "Workshop Schedule",
+    "description": "Join us monthly on Thursdays{{time}} — topics are announced a few weeks before each gathering"
+  },
+  "resources": {
+    "headline": "Resource Archive",
+    "description": "Prompts, materials, and links from previous sessions. Shuffle to see more from our archive."
+  },
+  "hubs": {
+    "headline": "Meet In Person at a Hub Site",
+    "description": "Teacher Studio is a partnership across five organizations in the Midwest"
+  },
+  "team": {
+    "headline": "Meet the Team",
+    "description": "The educators behind Teacher Studio"
+  },
+  "gallery": {
+    "headline": "Share What You Made",
+    "description": "Upload photos of your creations to inspire others!"
+  }
+}
