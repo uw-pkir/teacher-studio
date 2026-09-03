@@ -1,29 +1,29 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 208 208" role="img" aria-label="Teacher Studio quilt block logo">
-  <!-- Top-left quadrant: orange -> purple -->
+  <!-- Top-left quadrant: orange + purple -->
   <rect x="2" y="2" width="48" height="48" fill="#fb923c"/>
   <rect x="54" y="2" width="48" height="48" fill="#6366f1"/>
   <polygon points="2,54 50,54 2,102" fill="#fb923c"/>
-  <polygon points="50,54 50,102 2,102" fill="#6366f1"/>
-  <rect x="54" y="54" width="48" height="48" fill="#6366f1"/>
+  <polygon points="50,54 50,102 2,102" fill="#f472b6"/>
+  <rect x="54" y="54" width="48" height="48" fill="#f472b6"/>
 
-  <!-- Top-right quadrant: purple -> pink -->
-  <rect x="106" y="2" width="48" height="48" fill="#6366f1"/>
-  <rect x="158" y="2" width="48" height="48" fill="#f472b6"/>
-  <polygon points="106,54 154,54 106,102" fill="#6366f1"/>
-  <polygon points="154,54 154,102 106,102" fill="#f472b6"/>
-  <rect x="158" y="54" width="48" height="48" fill="#f472b6"/>
+  <!-- Top-right quadrant: pink + teal -->
+  <rect x="106" y="2" width="48" height="48" fill="#f472b6"/>
+  <rect x="158" y="2" width="48" height="48" fill="#fb923c"/>
+  <polygon points="106,54 154,54 106,102" fill="#f472b6"/>
+  <polygon points="154,54 154,102 106,102" fill="#22d3d3"/>
+  <rect x="158" y="54" width="48" height="48" fill="#22d3d3"/>
 
-  <!-- Bottom-left quadrant: teal -> orange -->
-  <rect x="2" y="106" width="48" height="48" fill="#22d3d3"/>
-  <rect x="54" y="106" width="48" height="48" fill="#fb923c"/>
-  <polygon points="2,158 50,158 2,206" fill="#22d3d3"/>
+  <!-- Bottom-left quadrant: purple + teal -->
+  <rect x="2" y="106" width="48" height="48" fill="#6366f1"/>
+  <rect x="54" y="106" width="48" height="48" fill="#22d3d3"/>
+  <polygon points="2,158 50,158 2,206" fill="#6366f1"/>
   <polygon points="50,158 50,206 2,206" fill="#fb923c"/>
   <rect x="54" y="158" width="48" height="48" fill="#fb923c"/>
 
-  <!-- Bottom-right quadrant: pink -> teal -->
-  <rect x="106" y="106" width="48" height="48" fill="#f472b6"/>
-  <rect x="158" y="106" width="48" height="48" fill="#22d3d3"/>
-  <polygon points="106,158 154,158 106,206" fill="#f472b6"/>
-  <polygon points="154,158 154,206 106,206" fill="#22d3d3"/>
-  <rect x="158" y="158" width="48" height="48" fill="#22d3d3"/>
+  <!-- Bottom-right quadrant: teal + purple -->
+  <rect x="106" y="106" width="48" height="48" fill="#22d3d3"/>
+  <rect x="158" y="106" width="48" height="48" fill="#f472b6"/>
+  <polygon points="106,158 154,158 106,206" fill="#22d3d3"/>
+  <polygon points="154,158 154,206 106,206" fill="#6366f1"/>
+  <rect x="158" y="158" width="48" height="48" fill="#6366f1"/>
 </svg>
