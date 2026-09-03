@@ -105,6 +105,18 @@ function initHeroLogo() {
     const grid = document.getElementById('hero-logo-grid');
     if (!grid) return;
 
+    // Anyone with "reduce motion" on (an OS/browser accessibility setting,
+    // not specific to screen readers) gets the plain, static logo with no
+    // click-to-shuffle -- there'd be nothing to see happen anyway. That
+    // lets the coin-flip animation below stay a real, full-speed effect
+    // for everyone else instead of being neutered site-wide.
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reducedMotion) {
+        grid.removeAttribute('role');
+        grid.removeAttribute('aria-label');
+        grid.setAttribute('aria-hidden', 'true');
+    }
+
     const [orange, purple, pink, teal] = QUILT_PALETTE;
     const split = (a, b, angle) => `linear-gradient(${angle || 135}deg, ${a} 50%, ${b} 50%)`;
     const initial = [
@@ -115,12 +127,14 @@ function initHeroLogo() {
     ];
 
     initial.forEach((background, index) => {
-        const tile = document.createElement('button');
-        tile.type = 'button';
+        const tile = document.createElement(reducedMotion ? 'div' : 'button');
         tile.className = 'hero-tile';
         tile.style.background = background;
-        tile.setAttribute('aria-label', `Shuffle quilt square ${index + 1}`);
-        tile.addEventListener('click', () => flipTile(tile));
+        if (!reducedMotion) {
+            tile.type = 'button';
+            tile.setAttribute('aria-label', `Shuffle quilt square ${index + 1}`);
+            tile.addEventListener('click', () => flipTile(tile));
+        }
         grid.appendChild(tile);
     });
 }

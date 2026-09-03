@@ -31,8 +31,9 @@ collections:
               - { label: "Website", name: "website", widget: "string" }
               - { label: "Icon (an emoji)", name: "icon", widget: "string" }
               - { label: "Physical hub site? (uncheck if this is an organizing partner only, not a gathering location — it still appears in the Partner Organizations list either way)", name: "physical_hub", widget: "boolean", default: true }
-              - { label: "Latitude (only used if it's a physical hub)", name: "lat", widget: "number", value_type: "float", required: false }
-              - { label: "Longitude (only used if it's a physical hub)", name: "lng", widget: "number", value_type: "float", required: false }
+              - { label: "Street Address (only used if it's a physical hub — a robot turns this into a map pin automatically within a minute or two of saving)", name: "address", widget: "string", required: false }
+              - { label: "Latitude (auto-filled from the Street Address above once saved — leave blank)", name: "lat", widget: "number", value_type: "float", required: false }
+              - { label: "Longitude (auto-filled from the Street Address above once saved — leave blank)", name: "lng", widget: "number", value_type: "float", required: false }
 
       - name: "organizers"
         label: "Organizers"

@@ -71,3 +71,7 @@ The sync runs automatically every 30 minutes (`.github/workflows/sync-showcase.y
 **Entering a new workshop:** fill out the workshops Google Form (title, emoji, description, materials, and — once it's happened — resource links). That's it; no `/admin`, no git. It shows up as the Next Workshop banner automatically once its date is nearest, and moves itself into the archive once the date passes.
 
 **Everything else** (hub sites, organizers, the About paragraph, Show & Tell settings) is still edited at `https://uw-pkir.github.io/teacher-studio/admin/` — no code, no git.
+
+## 5. Hub site map pins
+
+Each physical hub's map pin is placed automatically from its **Street Address** field in `/admin` (Site Content → Hub Sites / Organizing Partners) — type a normal address like `201 W Mifflin St, Madison, WI 53703` and save. That push triggers `.github/workflows/geocode-hubs.yml`, which looks the address up via OpenStreetMap's free Nominatim geocoder (`scripts/geocode-hubs.js`) and commits the resulting Latitude/Longitude back into `data/hubs.json` within a minute or two — no need to touch those two fields yourself; leave them blank. Results are cached in `data/hub-geocode-cache.json` so re-runs don't re-query an address that hasn't changed. If an address can't be found (typo, or too vague), the workflow logs a warning and leaves that hub's existing pin (if any) untouched rather than removing it — check the **Actions** tab → "Geocode hub site addresses" if a pin doesn't show up where expected.

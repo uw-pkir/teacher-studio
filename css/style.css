@@ -108,6 +108,14 @@ body {
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
     }
+
+    /* The hero quilt tiles aren't rendered as clickable buttons at all
+       under reduced motion (see initHeroLogo in js/main.js) -- this rule
+       only matters if that ever changes, so the animation doesn't get
+       silently re-neutered by the blanket rule above. */
+    .hero-tile.is-flipping {
+        animation-duration: 0.5s !important;
+    }
 }
 
 h1, h2, h3, h4, h5, h6 {

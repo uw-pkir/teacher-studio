@@ -1,0 +1,36 @@
+name: Geocode hub site addresses
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - data/hubs.json
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  geocode:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+
+      - name: Geocode hub addresses
+        run: node scripts/geocode-hubs.js
+
+      - name: Commit changes if any
+        run: |
+          if git diff --quiet -- data/hubs.json data/hub-geocode-cache.json; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git config user.name "teacher-studio-bot"
+          git config user.email "actions@github.com"
+          git add data/hubs.json data/hub-geocode-cache.json
+          git commit -m "Geocode hub site addresses"
+          git push
