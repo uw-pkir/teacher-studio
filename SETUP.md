@@ -46,6 +46,8 @@ All three are editable from `/admin` → Site Content → About Text & Misc Sett
 
 The sync runs hourly, or trigger it immediately from the repo's **Actions** tab → "Sync workshop schedule & archive" → **Run workflow** (handy right after submitting a new workshop). Resource-link page titles for archived workshops are cached in `data/link-title-cache.json` so re-runs don't keep re-fetching the same links.
 
+**How resource link labels are chosen:** a plain scrape of a page's `<title>` is often useless (a cookie-consent wall, a bot challenge, or just "- YouTube" with nothing else) — so the sync tries, in order: (1) for YouTube/Vimeo links, the real video title via their public oEmbed APIs; (2) the page's `<title>`, or its `og:title` if the `<title>` looks like junk; (3) if everything looks like junk, a friendly label naming the resource type instead (e.g. "Google Doc", "Instagram post", "YouTube video") rather than a blank or unhelpful string. If a link's label still isn't great, the most reliable fix is editing the page's own title/`og:title` at the source, since that's what feeds all of this — there's no per-link description field to hand-edit in the sheet.
+
 ## 3. Set up Show & Tell photo submissions
 
 The form is already live: https://forms.gle/mYfvcYatq97hKuVz8 (set as `show_tell_form_url` in `data/site-settings.json`). What's left:
