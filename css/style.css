@@ -78,6 +78,18 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
+/* Alternating section backgrounds, keyed off source order so re-arranging
+   the sections in index.html re-alternates them automatically -- no
+   per-section background rule to update by hand. Individual section rules
+   (.about, .workshops, etc.) intentionally don't set their own background. */
+main > section:nth-of-type(odd) {
+    background: var(--bg-primary);
+}
+
+main > section:nth-of-type(even) {
+    background: var(--white);
+}
+
 /* Hidden until keyboard-focused, then jumps to the top so keyboard users
    can bypass the nav without tabbing through every link first. */
 .skip-link {
@@ -458,7 +470,6 @@ img {
 /* ===== About Section ===== */
 .about {
     padding: var(--space-3xl) 0;
-    background: var(--white);
 }
 
 .about-content {
@@ -511,7 +522,6 @@ img {
 /* ===== Workshops Section ===== */
 .workshops {
     padding: var(--space-3xl) 0;
-    background: var(--bg-primary);
 }
 
 /* Condensed season calendar: just the dates, in colored boxes -- full
@@ -672,7 +682,6 @@ img {
 /* ===== Resources Section ===== */
 .resources {
     padding: var(--space-3xl) 0;
-    background: var(--bg-primary);
 }
 
 .resources-grid {
@@ -744,7 +753,6 @@ img {
 /* ===== Hubs Section ===== */
 .hubs {
     padding: var(--space-3xl) 0;
-    background: var(--white);
 }
 
 .hubs-grid {
@@ -881,7 +889,6 @@ img {
 /* ===== Team Section ===== */
 .team {
     padding: var(--space-3xl) 0;
-    background: var(--bg-primary);
 }
 
 .team-grid {
@@ -999,7 +1006,6 @@ img {
 /* ===== Gallery Section ===== */
 .gallery {
     padding: var(--space-3xl) 0;
-    background: var(--white);
 }
 
 .gallery-submit {
@@ -1481,7 +1487,6 @@ img {
 /* ===== Next Event Spotlight ===== */
 .next-event {
     padding: var(--space-2xl) 0 var(--space-3xl);
-    background: var(--bg-primary);
 }
 
 .next-event-card {
