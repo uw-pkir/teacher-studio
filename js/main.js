@@ -6,8 +6,51 @@
 document.addEventListener('DOMContentLoaded', function () {
     initNav();
     initModal();
+    initHeroLogo();
+    randomizeFlourishes();
     loadAndRenderAll();
 });
+
+// All quilt-patch flourish variants -- also used as the random fallback
+// icon (renderIcon) when a workshop has no emoji of its own.
+const FLOURISH_ICONS = [
+    'images/quilt-flourish.svg',
+    'images/quilt-flourish-2.svg',
+    'images/quilt-flourish-3.svg',
+    'images/quilt-flourish-4.svg',
+    'images/quilt-flourish-5.svg',
+    'images/quilt-flourish-6.svg',
+    'images/quilt-flourish-7.svg',
+    'images/quilt-flourish-8.svg',
+    'images/quilt-flourish-9.svg',
+    'images/quilt-flourish-10.svg'
+];
+
+function randomFlourish() {
+    return FLOURISH_ICONS[Math.floor(Math.random() * FLOURISH_ICONS.length)];
+}
+
+// Gives each section-tag pill a different quilt-patch flourish instead of
+// always the same one.
+function randomizeFlourishes() {
+    document.querySelectorAll('.section-tag').forEach(tag => {
+        const img = document.createElement('img');
+        img.className = 'icon-flourish';
+        img.src = randomFlourish();
+        img.alt = '';
+        tag.prepend(img);
+    });
+}
+
+// A workshop's icon is usually a real emoji, but the sync script fills in
+// 🧩 when none was given -- swap that specific case for a random quilt
+// flourish image instead of the plain puzzle-piece character.
+function renderIcon(icon) {
+    if (icon === '🧩' || !icon) {
+        return `<img class="icon-flourish" src="${randomFlourish()}" alt="">`;
+    }
+    return escapeHTML(icon);
+}
 
 // ===== Navigation =====
 function initNav() {
@@ -44,6 +87,51 @@ function initNav() {
     window.addEventListener('scroll', function () {
         navbar.style.boxShadow = window.scrollY > 50 ? '0 2px 20px rgba(0, 0, 0, 0.1)' : 'none';
     });
+}
+
+// ===== Interactive hero quilt block =====
+// Starts as a big rendering of the logo; each of the 16 tiles reshuffles to
+// a fresh random pattern (solid, or a two-color split) on click.
+const QUILT_PALETTE = ['#fb923c', '#6366f1', '#f472b6', '#22d3d3'];
+
+function initHeroLogo() {
+    const grid = document.getElementById('hero-logo-grid');
+    if (!grid) return;
+
+    const [orange, purple, pink, teal] = QUILT_PALETTE;
+    const split = (a, b, angle) => `linear-gradient(${angle || 135}deg, ${a} 50%, ${b} 50%)`;
+    const initial = [
+        orange, purple, pink, orange,
+        split(orange, pink), pink, split(pink, teal), teal,
+        purple, teal, teal, pink,
+        split(purple, orange), orange, split(teal, purple), purple
+    ];
+
+    initial.forEach((background) => {
+        const tile = document.createElement('div');
+        tile.className = 'hero-tile';
+        tile.style.background = background;
+        tile.addEventListener('click', () => flipTile(tile));
+        grid.appendChild(tile);
+    });
+}
+
+function randomQuiltFill() {
+    const pick = () => QUILT_PALETTE[Math.floor(Math.random() * QUILT_PALETTE.length)];
+    if (Math.random() < 0.5) return pick();
+
+    const a = pick();
+    let b = pick();
+    while (b === a) b = pick();
+    const angle = [45, 135, 225, 315][Math.floor(Math.random() * 4)];
+    return `linear-gradient(${angle}deg, ${a} 50%, ${b} 50%)`;
+}
+
+function flipTile(tile) {
+    if (tile.classList.contains('is-flipping')) return;
+    tile.classList.add('is-flipping');
+    setTimeout(() => { tile.style.background = randomQuiltFill(); }, 250);
+    tile.addEventListener('animationend', () => tile.classList.remove('is-flipping'), { once: true });
 }
 
 // ===== Fade-in-on-scroll (applied to any card, including ones added after load) =====
@@ -162,7 +250,7 @@ function renderNextEvent(event, settings) {
     mount.innerHTML = `
         <div class="next-event-info">
             <span class="section-tag">Next Workshop</span>
-            <h2>${event.icon ? escapeHTML(event.icon) + ' ' : ''}${escapeHTML(event.title)}</h2>
+            <h2>${renderIcon(event.icon)} ${escapeHTML(event.title)}</h2>
             <p class="next-event-when"><strong>When:</strong> ${formatLongDate(event.date)}, ${escapeHTML(settings.workshop_time || '')}</p>
             <p class="next-event-description">${escapeHTML(event.description)}</p>
             ${renderMaterialsBlock(event, 'next-event-materials')}
@@ -212,7 +300,7 @@ function renderSchedule(upcoming, settings) {
                 </div>
                 <div class="workshop-info">
                     <span class="workshop-status upcoming">Upcoming</span>
-                    <h3><span class="workshop-icon">${escapeHTML(item.icon)}</span> ${escapeHTML(item.title)}</h3>
+                    <h3><span class="workshop-icon">${renderIcon(item.icon)}</span> ${escapeHTML(item.title)}</h3>
                     <p>${escapeHTML(item.description || '')}</p>
                     <span class="workshop-time">${escapeHTML(settings.workshop_time || '')}</span>
                     ${isFeatured ? '<a href="#next-event" class="btn btn-small">Register</a>' : ''}
@@ -237,7 +325,7 @@ function renderResources(resources) {
 
     grid.innerHTML = resources.map((r, index) => `
         <div class="resource-card" data-resource-index="${index}">
-            <div class="resource-icon">${escapeHTML(r.icon)}</div>
+            <div class="resource-icon">${renderIcon(r.icon)}</div>
             <h3>${escapeHTML(r.title)}</h3>
             <p>${escapeHTML(r.description || '')}</p>
             <div class="resource-meta">
@@ -272,7 +360,7 @@ function initModal() {
 function openResourceModal(resource) {
     const modal = document.getElementById('resource-modal');
     modal.querySelector('.modal-eyebrow').textContent = formatMediumDate(resource.date);
-    modal.querySelector('.modal-title').textContent = resource.icon ? `${resource.icon} ${resource.title}` : resource.title;
+    modal.querySelector('.modal-title').innerHTML = `${renderIcon(resource.icon)} ${escapeHTML(resource.title)}`;
     modal.querySelector('.modal-description').textContent = resource.description || '';
 
     setMaterialsBlock(modal.querySelector('.modal-materials-required'), resource.required_materials);

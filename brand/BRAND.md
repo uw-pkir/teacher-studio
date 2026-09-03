@@ -12,7 +12,14 @@ The logo is a **quilt block** — specifically a pinwheel-style half-square-tria
 - Don't recolor, recrop, or distort it — the four quadrants and the color arrangement are the point.
 - It has a built-in white background and margin, so it's safe to drop onto any color background as-is.
 - Minimum size: keep it at least 32×32px (or about 0.3in in print) — smaller than that and the quadrants stop reading clearly.
-- A smaller decorative version (a single two-color triangle square, no white margin) is used as a bullet/flourish next to section labels throughout the website — see `images/quilt-flourish.svg` in the main site if you need that variant too.
+
+On the site itself, a big interactive version of this logo sits in the homepage header — each of its 16 squares can be clicked to "shuffle" into a new random patch, a little nod to piecing a quilt together.
+
+## Flourish patches
+
+Ten small single-patch icons — `quilt-flourish.svg` through `quilt-flourish-10.svg` in this folder — are the individual quilt pieces the logo is built from: six two-color half-square-triangle patches (each pair of brand colors, both diagonal directions) plus one solid square in each of the four colors. Use any of these as a small bullet, divider, or accent wherever a single quilt patch fits better than the full logo.
+
+On the site, one of these ten is picked at random next to every section label ("Past Workshops," "Season Schedule," etc.) so headers don't all repeat the same patch, and the same pool fills in for a workshop's icon whenever one hasn't been given yet.
 
 ## Colors
 
