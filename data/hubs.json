@@ -1,9 +1,9 @@
 {
   "hubs": [
     {
+      "is_hub": true,
       "lng": -89.3124965,
       "name": "Fablab @ Henderson Elementary",
-      "is_hub": true,
       "is_partner": true,
       "address": "1201 Tompkins Dr, Madison, WI 53716",
       "location": "Madison, WI",
@@ -13,9 +13,9 @@
       "lat": 43.058657
     },
     {
+      "is_hub": false,
       "lng": -88.407147,
       "name": "Building for Kids Children's Museum",
-      "is_hub": true,
       "is_partner": true,
       "address": "200 N Appleton St, Appleton, WI 54911",
       "location": "Appleton, WI",
@@ -25,20 +25,20 @@
       "lat": 44.263068
     },
     {
-      "name": "Fermilab MakerSpace",
-      "location": "Batavia, IL",
-      "description": "Making and STEM education at America's particle physics laboratory.",
-      "website": "https://education.fnal.gov/makerspace",
-      "icon": "⚛️",
-      "lat": 41.8421,
-      "lng": -88.2583,
       "is_hub": false,
-      "is_partner": true
+      "lng": -88.2583,
+      "name": "Fermilab MakerSpace",
+      "is_partner": true,
+      "location": "Batavia, IL",
+      "icon": "⚛️",
+      "website": "https://education.fnal.gov/makerspace",
+      "description": "Making and STEM education at America's particle physics laboratory.",
+      "lat": 41.8421
     },
     {
+      "is_hub": true,
       "lng": -83.3638634,
       "name": "Wayne RESA",
-      "is_hub": true,
       "is_partner": true,
       "address": "5454 Venoy Rd, Wayne, MI 48184",
       "location": "Wayne, MI",
@@ -48,15 +48,25 @@
       "lat": 42.2693704
     },
     {
-      "name": "UW-Madison",
-      "location": "Madison, WI",
-      "description": "Playful Learning Across the Curriculum of Education at UW-Madison.",
-      "website": "https://education.wisc.edu",
-      "icon": "🔬",
-      "lat": 43.0766,
-      "lng": -89.4125,
       "is_hub": false,
-      "is_partner": true
+      "lng": -89.4125,
+      "name": "UW-Madison",
+      "is_partner": true,
+      "location": "Madison, WI",
+      "icon": "🔬",
+      "website": "https://education.wisc.edu",
+      "description": "Playful Learning Across the Curriculum of Education at UW-Madison.",
+      "lat": 43.0766
+    },
+    {
+      "is_hub": true,
+      "is_partner": false,
+      "name": "Appleton Public Library",
+      "location": "Appleton, WI",
+      "description": "Host location for the Appleton Hub, which is organized by Building for Kids.",
+      "website": "https://apl.org/",
+      "address": "200 N Appleton St, Appleton, WI 54911",
+      "icon": "📖"
     }
   ]
 }
