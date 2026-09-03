@@ -1001,39 +1001,15 @@ img {
     background: var(--white);
 }
 
-.gallery-upload {
-    margin-bottom: var(--space-3xl);
-}
-
-.upload-card {
-    max-width: 500px;
-    margin: 0 auto;
+.gallery-submit {
+    max-width: 480px;
+    margin: var(--space-3xl) auto 0;
     text-align: center;
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(244, 114, 182, 0.05));
-    border: 2px dashed var(--primary-light);
-    border-radius: var(--radius-xl);
-    padding: var(--space-3xl);
 }
 
-.upload-icon {
-    font-size: 3rem;
-    margin-bottom: var(--space-md);
-}
-
-.upload-card h3 {
-    font-size: 1.5rem;
-    margin-bottom: var(--space-md);
-}
-
-.upload-card p {
+.gallery-submit p {
     color: var(--gray-600);
     margin-bottom: var(--space-lg);
-}
-
-.upload-note {
-    font-size: 0.875rem;
-    color: var(--gray-500);
-    margin-top: var(--space-md) !important;
 }
 
 .gallery-preview h3 {
@@ -1623,8 +1599,12 @@ img {
 .showcase-card img {
     width: 100%;
     aspect-ratio: 4 / 3;
-    object-fit: cover;
+    object-fit: contain;
     display: block;
+    /* Background color is set per-card in JS (renderShowcaseSample), picked
+       from the quilt palette -- shows behind the full, uncropped photo
+       instead of a crop hiding part of it. */
+    background: var(--gray-100);
 }
 
 .showcase-card figcaption {

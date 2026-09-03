@@ -104,6 +104,10 @@ function initNav() {
 // a fresh random pattern (solid, or a two-color split) on click.
 const QUILT_PALETTE = ['#fb923c', '#6366f1', '#f472b6', '#22d3d3'];
 
+function randomQuiltColor() {
+    return QUILT_PALETTE[Math.floor(Math.random() * QUILT_PALETTE.length)];
+}
+
 function initHeroLogo() {
     const grid = document.getElementById('hero-logo-grid');
     if (!grid) return;
@@ -621,7 +625,7 @@ function renderShowcaseSample() {
 
     grid.innerHTML = sample.map(item => `
         <figure class="showcase-card">
-            <img src="${escapeAttr(item.image_url)}" alt="${escapeAttr(item.title || item.caption || 'Teacher Studio creation')}" loading="lazy">
+            <img src="${escapeAttr(item.image_url)}" alt="${escapeAttr(item.title || item.caption || 'Teacher Studio creation')}" loading="lazy" style="background-color: ${randomQuiltColor()};">
             <figcaption>
                 ${item.title ? `<h3>${escapeHTML(item.title)}</h3>` : ''}
                 ${item.caption ? `<p>${escapeHTML(item.caption)}</p>` : ''}

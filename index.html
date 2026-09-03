@@ -29,12 +29,12 @@
             </button>
             <ul class="nav-menu" id="primary-nav-menu">
                 <li><a href="#next-event">Next Workshop</a></li>
-                <li><a href="#about">About Us</a></li>
                 <li><a href="#workshops">Schedule</a></li>
+                <li><a href="#gallery">Show &amp; Tell</a></li>
                 <li><a href="#resources">Past Workshops</a></li>
+                <li><a href="#about">About Us</a></li>
                 <li><a href="#hubs">Hubs</a></li>
                 <li><a href="#team">Organizers</a></li>
-                <li><a href="#gallery">Show &amp; Tell</a></li>
             </ul>
         </div>
     </nav>
@@ -64,20 +64,6 @@
         </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="about">
-        <div class="container">
-            <div class="about-content">
-                <div class="about-header">
-                    <span class="section-tag">About Us</span>
-                    <h2 id="about-headline">Making is Learning</h2>
-                </div>
-                <p id="about-description">Teacher Studio brings together educators from classrooms, museums, libraries, and beyond to explore maker-based pedagogy through hands-on experiences.</p>
-                <div class="about-features" id="about-features"></div>
-            </div>
-        </div>
-    </section>
-
     <!-- Workshops Section -->
     <section id="workshops" class="workshops">
         <div class="container">
@@ -88,6 +74,34 @@
             </div>
             <div class="schedule-dates" id="schedule-dates">
                 <p>Loading schedule&hellip;</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery / Show & Tell Section -->
+    <section id="gallery" class="gallery">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Show &amp; Tell</span>
+                <h2 id="gallery-headline">Share What You Made</h2>
+                <p id="gallery-description">Upload photos of your creations to inspire others!</p>
+            </div>
+            <div class="gallery-preview">
+                <h3>Studio Creations</h3>
+                <button type="button" class="btn btn-secondary btn-small" id="showcase-shuffle">🔀 Shuffle</button>
+                <div class="showcase-grid" id="showcase-grid">
+                    <div class="gallery-placeholder">
+                        <span>✨</span>
+                        <p>Your photo here!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="gallery-submit">
+                <p>Made something awesome at a workshop? We want to see it! Submit using the form linked below.</p>
+                <a href="#" id="show-tell-form-link" target="_blank" class="btn btn-primary">
+                    Submit a Project
+                    <span class="btn-icon" aria-hidden="true">↑</span>
+                </a>
             </div>
         </div>
     </section>
@@ -103,6 +117,20 @@
             </div>
             <div class="resources-grid" id="resources-grid">
                 <p>Loading resources&hellip;</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-header">
+                    <span class="section-tag">About Us</span>
+                    <h2 id="about-headline">Making is Learning</h2>
+                </div>
+                <p id="about-description">Teacher Studio brings together educators from classrooms, museums, libraries, and beyond to explore maker-based pedagogy through hands-on experiences.</p>
+                <div class="about-features" id="about-features"></div>
             </div>
         </div>
     </section>
@@ -152,39 +180,6 @@
             <div class="partners">
                 <h3>Partner Organizations</h3>
                 <div class="partners-list" id="partners-list"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Gallery / Show & Tell Section -->
-    <section id="gallery" class="gallery">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Show &amp; Tell</span>
-                <h2 id="gallery-headline">Share What You Made</h2>
-                <p id="gallery-description">Upload photos of your creations to inspire others!</p>
-            </div>
-            <div class="gallery-upload">
-                <div class="upload-card">
-                    <div class="upload-icon" aria-hidden="true">📸</div>
-                    <h3>Share Your Creations</h3>
-                    <p>Made something awesome at a workshop? We want to see it! Submit a photo and a facilitator will add it to the wall below.</p>
-                    <a href="#" id="show-tell-form-link" target="_blank" class="btn btn-primary">
-                        Submit a Photo
-                        <span class="btn-icon" aria-hidden="true">↑</span>
-                    </a>
-                    <p class="upload-note">Opens a short Google Form. Photos are reviewed before they appear here.</p>
-                </div>
-            </div>
-            <div class="gallery-preview">
-                <h3>Recent Creations</h3>
-                <button type="button" class="btn btn-secondary btn-small" id="showcase-shuffle">🔀 Shuffle</button>
-                <div class="showcase-grid" id="showcase-grid">
-                    <div class="gallery-placeholder">
-                        <span>✨</span>
-                        <p>Your photo here!</p>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
