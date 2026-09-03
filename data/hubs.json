@@ -1,13 +1,13 @@
 {
   "hubs": [
     {
-      "name": "The Bubbler @ Madison Public Library",
+      "name": "Fablab @ Henderson Elementary",
       "location": "Madison, WI",
-      "description": "Madison's creative hub offering free maker programming for all ages.",
-      "website": "https://madisonbubbler.org",
-      "icon": "📚",
-      "lat": 43.0731,
-      "lng": -89.4012,
+      "description": "Elementary school-based makerspace in a public elementary school in Madison, WI.",
+      "website": "https://www.facebook.com/HendersonFABLab/",
+      "icon": "🏫",
+      "lat": 43.0578675,
+      "lng": -83,
       "physical_hub": true
     },
     {
