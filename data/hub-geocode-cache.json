@@ -2,5 +2,13 @@
   "1201 Tompkins Dr, Madison, WI 53716": {
     "lat": 43.058657,
     "lng": -89.3124965
+  },
+  "200 N Appleton St, Appleton, WI 54911": {
+    "lat": 44.263068,
+    "lng": -88.407147
+  },
+  "5454 Venoy Rd, Wayne, MI 48184": {
+    "lat": 42.2693704,
+    "lng": -83.3638634
   }
 }
