@@ -2,9 +2,7 @@ backend:
   name: github
   repo: uw-pkir/teacher-studio
   branch: main
-  # This must point at the OAuth proxy Peter deploys per SETUP.md.
-  # Example: https://teacher-studio-cms-auth.your-subdomain.workers.dev
-  base_url: https://REPLACE_WITH_YOUR_OAUTH_WORKER_URL
+  base_url: https://teacher-studio-cms-auth.kirschmann.workers.dev
 
 media_folder: "images/uploads"
 public_folder: "images/uploads"
