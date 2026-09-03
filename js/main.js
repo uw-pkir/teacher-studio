@@ -52,7 +52,9 @@ function renderIcon(icon) {
     if (icon === '🧩' || !icon) {
         return `<img class="icon-flourish" src="${randomFlourish()}" alt="">`;
     }
-    return escapeHTML(icon);
+    // The adjacent title always conveys the same thing, so hide the emoji
+    // itself from screen readers instead of announcing its Unicode name.
+    return `<span aria-hidden="true">${escapeHTML(icon)}</span>`;
 }
 
 // ===== Navigation =====
@@ -62,8 +64,9 @@ function initNav() {
 
     if (navToggle) {
         navToggle.addEventListener('click', function () {
-            navMenu.classList.toggle('active');
+            const isOpen = navMenu.classList.toggle('active');
             navToggle.classList.toggle('active');
+            navToggle.setAttribute('aria-expanded', String(isOpen));
         });
     }
 
@@ -71,6 +74,7 @@ function initNav() {
         link.addEventListener('click', function () {
             navMenu.classList.remove('active');
             navToggle.classList.remove('active');
+            navToggle.setAttribute('aria-expanded', 'false');
         });
     });
 
@@ -110,10 +114,12 @@ function initHeroLogo() {
         split(purple, orange), orange, split(teal, purple), purple
     ];
 
-    initial.forEach((background) => {
-        const tile = document.createElement('div');
+    initial.forEach((background, index) => {
+        const tile = document.createElement('button');
+        tile.type = 'button';
         tile.className = 'hero-tile';
         tile.style.background = background;
+        tile.setAttribute('aria-label', `Shuffle quilt square ${index + 1}`);
         tile.addEventListener('click', () => flipTile(tile));
         grid.appendChild(tile);
     });
@@ -210,7 +216,7 @@ function renderAboutFeatures(features) {
 
     container.innerHTML = features.map(f => `
         <div class="feature">
-            <span class="feature-icon">${escapeHTML(f.icon)}</span>
+            <span class="feature-icon" aria-hidden="true">${escapeHTML(f.icon)}</span>
             <div>
                 <h4>${escapeHTML(f.title)}</h4>
                 <p>${escapeHTML(f.description)}</p>
@@ -261,7 +267,7 @@ function renderNextEvent(event, settings) {
                 <p class="next-event-description">We're finalizing the schedule for our next gathering &mdash; check back soon, or register below to be notified.</p>
                 <a href="${escapeAttr(registerUrl)}" target="_blank" class="btn btn-primary btn-large">
                     Register
-                    <span class="btn-icon">→</span>
+                    <span class="btn-icon" aria-hidden="true">→</span>
                 </a>
                 <p class="next-event-location">${escapeHTML(locationNote)}</p>
             </div>
@@ -278,7 +284,7 @@ function renderNextEvent(event, settings) {
             ${renderMaterialsBlock(event, 'next-event-materials')}
             <a href="${escapeAttr(registerUrl)}" target="_blank" class="btn btn-primary btn-large">
                 Register for ${parseLocalDate(event.date).toLocaleDateString('en-US', { month: 'long' })}
-                <span class="btn-icon">→</span>
+                <span class="btn-icon" aria-hidden="true">→</span>
             </a>
             <p class="next-event-location">${escapeHTML(locationNote)}</p>
         </div>
@@ -387,18 +393,46 @@ function formatMediumDate(isoDate) {
 }
 
 // ===== Modal (shared by resource cards) =====
+// Focus moves into the modal on open, is trapped inside it while open (Tab
+// wraps at both ends), and returns to whatever opened it on close --
+// standard expected dialog behavior for keyboard and screen-reader users.
+let modalTriggerElement = null;
+
 function initModal() {
     const modal = document.getElementById('resource-modal');
     if (!modal) return;
     modal.querySelector('.modal-overlay').addEventListener('click', closeResourceModal);
     modal.querySelector('.modal-close').addEventListener('click', closeResourceModal);
     document.addEventListener('keydown', e => {
-        if (e.key === 'Escape' && modal.classList.contains('active')) closeResourceModal();
+        if (!modal.classList.contains('active')) return;
+        if (e.key === 'Escape') {
+            closeResourceModal();
+        } else if (e.key === 'Tab') {
+            trapFocus(e, modal.querySelector('.modal-content'));
+        }
     });
 }
 
-function openResourceModal(resource) {
+function trapFocus(e, container) {
+    const focusable = Array.from(container.querySelectorAll(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    ));
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+    }
+}
+
+function openResourceModal(resource, triggerEl) {
     const modal = document.getElementById('resource-modal');
+    modalTriggerElement = triggerEl || document.activeElement;
     modal.querySelector('.modal-eyebrow').textContent = formatMediumDate(resource.date);
     modal.querySelector('.modal-title').innerHTML = `${renderIcon(resource.icon)} ${escapeHTML(resource.title)}`;
     modal.querySelector('.modal-description').textContent = resource.description || '';
@@ -417,13 +451,24 @@ function openResourceModal(resource) {
         linksBlock.style.display = 'none';
     }
 
+    modal.hidden = false;
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
+    modal.querySelector('.modal-close').focus();
 }
 
 function closeResourceModal() {
-    document.getElementById('resource-modal').classList.remove('active');
+    const modal = document.getElementById('resource-modal');
+    modal.classList.remove('active');
     document.body.style.overflow = '';
+    if (modalTriggerElement) {
+        modalTriggerElement.focus();
+        modalTriggerElement = null;
+    }
+    // Wait for the fade-out (see .modal's transition) before fully removing
+    // it from layout/the accessibility tree, so the closing animation still
+    // plays instead of cutting off instantly.
+    setTimeout(() => { modal.hidden = true; }, 250);
 }
 
 // ===== Hub sites map =====
@@ -433,6 +478,24 @@ function renderHubs(hubs) {
     // still be a partner (shown in the Partner Organizations list) without
     // being an in-person site.
     const physicalHubs = hubs.filter(hub => hub.physical_hub !== false);
+
+    // Text equivalent of the map, for screen-reader/keyboard users and
+    // anyone whose browser can't or won't load Leaflet/the map tiles.
+    const list = document.getElementById('hubs-list');
+    if (list) {
+        list.innerHTML = physicalHubs.map(hub => `
+            <li class="hub-list-item">
+                <span class="hub-list-icon" aria-hidden="true">${escapeHTML(hub.icon || '📍')}</span>
+                <div class="hub-list-body">
+                    <h3>${escapeHTML(hub.name)}</h3>
+                    <span class="hub-list-location">${escapeHTML(hub.location)}</span>
+                    <p>${escapeHTML(hub.description)}</p>
+                    <a href="${escapeAttr(hub.website)}" target="_blank" rel="noopener">Visit Website →</a>
+                </div>
+            </li>
+        `).join('');
+    }
+
     if (!mapContainer || typeof L === 'undefined' || !physicalHubs.length) return;
 
     const map = L.map('hubs-map', { scrollWheelZoom: false }).setView([42.5, -87.5], 6);

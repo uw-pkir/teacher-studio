@@ -1,7 +1,10 @@
 /* ===== CSS Variables ===== */
 :root {
     /* Playful color palette */
-    --primary: #6366f1;       /* Indigo */
+    /* Nudged slightly darker than the original #6366f1 -- that was 4.47:1
+       with white text, just under the 4.5:1 AA minimum; this is 5.0:1+
+       and visually indistinguishable. */
+    --primary: #5a5dea;       /* Indigo */
     --primary-light: #818cf8;
     --primary-dark: #4f46e5;
     --secondary: #f472b6;     /* Pink */
@@ -14,6 +17,7 @@
     --dark: #1e1b4b;
     --gray-800: #3f3f46;
     --gray-600: #71717a;
+    --gray-500: #71717a;
     --gray-400: #a1a1aa;
     --gray-200: #e4e4e7;
     --gray-100: #f4f4f5;
@@ -72,6 +76,38 @@ body {
     color: var(--gray-800);
     background: var(--bg-primary);
     -webkit-font-smoothing: antialiased;
+}
+
+/* Hidden until keyboard-focused, then jumps to the top so keyboard users
+   can bypass the nav without tabbing through every link first. */
+.skip-link {
+    position: absolute;
+    top: -100px;
+    left: var(--space-md);
+    z-index: 2000;
+    background: var(--primary);
+    color: var(--white);
+    padding: var(--space-sm) var(--space-lg);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    transition: top var(--transition-fast);
+}
+
+.skip-link:focus {
+    top: var(--space-md);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -349,6 +385,9 @@ img {
 }
 
 .hero-tile {
+    border: none;
+    padding: 0;
+    font: inherit;
     border-radius: 4px;
     cursor: pointer;
     transform-style: preserve-3d;
@@ -356,6 +395,11 @@ img {
 
 .hero-tile:hover {
     filter: brightness(1.08);
+}
+
+.hero-tile:focus-visible {
+    outline: 3px solid var(--dark);
+    outline-offset: 2px;
 }
 
 .hero-tile.is-flipping {
@@ -507,9 +551,24 @@ img {
 }
 
 .schedule-date-chip.c0 { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); }
-.schedule-date-chip.c1 { background: linear-gradient(135deg, var(--secondary), var(--primary-light)); }
-.schedule-date-chip.c2 { background: linear-gradient(135deg, var(--accent-orange), var(--accent-yellow)); }
-.schedule-date-chip.c3 { background: linear-gradient(135deg, var(--accent-cyan), var(--primary-light)); }
+
+/* c1-c3 use lighter/brighter gradients that white text can't sit on at
+   AA contrast (measured as low as 1.7:1) -- dark text instead measures
+   5.4-9.6:1 against these same backgrounds. */
+.schedule-date-chip.c1 {
+    background: linear-gradient(135deg, var(--secondary), var(--primary-light));
+    color: var(--dark);
+}
+
+.schedule-date-chip.c2 {
+    background: linear-gradient(135deg, var(--accent-orange), var(--accent-yellow));
+    color: var(--dark);
+}
+
+.schedule-date-chip.c3 {
+    background: linear-gradient(135deg, var(--accent-cyan), var(--primary-light));
+    color: var(--dark);
+}
 
 /* ===== Register Section ===== */
 .register {
@@ -747,6 +806,68 @@ img {
 .hubs-cta p {
     color: var(--gray-700);
     font-size: 1.125rem;
+}
+
+/* Text list of hub sites -- a redundant, accessible equivalent to the
+   map's pins for keyboard/screen-reader users and anyone who'd rather
+   not interact with an embedded map. */
+.hubs-list {
+    list-style: none;
+    margin: var(--space-xl) 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--space-lg);
+}
+
+.hub-list-item {
+    display: flex;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    background: var(--bg-primary);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.hub-list-icon {
+    font-size: 1.5rem;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.hub-list-body h3 {
+    font-family: var(--font-display);
+    font-size: 1.0625rem;
+    color: var(--dark);
+    margin-bottom: var(--space-xs);
+}
+
+.hub-list-location {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--gray-500);
+    background: var(--gray-100);
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    margin-bottom: var(--space-sm);
+}
+
+.hub-list-body p {
+    font-size: 0.875rem;
+    color: var(--gray-600);
+    line-height: 1.5;
+    margin-bottom: var(--space-sm);
+}
+
+.hub-list-body a {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--primary);
+}
+
+.hub-list-body a:hover {
+    color: var(--primary-dark);
 }
 
 /* ===== Team Section ===== */
@@ -1191,11 +1312,14 @@ img {
 }
 
 /* ===== Resource Modal ===== */
+/* display is intentionally NOT set here -- the native [hidden] attribute
+   (toggled in JS, removed slightly after the fade-out finishes) handles
+   removing this from layout and the accessibility tree entirely when
+   closed; .active handles the visible/flex state while open. */
 .modal {
     position: fixed;
     inset: 0;
     z-index: 2000;
-    display: flex;
     align-items: center;
     justify-content: center;
     padding: var(--space-lg);
@@ -1205,6 +1329,7 @@ img {
 }
 
 .modal.active {
+    display: flex;
     opacity: 1;
     visibility: visible;
 }

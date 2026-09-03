@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
@@ -19,12 +21,12 @@
                 <img class="logo-icon" src="images/quilt-icon.svg" alt="">
                 <span class="logo-text">Teacher Studio</span>
             </a>
-            <button class="nav-toggle" aria-label="Toggle navigation">
+            <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="primary-nav-menu">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
-            <ul class="nav-menu">
+            <ul class="nav-menu" id="primary-nav-menu">
                 <li><a href="#next-event">Next Workshop</a></li>
                 <li><a href="#about">About Us</a></li>
                 <li><a href="#workshops">Schedule</a></li>
@@ -36,6 +38,7 @@
         </div>
     </nav>
 
+    <main id="main-content">
     <!-- Hero Section -->
     <header class="hero">
         <div class="hero-inner">
@@ -114,12 +117,16 @@
 
             <!-- Interactive Map -->
             <div class="hubs-map-container">
-                <div id="hubs-map"></div>
+                <div id="hubs-map" role="group" aria-label="Map of hub site locations -- see the list below for the same information as text"></div>
             </div>
 
             <div class="hubs-cta">
                 <p>Click a pin on the map for details, or <strong>join us virtually via Zoom!</strong> Register above to receive the link.</p>
             </div>
+
+            <!-- Text equivalent of the map's pins, for anyone who can't or
+                 would rather not interact with an embedded map. -->
+            <ul class="hubs-list" id="hubs-list"></ul>
         </div>
     </section>
 
@@ -158,12 +165,12 @@
             </div>
             <div class="gallery-upload">
                 <div class="upload-card">
-                    <div class="upload-icon">📸</div>
+                    <div class="upload-icon" aria-hidden="true">📸</div>
                     <h3>Share Your Creations</h3>
                     <p>Made something awesome at a workshop? We want to see it! Submit a photo and a facilitator will add it to the wall below.</p>
                     <a href="#" id="show-tell-form-link" target="_blank" class="btn btn-primary">
                         Submit a Photo
-                        <span class="btn-icon">↑</span>
+                        <span class="btn-icon" aria-hidden="true">↑</span>
                     </a>
                     <p class="upload-note">Opens a short Google Form. Photos are reviewed before they appear here.</p>
                 </div>
@@ -179,6 +186,7 @@
             </div>
         </div>
     </section>
+    </main>
 
     <!-- Footer -->
     <footer class="footer">
@@ -212,12 +220,12 @@
     </footer>
 
     <!-- Resource Modal -->
-    <div id="resource-modal" class="modal">
+    <div id="resource-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
         <div class="modal-overlay"></div>
         <div class="modal-content">
             <button class="modal-close" aria-label="Close modal">&times;</button>
             <p class="modal-eyebrow"></p>
-            <h2 class="modal-title"></h2>
+            <h2 class="modal-title" id="modal-title"></h2>
             <p class="modal-description"></p>
             <div class="modal-materials modal-materials-required">
                 <h4>Required Materials</h4>
