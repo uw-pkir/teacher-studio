@@ -4,7 +4,7 @@ A quick reference for anyone putting together a flyer, slide, or anything else t
 
 ## Logo
 
-**File:** [`teacher-studio-logo.svg`](teacher-studio-logo.svg) in this folder — pull this one file out and use it anywhere (slides, docs, print, social).
+**File:** [`teacher-studio-logo.svg`](teacher-studio-logo.svg) in this folder — pull this one file out and use it anywhere (slides, docs, print, social). A PNG version (`teacher-studio-logo.png`, 1024×1024, transparent-free with its built-in white background) is also here for anything that doesn't accept SVG, like PowerPoint or Google Slides.
 
 The logo is a **quilt block** — specifically a pinwheel-style half-square-triangle block. We picked this on purpose: Teacher Studio has the feel of a quilting bee more than a formal workshop (people gathering to talk and make together), and this particular block's four quadrants read like four separate windows or rooms — which mirrors the hybrid/Zoom-grid way the group actually meets, in person at hub sites and virtually all at once.
 
@@ -20,6 +20,8 @@ On the site itself, a big interactive version of this logo sits in the homepage 
 Ten small single-patch icons — `quilt-flourish.svg` through `quilt-flourish-10.svg` in this folder — are the individual quilt pieces the logo is built from: six two-color half-square-triangle patches (each pair of brand colors, both diagonal directions) plus one solid square in each of the four colors. Use any of these as a small bullet, divider, or accent wherever a single quilt patch fits better than the full logo.
 
 On the site, one of these ten is picked at random next to every section label ("Past Workshops," "Season Schedule," etc.) so headers don't all repeat the same patch, and the same pool fills in for a workshop's icon whenever one hasn't been given yet.
+
+Each has a matching PNG (512×512, transparent background) alongside its SVG, for drag-and-drop into flyers or slides.
 
 ## Colors
 
@@ -47,6 +49,8 @@ Both are free Google Fonts, loaded via:
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 ```
+
+**Offline copies:** [`fonts/`](fonts/) in this folder has each weight as a `.ttf` file, for installing on your own computer or embedding in a flyer/slide tool that can't pull from Google Fonts directly — Fredoka Regular/Medium/SemiBold/Bold and Inter Regular/Medium/SemiBold. (Both are open-source under the [SIL Open Font License](https://openfontlicense.org/), so they're free to use and share this way.)
 
 ## Where this lives in the actual site
 
