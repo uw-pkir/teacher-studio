@@ -4,14 +4,36 @@
     "icon": "🗼",
     "title": "Stacking!",
     "description": "Playing with blocks, considering balance, weight, coordination, and planning are collaborative and problem solving opportunities.   No consumable materials, unless you want them, rolling paper and using tape is always an option, but we are curious what you can make with the materials you have on hand.",
-    "required_materials": ["Whatever you have on hand!"],
-    "nice_to_have_materials": ["solo cups", "keva planks", "books", "kids"],
+    "required_materials": [
+      "Whatever you have on hand!"
+    ],
+    "nice_to_have_materials": [
+      "solo cups",
+      "keva planks",
+      "books",
+      "kids"
+    ],
     "links": [
-      {"label": "youtube.com", "url": "https://www.youtube.com/shorts/j_2XWjLWL78"},
-      {"label": "docs.google.com", "url": "https://docs.google.com/document/d/1YRADwqjXnqJS9jaZ4A85v0rw7PE_uvxXS5LhZz1V8i0/edit?tab=t.0"},
-      {"label": "instagram.com", "url": "https://www.instagram.com/p/DJTEVLDOp1N/"},
-      {"label": "gravityglue.com", "url": "https://gravityglue.com/category/travel/usa/"},
-      {"label": "boredpanda.com", "url": "https://www.boredpanda.com/creative-wood-pile-stacking-art/"}
+      {
+        "label": "Me whenever i stumble upon a stack of books 📚 #Ghostbusters - YouTube",
+        "url": "https://www.youtube.com/shorts/j_2XWjLWL78"
+      },
+      {
+        "label": "Stack the Cats, instructions - Google Docs",
+        "url": "https://docs.google.com/document/d/1YRADwqjXnqJS9jaZ4A85v0rw7PE_uvxXS5LhZz1V8i0/edit?tab=t.0"
+      },
+      {
+        "label": "Instagram",
+        "url": "https://www.instagram.com/p/DJTEVLDOp1N/"
+      },
+      {
+        "label": "USA – Gravity Glue",
+        "url": "https://gravityglue.com/category/travel/usa/"
+      },
+      {
+        "label": "36 People Who Turned Log Piling Into An Art Form | Bored Panda",
+        "url": "https://www.boredpanda.com/creative-wood-pile-stacking-art/"
+      }
     ]
   },
   {
@@ -19,14 +41,42 @@
     "icon": "🧶",
     "title": "Weaving with Everyday Objects",
     "description": "What CAN you weave? Usually, we think of yarn as the material we weave with in educational activities. What if we explored other materials? What can we create? What do we learn about the properties of materials that make them good (or less good) for weaving?",
-    "required_materials": ["Something to weave."],
-    "nice_to_have_materials": ["stems", "electrical cords", "jewelry", "chains", "spaghetti", "christmas lights", "grapevines", "charging cords", "wire", "paper"],
+    "required_materials": [
+      "Something to weave."
+    ],
+    "nice_to_have_materials": [
+      "stems",
+      "electrical cords",
+      "jewelry",
+      "chains",
+      "spaghetti",
+      "christmas lights",
+      "grapevines",
+      "charging cords",
+      "wire",
+      "paper"
+    ],
     "links": [
-      {"label": "youtube.com", "url": "https://www.youtube.com/watch?v=oSs7albfboM"},
-      {"label": "youtube.com", "url": "https://www.youtube.com/watch?v=iFMjcCVa_vs"},
-      {"label": "youtube.com", "url": "https://www.youtube.com/watch?v=TU3NLH0WtZQ"},
-      {"label": "youtube.com", "url": "https://www.youtube.com/watch?v=zGoAm18hmRs"},
-      {"label": "youtube.com", "url": "https://www.youtube.com/watch?v=lBuMd_ltx-k"}
+      {
+        "label": "- YouTube",
+        "url": "https://www.youtube.com/watch?v=oSs7albfboM"
+      },
+      {
+        "label": "- YouTube",
+        "url": "https://www.youtube.com/watch?v=iFMjcCVa_vs"
+      },
+      {
+        "label": "- YouTube",
+        "url": "https://www.youtube.com/watch?v=TU3NLH0WtZQ"
+      },
+      {
+        "label": "- YouTube",
+        "url": "https://www.youtube.com/watch?v=zGoAm18hmRs"
+      },
+      {
+        "label": "- YouTube",
+        "url": "https://www.youtube.com/watch?v=lBuMd_ltx-k"
+      }
     ]
   },
   {
@@ -34,12 +84,31 @@
     "icon": "📗",
     "title": "Magazine Beads",
     "description": "Create your own beads from recycled materials! This is a great way to discuss sustainability, design, and creativity.",
-    "required_materials": ["magazines", "scissors", "a straw or skewer", "glue"],
-    "nice_to_have_materials": ["Popsicle sticks (to spread glue", "or use fingers)", "wax paper or tray", "paper towels"],
+    "required_materials": [
+      "magazines",
+      "scissors",
+      "a straw or skewer",
+      "glue"
+    ],
+    "nice_to_have_materials": [
+      "Popsicle sticks (to spread glue",
+      "or use fingers)",
+      "wax paper or tray",
+      "paper towels"
+    ],
     "links": [
-      {"label": "youtube.com", "url": "https://www.youtube.com/watch?v=jMG40809rws"},
-      {"label": "drive.google.com", "url": "https://drive.google.com/file/d/1iymXeWeVMVwY0V0S6AK51adsyFPxJfe1/view"},
-      {"label": "richlandlibrary.com", "url": "https://www.richlandlibrary.com/blog/2025-02-12/diy-magazine-beads"}
+      {
+        "label": "- YouTube",
+        "url": "https://www.youtube.com/watch?v=jMG40809rws"
+      },
+      {
+        "label": "STEM-Kit_Magazine-Beads-2.pdf - Google Drive",
+        "url": "https://drive.google.com/file/d/1iymXeWeVMVwY0V0S6AK51adsyFPxJfe1/view"
+      },
+      {
+        "label": "Just a moment...",
+        "url": "https://www.richlandlibrary.com/blog/2025-02-12/diy-magazine-beads"
+      }
     ]
   },
   {
@@ -47,8 +116,15 @@
     "icon": "🧩",
     "title": "Description Coming Soon!",
     "description": "Description of workshop coming soon!",
-    "required_materials": ["Paper", "Tape", "Imagination"],
-    "nice_to_have_materials": ["Scissors", "Markers"],
+    "required_materials": [
+      "Paper",
+      "Tape",
+      "Imagination"
+    ],
+    "nice_to_have_materials": [
+      "Scissors",
+      "Markers"
+    ],
     "links": []
   }
 ]
