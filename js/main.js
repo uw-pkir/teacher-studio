@@ -192,9 +192,28 @@ async function loadAndRenderAll() {
     if (settings.about_text) {
         document.getElementById('about-text').textContent = settings.about_text;
     }
+    renderAboutFeatures(settings.about_features);
     if (settings.show_tell_form_url) {
         document.getElementById('show-tell-form-link').href = settings.show_tell_form_url;
     }
+}
+
+// The 3 icon/title/description rows under the About paragraph -- editable
+// via /admin (Site Content -> About Text & Misc Settings) like the rest of
+// this section, rather than being hardcoded in index.html.
+function renderAboutFeatures(features) {
+    const container = document.getElementById('about-features');
+    if (!container || !features || !features.length) return;
+
+    container.innerHTML = features.map(f => `
+        <div class="feature">
+            <span class="feature-icon">${escapeHTML(f.icon)}</span>
+            <div>
+                <h4>${escapeHTML(f.title)}</h4>
+                <p>${escapeHTML(f.description)}</p>
+            </div>
+        </div>
+    `).join('');
 }
 
 // Turns "a, b, c" into ["a", "b", "c"] rendered as <li> items.
@@ -294,11 +313,13 @@ function renderSchedule(upcoming, settings) {
         const itemDate = parseLocalDate(item.date);
         const month = itemDate.toLocaleDateString('en-US', { month: 'short' });
         const day = itemDate.getDate();
+        const year = itemDate.getFullYear();
 
         return `
             <div class="schedule-date-chip c${index % 4}" title="${escapeAttr(item.title)}">
                 <span class="month">${month}</span>
                 <span class="day">${day}</span>
+                <span class="year">${year}</span>
             </div>
         `;
     }).join('');

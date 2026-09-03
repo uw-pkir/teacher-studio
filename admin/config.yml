@@ -59,4 +59,12 @@ collections:
           - { label: "Show & Tell submission form (Google Form URL)", name: "show_tell_form_url", widget: "string" }
           - { label: "Show & Tell published CSV URL (from the response sheet's 'Public' tab — see SETUP.md)", name: "show_tell_csv_url", widget: "string", required: false }
           - { label: "About paragraph", name: "about_text", widget: "text" }
+          - label: "About page: icon/title/description rows"
+            name: "about_features"
+            widget: "list"
+            summary: "{{title}}"
+            fields:
+              - { label: "Icon (an emoji)", name: "icon", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
           - { label: "Organizers Emeriti (names)", name: "emeriti", widget: "list" }

@@ -254,7 +254,7 @@ img {
 .nav-menu {
     display: flex;
     align-items: center;
-    gap: var(--space-xl);
+    gap: var(--space-lg);
     list-style: none;
 }
 
@@ -301,7 +301,7 @@ img {
 
 .hero-inner {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     flex-wrap: wrap;
     gap: var(--space-2xl);
@@ -382,11 +382,13 @@ img {
     background: var(--white);
 }
 
-.about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-3xl);
-    align-items: center;
+.about-content {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.about-header {
+    text-align: center;
 }
 
 .about-content h2 {
@@ -427,34 +429,6 @@ img {
     margin: 0;
 }
 
-.about-image {
-    display: flex;
-    justify-content: center;
-}
-
-.image-placeholder {
-    width: 100%;
-    max-width: 400px;
-    aspect-ratio: 4/3;
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(244, 114, 182, 0.1));
-    border-radius: var(--radius-xl);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border: 2px dashed var(--gray-300);
-}
-
-.image-placeholder span {
-    font-size: 4rem;
-    margin-bottom: var(--space-md);
-}
-
-.image-placeholder p {
-    color: var(--gray-500);
-    font-weight: 500;
-}
-
 /* ===== Workshops Section ===== */
 .workshops {
     padding: var(--space-3xl) 0;
@@ -474,7 +448,7 @@ img {
 
 .schedule-date-chip {
     width: 72px;
-    height: 80px;
+    height: 92px;
     border-radius: var(--radius-md);
     display: flex;
     flex-direction: column;
@@ -489,7 +463,8 @@ img {
     transform: translateY(-3px);
 }
 
-.schedule-date-chip .month {
+.schedule-date-chip .month,
+.schedule-date-chip .year {
     font-size: 0.75rem;
     font-weight: 500;
     text-transform: uppercase;
@@ -501,6 +476,7 @@ img {
     font-size: 1.5rem;
     font-weight: 700;
     line-height: 1;
+    margin: 1px 0;
 }
 
 .schedule-date-chip.c0 { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); }
@@ -1020,15 +996,6 @@ img {
         font-size: 2.75rem;
     }
 
-    .about-grid {
-        grid-template-columns: 1fr;
-        gap: var(--space-xl);
-    }
-
-    .about-image {
-        order: -1;
-    }
-
     .register-card {
         grid-template-columns: 1fr;
     }
@@ -1046,7 +1013,9 @@ img {
     }
 }
 
-@media (max-width: 768px) {
+/* The nav has 7 links plus a button now, so it needs the hamburger sooner
+   than the rest of the mobile-only adjustments below. */
+@media (max-width: 1024px) {
     .nav-menu {
         position: fixed;
         top: 70px;
@@ -1072,7 +1041,9 @@ img {
     .nav-toggle {
         display: flex;
     }
+}
 
+@media (max-width: 768px) {
     .hero {
         padding-top: 100px;
         min-height: auto;
@@ -1121,7 +1092,7 @@ img {
 
     .schedule-date-chip {
         width: 64px;
-        height: 70px;
+        height: 82px;
     }
 }
 
