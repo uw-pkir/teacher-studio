@@ -514,7 +514,8 @@ function renderHubs(hubs) {
     // "Hub" and "Partner" are independent flags -- some entries are only a
     // meeting location (a hub with no organizing-partner role), some are
     // only an organizing partner (no map pin), and some are both.
-    const physicalHubs = hubs.filter(hub => hub.is_hub !== false);
+    const physicalHubs = hubs.filter(hub => hub.is_hub !== false)
+        .sort((a, b) => a.name.localeCompare(b.name));
 
     // Text equivalent of the map, for screen-reader/keyboard users and
     // anyone whose browser can't or won't load Leaflet/the map tiles.
@@ -574,15 +575,19 @@ function renderHubs(hubs) {
 
 function renderPartners(hubs) {
     const list = document.getElementById('partners-list');
-    list.innerHTML = hubs.filter(h => h.is_partner !== false).map(h =>
-        `<a href="${escapeAttr(h.website)}" target="_blank" rel="noopener">${escapeHTML(h.name)}</a>`
-    ).join('');
+    list.innerHTML = hubs.filter(h => h.is_partner !== false)
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .map(h => `<a href="${escapeAttr(h.website)}" target="_blank" rel="noopener">${escapeHTML(h.name)}</a>`)
+        .join('');
 }
 
 // ===== Team =====
 function renderTeam(organizers, settings) {
     const grid = document.getElementById('team-grid');
-    grid.innerHTML = organizers.map(person => `
+    const sorted = [...organizers].sort((a, b) =>
+        (a.name || '').split(' ')[0].localeCompare((b.name || '').split(' ')[0])
+    );
+    grid.innerHTML = sorted.map(person => `
         <div class="team-card">
             <img class="team-avatar-img" src="${escapeAttr(person.photo)}" alt="${escapeAttr(person.name)}">
             <h3>${escapeHTML(person.name)}</h3>

@@ -812,24 +812,12 @@ img {
     font-weight: 500;
 }
 
-.hubs-cta {
-    text-align: center;
-    padding: var(--space-xl);
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(244, 114, 182, 0.05));
-    border-radius: var(--radius-lg);
-}
-
-.hubs-cta p {
-    color: var(--gray-700);
-    font-size: 1.125rem;
-}
-
 /* Text list of hub sites -- a redundant, accessible equivalent to the
    map's pins for keyboard/screen-reader users and anyone who'd rather
    not interact with an embedded map. */
 .hubs-list {
     list-style: none;
-    margin: var(--space-xl) 0 0;
+    margin: 0;
     padding: 0;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
