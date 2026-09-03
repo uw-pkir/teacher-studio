@@ -81,8 +81,8 @@ async function loadJSON(path) {
 async function loadAndRenderAll() {
     const [workshops, hubs, organizers, settings, showcase] = await Promise.all([
         loadJSON('data/workshops.json').catch(() => []),
-        loadJSON('data/hubs.json').catch(() => []),
-        loadJSON('data/organizers.json').catch(() => []),
+        loadJSON('data/hubs.json').then(d => d.hubs || []).catch(() => []),
+        loadJSON('data/organizers.json').then(d => d.organizers || []).catch(() => []),
         loadJSON('data/site-settings.json').catch(() => ({})),
         loadJSON('data/showcase.json').catch(() => [])
     ]);
