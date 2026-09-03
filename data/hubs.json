@@ -1,7 +1,7 @@
 {
   "hubs": [
     {
-      "lng": "",
+      "lng": -89.3124965,
       "name": "Fablab @ Henderson Elementary",
       "physical_hub": true,
       "address": "1201 Tompkins Dr, Madison, WI 53716",
@@ -9,7 +9,7 @@
       "icon": "🏫",
       "website": "https://www.facebook.com/HendersonFABLab/",
       "description": "Elementary school-based makerspace in a public elementary school in Madison, WI.",
-      "lat": ""
+      "lat": 43.058657
     },
     {
       "name": "Building for Kids Children's Museum",
