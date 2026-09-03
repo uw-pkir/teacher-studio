@@ -1,5 +1,128 @@
 [
   {
+    "date": "2023-10-26",
+    "icon": "😵‍💫",
+    "title": "Art & Motion",
+    "description": "Betty Brinn Children's Museum makerspace is exploring new activities using spinning, motion, and art making. Taking inspiration from spin art, spirograph, pendulums, and more. Let's explore these forces of art together.",
+    "required_materials": [
+      "Liquid art media like paint",
+      "ink",
+      "dye. Markers",
+      "spinning mechanisms like small motors",
+      "salad spinners",
+      "fans",
+      "pendulums",
+      "marbles",
+      "balls"
+    ],
+    "nice_to_have_materials": [],
+    "links": []
+  },
+  {
+    "date": "2023-11-23",
+    "icon": "⛵",
+    "title": "Trash Boats for the Bubbler Regatta",
+    "description": "Create a boat that is wind powered. You may supply your own wind by blowing on the sail or think about a box fan to generate wind. Create a testing arena to make sure your boat floats and that you are able to navigate it effectively.",
+    "required_materials": [
+      "Things that float - pool noodles; shipping foam; corks; cardboard boxes or juice containers. Other recycled or reused containers or materials   Mast materials - skewers; toothpicks; lollipop or popsicle sticks; straws   Sail materials - old library cards; cardstock; mylar sheeting; fabric   Joinery - twisty ties; pipe cleaners; hot glue (we often just stick things together into pool noodle foam)   Ballast - pennies; washers; brads; nails or screws"
+    ],
+    "nice_to_have_materials": [],
+    "links": []
+  },
+  {
+    "date": "2024-01-18",
+    "icon": "🔦",
+    "title": "Fun with Filters",
+    "description": "Create a light filter for your flashlight.  Can you make a UV filter? Can you find something fluorescent?  Can you make a red filter? How does the red filter change the way colors look around you? Can you make a filter of your favorite color?",
+    "required_materials": [
+      "Cellphone flashlight or LED flashlight",
+      "Blue and purple Sharpie markers",
+      "Clear tape",
+      "Highlighters",
+      "Paper"
+    ],
+    "nice_to_have_materials": [
+      "Cellophane in different colors",
+      "Other Sharpie colors",
+      "Colored paper"
+    ],
+    "links": [
+      {
+        "label": "DIY Blacklight: Use This Hack to Turn Any Smartphone Into a Blacklight",
+        "url": "https://www.osc.org/diy-blacklight-use-this-hack-to-turn-any-smartphone-into-a-blacklight/"
+      },
+      {
+        "label": "Make a UV Black Light at Home  : 5 Steps (with Pictures) - Instructables",
+        "url": "https://www.instructables.com/Make-a-UV-Black-Light-at-Home/"
+      }
+    ]
+  },
+  {
+    "date": "2024-02-22",
+    "icon": "🐙",
+    "title": "Octostudio Kaleidoscope",
+    "description": "Let’s explore a new, accessible coding tool by exploring movement, symmetry, and reflection.",
+    "required_materials": [
+      "Phone or tablet with Octostudio installed (Android or iOS)",
+      "Small reflective pieces/mirrors"
+    ],
+    "nice_to_have_materials": [],
+    "links": [
+      {
+        "label": "OctoStudio",
+        "url": "https://octostudio.org/"
+      },
+      {
+        "label": "Human Verification",
+        "url": "https://www.exploratorium.edu/tinkering/projects/octostudio-explorations#patterns"
+      },
+      {
+        "label": "Amazon",
+        "url": "https://www.amazon.com/BBTO-Flexible-Plastic-Adhesive-Stickers/dp/B07173LNJ3/"
+      }
+    ]
+  },
+  {
+    "date": "2024-03-21",
+    "icon": "🪀",
+    "title": "From tinkering to toys",
+    "description": "Create a dancing wire person, a spinney spin spin and use these same approaches to creatively design your own toy.",
+    "required_materials": [
+      "Wire (Electrical wire as well as bendy wire like wires and pliers activity :-)",
+      "Tape (Electrical or painters)",
+      "Stapler",
+      "Paper cups",
+      "Pipe cleaners",
+      "Small Dowels",
+      "Skewers",
+      "Rubberbands",
+      "Paper clips"
+    ],
+    "nice_to_have_materials": [
+      "Any other easily accessible and inspiring materials",
+      "pool noodles",
+      "binder clips",
+      "springs",
+      "legos"
+    ],
+    "links": []
+  },
+  {
+    "date": "2024-04-18",
+    "icon": "🧶",
+    "title": "Weave It",
+    "description": "Weaving is a simple, accessible activity that everyone in the group knows more about than me. It can be treated as a traditional craft/artform, or can be taken in non-traditional ways.",
+    "required_materials": [
+      "Yarn",
+      "String",
+      "Cardboard",
+      "Needle",
+      "Other materials that you might want to weave with."
+    ],
+    "nice_to_have_materials": [],
+    "links": []
+  },
+  {
     "date": "2025-10-16",
     "icon": "🗼",
     "title": "Stacking!",
@@ -15,7 +138,7 @@
     ],
     "links": [
       {
-        "label": "Me whenever i stumble upon a stack of books 📚 #Ghostbusters - YouTube",
+        "label": "Me whenever i stumble upon a stack of books 📚 #Ghostbusters",
         "url": "https://www.youtube.com/shorts/j_2XWjLWL78"
       },
       {
@@ -23,7 +146,7 @@
         "url": "https://docs.google.com/document/d/1YRADwqjXnqJS9jaZ4A85v0rw7PE_uvxXS5LhZz1V8i0/edit?tab=t.0"
       },
       {
-        "label": "Instagram",
+        "label": "The Art of Trader Joe&#x2019;s on Instagram: \"Swipe to see how Trader Joe&#x2019;s artists transformed an endcap display for #cincodemayo! &#x1f1f2;&#x1f1fd;&#x1f389; Take a close look and you might see a secret &#x201c;5&#x201d; and &#x201c;Mayo&#x201d; encoded in the stacked cans. &#x1f440;&#x1f64c;\n\nIn late April, this display featured separate stacked columns of beans, chiles, and taco shells. A few days later, Trader Joe&#x2019;s crew members rearranged the display, intermixing cans of Black Beans and Green Chiles. To celebrate Cinco de Mayo, they encoded a &#x201c;5&#x201d; in the upper portion of the display and the word &#x201c;Mayo&#x201d; in the lower portion. The crew brilliantly takes advantage of the color contrast between the cans, embedding a covert message for those who take the time to notice it. \n\nStacking is an art form at Trader Joe&#x2019;s. If you look closely enough, you might be surprised at the secret messages you discover on the shelves! As with many of my favorite artworks at Trader Joe&#x2019;s, stacked installations are ephemeral&#x2014;they can appear and disappear in a matter of days. \n\nShoutout to the 2023 crew in the Millburn NJ store for this display!\n\n#art #stacking #grocery #cincodemayo #holiday #creative\"",
         "url": "https://www.instagram.com/p/DJTEVLDOp1N/"
       },
       {
@@ -33,6 +156,40 @@
       {
         "label": "36 People Who Turned Log Piling Into An Art Form | Bored Panda",
         "url": "https://www.boredpanda.com/creative-wood-pile-stacking-art/"
+      }
+    ]
+  },
+  {
+    "date": "2025-12-18",
+    "icon": "📈",
+    "title": "Drawing Data",
+    "description": "Inspired by Spotify Unwrapped and other shared examples: Create a “_____” Unwrapped for 2025. Visualize some data, patterns, or trends from your life this year.",
+    "required_materials": [
+      "Paper (post-its; copy paper; the back of an envelope) Drawing materials (your favorite pen; some markers; colored pencils; highlighters) Craft materials (pony beads; pipe cleaners; paper clips; whatever is lying around)"
+    ],
+    "nice_to_have_materials": [
+      "Collect some data about your year. It doesn't have to be precise or serious. How many times did you go outside each week; was the sun out? Which song did you listen to most each month? Which are your most used emojis?"
+    ],
+    "links": [
+      {
+        "label": "Dear Data",
+        "url": "https://www.dear-data.com/"
+      },
+      {
+        "label": "Graphics - The New York Times",
+        "url": "https://www.nytimes.com/spotlight/graphics"
+      },
+      {
+        "label": "FabLearn 2019: Keynote (Amanda Cox)",
+        "url": "https://youtu.be/5gHUMi1GqyY?si=89YBDj0tzbJbmvhM"
+      },
+      {
+        "label": "💠 Data Gems",
+        "url": "https://plix.mit.edu/activities/activity-guides/data-gems"
+      },
+      {
+        "label": "Illustrated Graphs: Using Art to Enliven Scientific Data - Science Friday",
+        "url": "https://www.sciencefriday.com/educational-resources/illustrated-graphs-using-art-enliven-scientific-data/"
       }
     ]
   },
@@ -58,23 +215,23 @@
     ],
     "links": [
       {
-        "label": "- YouTube",
+        "label": "Weaving with Found Objects: A Commemorative and Collaborative Project",
         "url": "https://www.youtube.com/watch?v=oSs7albfboM"
       },
       {
-        "label": "- YouTube",
+        "label": "Ways to Weave",
         "url": "https://www.youtube.com/watch?v=iFMjcCVa_vs"
       },
       {
-        "label": "- YouTube",
+        "label": "Weaving & Repurposing Class",
         "url": "https://www.youtube.com/watch?v=TU3NLH0WtZQ"
       },
       {
-        "label": "- YouTube",
+        "label": "Art Challenge #4: Found Object Weaving.",
         "url": "https://www.youtube.com/watch?v=zGoAm18hmRs"
       },
       {
-        "label": "- YouTube",
+        "label": "Weaving without a Loom and with Dollar Store items!",
         "url": "https://www.youtube.com/watch?v=lBuMd_ltx-k"
       }
     ]
@@ -98,7 +255,7 @@
     ],
     "links": [
       {
-        "label": "- YouTube",
+        "label": "How to make Paper Beads from Magazines",
         "url": "https://www.youtube.com/watch?v=jMG40809rws"
       },
       {
@@ -106,25 +263,21 @@
         "url": "https://drive.google.com/file/d/1iymXeWeVMVwY0V0S6AK51adsyFPxJfe1/view"
       },
       {
-        "label": "Just a moment...",
+        "label": "richlandlibrary.com",
         "url": "https://www.richlandlibrary.com/blog/2025-02-12/diy-magazine-beads"
       }
     ]
   },
   {
     "date": "2026-10-15",
-    "icon": "🧩",
-    "title": "Description Coming Soon!",
-    "description": "Description of workshop coming soon!",
+    "icon": "😻",
+    "title": "Face Sensing with Scratch",
+    "description": "We'll explore the new face sensing blocks in Scratch, which use a pre-trained AI model that runs locally on your computer. We'll make a custom face filter and talk about how we're using (or not using) AI tools with our learners.",
     "required_materials": [
-      "Paper",
-      "Tape",
-      "Imagination"
+      "Computer or chromebook",
+      "internet connection"
     ],
-    "nice_to_have_materials": [
-      "Scissors",
-      "Markers"
-    ],
+    "nice_to_have_materials": [],
     "links": []
   },
   {
