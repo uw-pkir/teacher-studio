@@ -1,7 +1,7 @@
 {
   "hubs": [
     {
-      "lng": -89.3124965,
+      "lng": "",
       "name": "Fablab @ Henderson Elementary",
       "physical_hub": true,
       "address": "1201 Tompkins Dr, Madison, WI 53716",
@@ -9,17 +9,18 @@
       "icon": "🏫",
       "website": "https://www.facebook.com/HendersonFABLab/",
       "description": "Elementary school-based makerspace in a public elementary school in Madison, WI.",
-      "lat": 43.058657
+      "lat": ""
     },
     {
+      "lng": "",
       "name": "Building for Kids Children's Museum",
+      "physical_hub": true,
+      "address": "200 N Appleton St, Appleton, WI 54911",
       "location": "Appleton, WI",
-      "description": "A hands-on children's museum focused on play-based learning.",
-      "website": "https://buildingforkids.org",
       "icon": "🏛️",
-      "lat": 44.2619,
-      "lng": -88.4154,
-      "physical_hub": true
+      "website": "https://buildingforkids.org",
+      "description": "A hands-on children's museum focused on play-based learning.",
+      "lat": ""
     },
     {
       "name": "Fermilab MakerSpace",
@@ -32,14 +33,15 @@
       "physical_hub": false
     },
     {
+      "lng": "",
       "name": "Wayne RESA",
+      "physical_hub": true,
+      "address": "5454 Venoy Rd, Wayne, MI 48184",
       "location": "Wayne, MI",
-      "description": "Regional educational service agency supporting schools across Wayne County.",
-      "website": "https://resa.net",
       "icon": "🎓",
-      "lat": 42.2808,
-      "lng": -83.2433,
-      "physical_hub": true
+      "website": "https://resa.net",
+      "description": "Regional educational service agency supporting schools across Wayne County.",
+      "lat": ""
     },
     {
       "name": "UW-Madison",
