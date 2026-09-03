@@ -109,10 +109,9 @@ body {
         scroll-behavior: auto !important;
     }
 
-    /* The hero quilt tiles aren't rendered as clickable buttons at all
-       under reduced motion (see initHeroLogo in js/main.js) -- this rule
-       only matters if that ever changes, so the animation doesn't get
-       silently re-neutered by the blanket rule above. */
+    /* Exempt from the blanket rule above: a brief, click-only effect, not
+       ambient/autoplaying motion, so it stays on even under reduced motion
+       (see initHeroLogo in js/main.js). */
     .hero-tile.is-flipping {
         animation-duration: 0.5s !important;
     }
