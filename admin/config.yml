@@ -13,60 +13,10 @@ collections:
   - name: "content"
     label: "Site Content"
     files:
-      - name: "next_event"
-        label: "🟣 Next Workshop (the monthly header)"
-        file: "data/next-event.json"
-        description: "The most important thing to keep current — this powers the big banner on the homepage."
-        fields:
-          - { label: "Title", name: "title", widget: "string" }
-          - { label: "Icon (an emoji — carries over to the resource archive entry once you write one up)", name: "icon", widget: "string", required: false }
-          - { label: "Date", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
-          - { label: "Time", name: "time", widget: "string", hint: "e.g. 4:30-5:30 PM CST" }
-          - { label: "Description", name: "description", widget: "text" }
-          - { label: "Registration link (Google Form URL)", name: "register_url", widget: "string" }
-          - { label: "Location note", name: "location_note", widget: "text" }
-
-      - name: "schedule"
-        label: "Season Schedule"
-        file: "data/schedule.json"
-        description: "The full-season calendar grid shown below the next-event banner."
-        fields:
-          - label: "Workshops"
-            name: "schedule"
-            widget: "list"
-            summary: "{{title}} — {{date}}"
-            fields:
-              - { label: "Date", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
-              - { label: "Time", name: "time", widget: "string" }
-              - { label: "Title / Topic", name: "title", widget: "string" }
-              - { label: "Icon (an emoji — carry it over to the resource archive entry once you write one up)", name: "icon", widget: "string", required: false }
-              - { label: "Description", name: "description", widget: "text", required: false }
-
-      - name: "resources"
-        label: "Past Workshops / Resources"
-        file: "data/resources.json"
-        description: "One entry per past session. Newest should be added at the top."
-        fields:
-          - label: "Sessions"
-            name: "resources"
-            widget: "list"
-            summary: "{{title}} — {{date}}"
-            fields:
-              - { label: "Month (YYYY-MM)", name: "date", widget: "string" }
-              - { label: "Title", name: "title", widget: "string" }
-              - { label: "Icon (an emoji — reuse the one from the season schedule entry)", name: "icon", widget: "string", required: false }
-              - { label: "Facilitator", name: "facilitator", widget: "string", required: false }
-              - { label: "Activity prompt", name: "prompt", widget: "text", required: false }
-              - { label: "Extra description", name: "description", widget: "text", required: false }
-              - { label: "Materials", name: "materials", widget: "list", required: false }
-              - label: "Links"
-                name: "links"
-                widget: "list"
-                required: false
-                fields:
-                  - { label: "Label", name: "label", widget: "string" }
-                  - { label: "URL", name: "url", widget: "string" }
-
+      # Workshops (the Next Workshop banner, the schedule grid, and the
+      # resource archive) are no longer edited here — they're entirely
+      # driven by the published Google Sheets set in workshops_tsv_url /
+      # season_dates_tsv_url below. See SETUP.md.
       - name: "hubs"
         label: "Hub Sites / Organizing Partners"
         file: "data/hubs.json"
@@ -103,6 +53,11 @@ collections:
         label: "About Text & Misc Settings"
         file: "data/site-settings.json"
         fields:
+          - { label: "Workshops sheet (published TSV URL — see SETUP.md)", name: "workshops_tsv_url", widget: "string" }
+          - { label: "Season dates sheet (published TSV URL, optional — see SETUP.md)", name: "season_dates_tsv_url", widget: "string", required: false }
+          - { label: "Workshop time (same for every workshop)", name: "workshop_time", widget: "string", hint: "e.g. 4:30-5:30 PM CST" }
+          - { label: "Registration link (Google Form URL)", name: "register_url", widget: "string" }
+          - { label: "Location note", name: "location_note", widget: "text" }
           - { label: "Show & Tell submission form (Google Form URL)", name: "show_tell_form_url", widget: "string" }
           - { label: "Show & Tell published CSV URL (from the response sheet's 'Public' tab — see SETUP.md)", name: "show_tell_csv_url", widget: "string", required: false }
           - { label: "About paragraph", name: "about_text", widget: "text" }

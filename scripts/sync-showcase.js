@@ -9,42 +9,11 @@
 
 const fs = require('fs');
 const path = require('path');
+const { parseDelimited } = require('./lib/parse-delimited');
 
 const SETTINGS_PATH = path.join(__dirname, '..', 'data', 'site-settings.json');
 const OUTPUT_PATH = path.join(__dirname, '..', 'data', 'showcase.json');
 const CSV_URL = JSON.parse(fs.readFileSync(SETTINGS_PATH, 'utf8')).show_tell_csv_url;
-
-function parseCSV(text) {
-    const rows = [];
-    let row = [];
-    let field = '';
-    let inQuotes = false;
-
-    for (let i = 0; i < text.length; i++) {
-        const c = text[i];
-        if (inQuotes) {
-            if (c === '"') {
-                if (text[i + 1] === '"') { field += '"'; i++; }
-                else { inQuotes = false; }
-            } else {
-                field += c;
-            }
-        } else if (c === '"') {
-            inQuotes = true;
-        } else if (c === ',') {
-            row.push(field); field = '';
-        } else if (c === '\n' || c === '\r') {
-            if (c === '\r' && text[i + 1] === '\n') i++;
-            row.push(field); field = '';
-            if (row.some(v => v !== '')) rows.push(row);
-            row = [];
-        } else {
-            field += c;
-        }
-    }
-    if (field !== '' || row.length) { row.push(field); rows.push(row); }
-    return rows;
-}
 
 function extractDriveFileId(url) {
     if (!url) return null;
@@ -67,7 +36,7 @@ async function main() {
         throw new Error(`Failed to fetch published sheet CSV: ${res.status} ${res.statusText}`);
     }
     const text = await res.text();
-    const rows = parseCSV(text);
+    const rows = parseDelimited(text, ',');
     if (!rows.length) {
         console.log('Published sheet is empty. Leaving data/showcase.json unchanged.');
         return;

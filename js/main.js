@@ -79,19 +79,23 @@ async function loadJSON(path) {
 }
 
 async function loadAndRenderAll() {
-    const [nextEvent, schedule, resources, hubs, organizers, settings, showcase] = await Promise.all([
-        loadJSON('data/next-event.json').catch(() => null),
-        loadJSON('data/schedule.json').catch(() => []),
-        loadJSON('data/resources.json').catch(() => []),
+    const [workshops, hubs, organizers, settings, showcase] = await Promise.all([
+        loadJSON('data/workshops.json').catch(() => []),
         loadJSON('data/hubs.json').catch(() => []),
         loadJSON('data/organizers.json').catch(() => []),
         loadJSON('data/site-settings.json').catch(() => ({})),
         loadJSON('data/showcase.json').catch(() => [])
     ]);
 
-    if (nextEvent) renderNextEvent(nextEvent);
-    renderSchedule(schedule);
-    renderResources(resources);
+    // A workshop's date vs. today is the only thing that decides whether
+    // it's "next"/upcoming or archived — there's no separate flag for it.
+    const todayISO = new Date().toISOString().slice(0, 10);
+    const upcoming = workshops.filter(w => w.date >= todayISO).sort((a, b) => a.date.localeCompare(b.date));
+    const archive = workshops.filter(w => w.date < todayISO).sort((a, b) => b.date.localeCompare(a.date));
+
+    renderNextEvent(upcoming[0] || null, settings);
+    renderSchedule(upcoming, settings);
+    renderResources(archive);
     renderHubs(hubs);
     renderTeam(organizers, settings);
     renderPartners(hubs);
@@ -105,7 +109,23 @@ async function loadAndRenderAll() {
     }
 
     document.getElementById('stat-hubs').textContent = hubs.filter(h => h.physical_hub !== false).length;
-    document.getElementById('stat-workshops').textContent = schedule.length;
+    document.getElementById('stat-workshops').textContent = archive.length;
+}
+
+// Turns "a, b, c" into ["a", "b", "c"] rendered as <li> items.
+function renderBullets(items) {
+    return (items || []).map(m => `<li>${escapeHTML(m)}</li>`).join('');
+}
+
+// Shows/hides one of the modal's two material blocks depending on whether
+// there's anything to show in it.
+function setMaterialsBlock(block, items) {
+    if (items && items.length) {
+        block.querySelector('.materials-list').innerHTML = renderBullets(items);
+        block.style.display = '';
+    } else {
+        block.style.display = 'none';
+    }
 }
 
 // Parses a "YYYY-MM-DD" string as a local date (avoids UTC off-by-one).
@@ -121,60 +141,83 @@ function formatLongDate(isoDate) {
 }
 
 // ===== Next Event spotlight =====
-function renderNextEvent(event) {
+function renderNextEvent(event, settings) {
     const mount = document.getElementById('next-event-mount');
+    const registerUrl = settings.register_url || '#';
+    const locationNote = settings.location_note || '';
+
+    if (!event) {
+        mount.innerHTML = `
+            <div class="next-event-info">
+                <span class="section-tag">Next Workshop</span>
+                <h2>Information coming soon</h2>
+                <p class="next-event-description">We're finalizing the schedule for our next gathering &mdash; check back soon, or register below to be notified.</p>
+                <a href="${escapeAttr(registerUrl)}" target="_blank" class="btn btn-primary btn-large">
+                    Register
+                    <span class="btn-icon">→</span>
+                </a>
+                <p class="next-event-location">${escapeHTML(locationNote)}</p>
+            </div>
+        `;
+        return;
+    }
+
     mount.innerHTML = `
         <div class="next-event-info">
             <span class="section-tag">Next Workshop</span>
-            <h2>${escapeHTML(event.title)}</h2>
-            <p class="next-event-when"><strong>When:</strong> ${formatLongDate(event.date)}, ${escapeHTML(event.time)}</p>
+            <h2>${event.icon ? escapeHTML(event.icon) + ' ' : ''}${escapeHTML(event.title)}</h2>
+            <p class="next-event-when"><strong>When:</strong> ${formatLongDate(event.date)}, ${escapeHTML(settings.workshop_time || '')}</p>
             <p class="next-event-description">${escapeHTML(event.description)}</p>
-            <a href="${escapeAttr(event.register_url)}" target="_blank" class="btn btn-primary btn-large">
+            ${renderMaterialsBlock(event, 'next-event-materials')}
+            <a href="${escapeAttr(registerUrl)}" target="_blank" class="btn btn-primary btn-large">
                 Register for ${parseLocalDate(event.date).toLocaleDateString('en-US', { month: 'long' })}
                 <span class="btn-icon">→</span>
             </a>
-            <p class="next-event-location">${escapeHTML(event.location_note || '')}</p>
+            <p class="next-event-location">${escapeHTML(locationNote)}</p>
         </div>
     `;
 }
 
-// ===== Workshop schedule =====
-function renderSchedule(schedule) {
+// Shared by the spotlight and the resource-archive modal: two labeled
+// bulleted lists built from comma-separated material strings.
+function renderMaterialsBlock(item, wrapperClass) {
+    const hasRequired = item.required_materials && item.required_materials.length;
+    const hasNice = item.nice_to_have_materials && item.nice_to_have_materials.length;
+    if (!hasRequired && !hasNice) return '';
+    return `
+        <div class="${wrapperClass}">
+            ${hasRequired ? `<div><h4>Required Materials</h4><ul>${renderBullets(item.required_materials)}</ul></div>` : ''}
+            ${hasNice ? `<div><h4>Nice to Have</h4><ul>${renderBullets(item.nice_to_have_materials)}</ul></div>` : ''}
+        </div>
+    `;
+}
+
+// ===== Workshop schedule: every upcoming workshop, nearest first =====
+function renderSchedule(upcoming, settings) {
     const grid = document.getElementById('workshop-grid');
-    if (!schedule.length) {
-        grid.innerHTML = '<p>Schedule coming soon.</p>';
+    if (!upcoming.length) {
+        grid.innerHTML = '<p>Information coming soon.</p>';
         return;
     }
 
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    // The "Up Next!" badge is derived from the schedule itself (the earliest
-    // date that hasn't passed yet) rather than from next-event.json, so the
-    // two files can never contradict each other if one is updated without the other.
-    const sorted = [...schedule].sort((a, b) => a.date.localeCompare(b.date));
-    const nextItem = sorted.find(item => parseLocalDate(item.date) >= today);
-    const nextDate = nextItem ? nextItem.date : null;
-
-    grid.innerHTML = schedule.map(item => {
+    grid.innerHTML = upcoming.map((item, index) => {
         const itemDate = parseLocalDate(item.date);
-        const isPast = itemDate < today;
-        const isFeatured = !isPast && item.date === nextDate;
+        const isFeatured = index === 0;
         const month = itemDate.toLocaleDateString('en-US', { month: 'short' });
         const day = itemDate.getDate();
 
         return `
-            <div class="workshop-card ${isPast ? 'past' : ''} ${isFeatured ? 'featured' : ''}">
+            <div class="workshop-card ${isFeatured ? 'featured' : ''}">
                 ${isFeatured ? '<div class="workshop-badge">Up Next!</div>' : ''}
                 <div class="workshop-date">
                     <span class="month">${month}</span>
                     <span class="day">${day}</span>
                 </div>
                 <div class="workshop-info">
-                    <span class="workshop-status ${isPast ? '' : 'upcoming'}">${isPast ? 'Completed' : 'Upcoming'}</span>
-                    <h3>${item.icon ? `<span class="workshop-icon">${escapeHTML(item.icon)}</span> ` : ''}${escapeHTML(item.title)}</h3>
+                    <span class="workshop-status upcoming">Upcoming</span>
+                    <h3><span class="workshop-icon">${escapeHTML(item.icon)}</span> ${escapeHTML(item.title)}</h3>
                     <p>${escapeHTML(item.description || '')}</p>
-                    <span class="workshop-time">${escapeHTML(item.time)}</span>
+                    <span class="workshop-time">${escapeHTML(settings.workshop_time || '')}</span>
                     ${isFeatured ? '<a href="#next-event" class="btn btn-small">Register</a>' : ''}
                 </div>
             </div>
@@ -197,11 +240,11 @@ function renderResources(resources) {
 
     grid.innerHTML = resources.map((r, index) => `
         <div class="resource-card" data-resource-index="${index}">
-            <div class="resource-icon">${escapeHTML(r.icon || '🧩')}</div>
+            <div class="resource-icon">${escapeHTML(r.icon)}</div>
             <h3>${escapeHTML(r.title)}</h3>
-            <p>${escapeHTML(r.prompt || r.description || '')}</p>
+            <p>${escapeHTML(r.description || '')}</p>
             <div class="resource-meta">
-                <span>${escapeHTML(formatMonthYear(r.date))}${r.facilitator ? ' · ' + escapeHTML(r.facilitator) : ''}</span>
+                <span>${escapeHTML(formatMediumDate(r.date))}</span>
             </div>
             <button class="resource-link">View Details →</button>
         </div>
@@ -214,9 +257,8 @@ function renderResources(resources) {
     observeFadeIn(grid, '.resource-card');
 }
 
-function formatMonthYear(yyyyMm) {
-    const [y, m] = yyyyMm.split('-').map(Number);
-    return new Date(y, m - 1, 1).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+function formatMediumDate(isoDate) {
+    return parseLocalDate(isoDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 }
 
 // ===== Modal (shared by resource cards) =====
@@ -232,19 +274,12 @@ function initModal() {
 
 function openResourceModal(resource) {
     const modal = document.getElementById('resource-modal');
-    modal.querySelector('.modal-eyebrow').textContent =
-        `${formatMonthYear(resource.date)}${resource.facilitator ? ' · Facilitated by ' + resource.facilitator : ''}`;
-    modal.querySelector('.modal-title').textContent = resource.title;
-    modal.querySelector('.modal-description').textContent = resource.prompt || resource.description || '';
+    modal.querySelector('.modal-eyebrow').textContent = formatMediumDate(resource.date);
+    modal.querySelector('.modal-title').textContent = resource.icon ? `${resource.icon} ${resource.title}` : resource.title;
+    modal.querySelector('.modal-description').textContent = resource.description || '';
 
-    const materialsBlock = modal.querySelector('.modal-materials');
-    const materialsList = modal.querySelector('.materials-list');
-    if (resource.materials && resource.materials.length) {
-        materialsList.innerHTML = resource.materials.map(m => `<li>${escapeHTML(m)}</li>`).join('');
-        materialsBlock.style.display = '';
-    } else {
-        materialsBlock.style.display = 'none';
-    }
+    setMaterialsBlock(modal.querySelector('.modal-materials-required'), resource.required_materials);
+    setMaterialsBlock(modal.querySelector('.modal-materials-nice'), resource.nice_to_have_materials);
 
     const linksBlock = modal.querySelector('.modal-links');
     const linksList = modal.querySelector('.modal-links-list');

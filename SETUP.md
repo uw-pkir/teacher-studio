@@ -33,7 +33,19 @@ The editor (Decap CMS) needs a small "OAuth proxy" to let it log in with GitHub.
    - Repo → **Settings → Collaborators** → **Add people** → invite them by GitHub username.
    - Once they accept, they log into `/admin` the same way, with their own GitHub account.
 
-## 2. Set up Show & Tell photo submissions
+## 2. Set up the workshop schedule & archive
+
+The Next Workshop banner, the schedule grid, and the resource archive are **not edited in `/admin`** — they're entirely generated from a Google Form/Sheet by `scripts/sync-workshops.js`, run hourly by `.github/workflows/sync-workshops.yml`. A workshop's date decides everything: today-or-later shows up as the next workshop / on the schedule grid, anything earlier moves to the archive — there's no separate step to "archive" something.
+
+**Already set up:** the workshops Form/Sheet, published as TSV, is set as `workshops_tsv_url` in `data/site-settings.json`. Its columns: `Timestamp, Date of workshop, Title/Theme, Emoji, Short description, Required materials, Nice to have materials, Resource Link 1..5` (materials are comma-separated; up to 5 optional resource links, only shown once the workshop is archived). Leave `Emoji` blank and it falls back to 🧩.
+
+**Two things to fill in when convenient:**
+1. **`workshop_time`** in `/admin` → Site Content → About Text & Misc Settings (or edit `data/site-settings.json` directly) — the same time slot shown on every workshop, e.g. "4:30-5:30 PM CST".
+2. **`season_dates_tsv_url`** (optional) — a *second*, minimal Google Sheet with just one column, `Date`, listing the season's workshop dates (`M/D/YYYY`, same as the main sheet). Update it once a year when the new season's dates are announced — no Form needed, just paste the dates directly into the sheet. Publish it to the web as TSV the same way (File → Share → Publish to web → CSV), and set the URL in `/admin` next to `workshops_tsv_url`. Any season date that doesn't have a matching row in the workshops sheet yet shows as a placeholder ("Topic announced a few weeks before the gathering") on the schedule grid, so the full season is always visible even before each topic is decided. Leave this blank and the schedule grid just shows whatever's actually been submitted.
+
+The sync runs hourly, or trigger it immediately from the repo's **Actions** tab → "Sync workshop schedule & archive" → **Run workflow** (handy right after submitting a new workshop). Resource-link page titles for archived workshops are cached in `data/link-title-cache.json` so re-runs don't keep re-fetching the same links.
+
+## 3. Set up Show & Tell photo submissions
 
 The form is already live: https://forms.gle/mYfvcYatq97hKuVz8 (set as `show_tell_form_url` in `data/site-settings.json`). What's left:
 
@@ -51,6 +63,8 @@ The form is already live: https://forms.gle/mYfvcYatq97hKuVz8 (set as `show_tell
 
 The sync runs automatically every 30 minutes (`.github/workflows/sync-showcase.yml`), or trigger it immediately from the repo's **Actions** tab → "Sync Show & Tell photos" → **Run workflow**.
 
-## 3. Monthly update (the whole point of this)
+## 4. Monthly update (the whole point of this)
 
-Go to `https://uw-pkir.github.io/teacher-studio/admin/`, click **Next Workshop (the monthly header)**, update the title/date/time/description, and hit **Publish**. The live site updates within a minute or two — no code, no git.
+**Entering a new workshop:** fill out the workshops Google Form (title, emoji, description, materials, and — once it's happened — resource links). That's it; no `/admin`, no git. It shows up as the Next Workshop banner automatically once its date is nearest, and moves itself into the archive once the date passes.
+
+**Everything else** (hub sites, organizers, the About paragraph, Show & Tell settings) is still edited at `https://uw-pkir.github.io/teacher-studio/admin/` — no code, no git.
