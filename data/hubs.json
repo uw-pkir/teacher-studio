@@ -48,7 +48,7 @@
       "icon": "🔬",
       "lat": 43.0766,
       "lng": -89.4125,
-      "physical_hub": true
+      "physical_hub": false
     }
   ]
 }
