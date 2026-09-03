@@ -50,12 +50,12 @@
     {
       "is_hub": false,
       "lng": -89.4125,
-      "name": "UW-Madison",
+      "name": "UW-Madison School of Education",
       "is_partner": true,
       "location": "Madison, WI",
-      "icon": "🔬",
+      "icon": "🏫",
       "website": "https://education.wisc.edu",
-      "description": "Playful Learning Across the Curriculum of Education at UW-Madison.",
+      "description": "School of Education",
       "lat": 43.0766
     },
     {
@@ -66,9 +66,16 @@
       "description": "Host location for the Appleton Hub, which is organized by Building for Kids.",
       "website": "https://apl.org/",
       "address": "200 N Appleton St, Appleton, WI 54911",
-      "icon": "📖",
-      "lat": 44.263068,
-      "lng": -88.407147
+      "icon": "📖"
+    },
+    {
+      "is_hub": false,
+      "is_partner": true,
+      "name": "UW-Madison College of Computing & AI",
+      "location": "Madison, WI",
+      "website": "https://cai.wisc.edu/",
+      "icon": "💻",
+      "description": "College of Computing and AI"
     }
   ]
 }
