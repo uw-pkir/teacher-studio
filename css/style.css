@@ -1039,12 +1039,17 @@ img {
 .gallery-preview h3 {
     text-align: center;
     font-size: 1.5rem;
-    margin-bottom: var(--space-xl);
+    margin-bottom: var(--space-md);
 }
 
-.gallery-grid {
+#showcase-shuffle {
+    display: block;
+    margin: 0 auto var(--space-xl);
+}
+
+.showcase-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: var(--space-lg);
 }
 
@@ -1600,36 +1605,46 @@ img {
 
 /* ===== Show & Tell gallery photos ===== */
 .showcase-card {
-    aspect-ratio: 1;
+    background: var(--white);
     border-radius: var(--radius-lg);
     overflow: hidden;
-    position: relative;
     box-shadow: var(--shadow-sm);
+    transition: all var(--transition-base);
+    border: 2px solid transparent;
+    margin: 0;
+}
+
+.showcase-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-light);
 }
 
 .showcase-card img {
     width: 100%;
-    height: 100%;
+    aspect-ratio: 4 / 3;
     object-fit: cover;
     display: block;
 }
 
 .showcase-card figcaption {
-    position: absolute;
-    inset: auto 0 0 0;
-    background: linear-gradient(to top, rgba(30, 27, 75, 0.85), transparent);
-    color: var(--white);
-    padding: var(--space-md) var(--space-sm) var(--space-sm);
+    padding: var(--space-lg);
+}
+
+.showcase-card figcaption h3 {
+    font-size: 1.125rem;
+    margin-bottom: var(--space-sm);
 }
 
 .showcase-card figcaption p {
-    font-size: 0.875rem;
-    margin: 0;
+    color: var(--gray-600);
+    font-size: 0.9375rem;
+    margin: 0 0 var(--space-sm);
 }
 
-.showcase-name {
+.showcase-maker {
     display: block;
-    font-size: 0.75rem;
-    opacity: 0.8;
-    margin-top: 2px;
+    font-size: 0.8125rem;
+    color: var(--gray-500);
+    font-weight: 500;
 }

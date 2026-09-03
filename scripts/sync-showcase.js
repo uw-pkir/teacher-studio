@@ -45,12 +45,13 @@ async function main() {
     const header = rows[0].map(h => h.trim().toLowerCase());
     const col = (name) => header.indexOf(name);
     const iTimestamp = col('timestamp');
-    const iName = col('name');
+    const iMaker = col('maker');
+    const iTitle = col('title');
     const iCaption = col('caption');
     const iPhoto = col('photo');
 
-    if (iName === -1 || iCaption === -1 || iPhoto === -1) {
-        throw new Error(`Published sheet is missing expected columns (Name, Caption, Photo). Found: ${header.join(', ')}`);
+    if (iPhoto === -1) {
+        throw new Error(`Published sheet is missing a "Photo" column. Found: ${header.join(', ')}`);
     }
 
     const items = rows.slice(1)
@@ -58,8 +59,9 @@ async function main() {
             const fileId = extractDriveFileId(r[iPhoto]);
             if (!fileId) return null;
             return {
-                name: (r[iName] || '').trim(),
-                caption: (r[iCaption] || '').trim(),
+                maker: iMaker !== -1 ? (r[iMaker] || '').trim() : '',
+                title: iTitle !== -1 ? (r[iTitle] || '').trim() : '',
+                caption: iCaption !== -1 ? (r[iCaption] || '').trim() : '',
                 image_url: `https://drive.google.com/thumbnail?id=${fileId}&sz=w1000`,
                 _sortKey: iTimestamp !== -1 ? (r[iTimestamp] || '') : ''
             };

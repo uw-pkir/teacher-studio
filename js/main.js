@@ -12,6 +12,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const shuffleBtn = document.getElementById('resources-shuffle');
     if (shuffleBtn) shuffleBtn.addEventListener('click', renderResourceSample);
+
+    const showcaseShuffleBtn = document.getElementById('showcase-shuffle');
+    if (showcaseShuffleBtn) showcaseShuffleBtn.addEventListener('click', renderShowcaseSample);
 });
 
 // All quilt-patch flourish variants -- also used as the random fallback
@@ -590,9 +593,21 @@ function renderTeam(organizers, settings) {
 }
 
 // ===== Show & Tell =====
+// Shows 3 random cards from all approved submissions at a time, same
+// sample-and-shuffle pattern as the resource archive above.
+const SHOWCASE_SAMPLE_SIZE = 3;
+let showcaseSubmissions = [];
+
 function renderShowcase(items) {
+    showcaseSubmissions = items || [];
+    const shuffleBtn = document.getElementById('showcase-shuffle');
+    if (shuffleBtn) shuffleBtn.style.display = showcaseSubmissions.length > SHOWCASE_SAMPLE_SIZE ? '' : 'none';
+    renderShowcaseSample();
+}
+
+function renderShowcaseSample() {
     const grid = document.getElementById('showcase-grid');
-    if (!items || !items.length) {
+    if (!showcaseSubmissions.length) {
         grid.innerHTML = `
             <div class="gallery-placeholder">
                 <span>✨</span>
@@ -602,12 +617,15 @@ function renderShowcase(items) {
         return;
     }
 
-    grid.innerHTML = items.map(item => `
+    const sample = sampleRandom(showcaseSubmissions, Math.min(SHOWCASE_SAMPLE_SIZE, showcaseSubmissions.length));
+
+    grid.innerHTML = sample.map(item => `
         <figure class="showcase-card">
-            <img src="${escapeAttr(item.image_url)}" alt="${escapeAttr(item.caption || 'Teacher Studio creation')}" loading="lazy">
+            <img src="${escapeAttr(item.image_url)}" alt="${escapeAttr(item.title || item.caption || 'Teacher Studio creation')}" loading="lazy">
             <figcaption>
+                ${item.title ? `<h3>${escapeHTML(item.title)}</h3>` : ''}
                 ${item.caption ? `<p>${escapeHTML(item.caption)}</p>` : ''}
-                ${item.name ? `<span class="showcase-name">${escapeHTML(item.name)}</span>` : ''}
+                ${item.maker ? `<span class="showcase-maker">by ${escapeHTML(item.maker)}</span>` : ''}
             </figcaption>
         </figure>
     `).join('');

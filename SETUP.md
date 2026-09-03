@@ -54,11 +54,11 @@ The form is already live: https://forms.gle/mYfvcYatq97hKuVz8 (set as `show_tell
 
 1. Open the Form's **Responses → linked Sheet** (the raw response sheet — leave its existing columns alone except for step 2).
 2. Add a column called **Approved** (a checkbox or plain TRUE/FALSE) after the existing columns. This is where you moderate — check it for any photo you're OK showing publicly.
-3. Add a **second tab** to the spreadsheet (bottom tab bar → `+`), call it `Public`, and put a `QUERY()` formula in cell A1 that selects only the Timestamp/Name/Caption/Photo columns where Approved = TRUE, e.g.:
+3. Add a **second tab** to the spreadsheet (bottom tab bar → `+`), call it `Public` (or `Approved`), and put a `QUERY()` formula in cell A1 that selects only the columns the site needs, where Approved = TRUE, e.g.:
    ```
-   =QUERY('Form Responses 1'!A:E, "SELECT A, B, C, D WHERE E = TRUE LABEL A 'Timestamp', B 'Name', C 'Caption', D 'Photo'", 1)
+   =QUERY('Form Responses 1'!A:F, "SELECT A, D, B, C, E WHERE F = TRUE LABEL A 'Timestamp', D 'Maker', B 'Title', C 'Caption', E 'Photo'", 1)
    ```
-   The sheet name (`Form Responses 1`) and column letters (`A:E`, and which of B/C/D/E is Name vs. Caption vs. Photo vs. Approved) depend on the exact order your form questions were created in — **use the actual header row of your raw response sheet to get these right**, since the `SELECT` letters must point at the real Name/Caption/Photo/Approved columns.
+   The sheet name (`Form Responses 1`), column letters, and which of your raw columns is which depend on the exact order your form questions were created in — **use the actual header row of your raw response sheet to get these right**, since the `SELECT` letters must point at your real project-title/description/maker-name/photo/Approved columns. The site only requires a **Photo** column (the header text matters, not the letter) — **Maker**, **Title**, and **Caption** are all optional and shown if present, so you can include as many or as few as you like.
    This tab shows *only* approved rows, and only the columns the site needs — no email addresses or unapproved submissions ever leave the raw sheet.
 4. **Publish only the `Public` tab**: File → Share → Publish to web → choose the `Public` sheet (not "Entire document") → CSV → Publish. Copy the resulting URL.
 5. Paste that URL into `show_tell_csv_url` in `/admin` (Misc Settings) — no GitHub access needed, it's just another CMS field. (Or edit `data/site-settings.json` directly if `/admin` isn't live yet.)
