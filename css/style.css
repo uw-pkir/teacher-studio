@@ -200,11 +200,6 @@ img {
     padding: var(--space-lg) var(--space-2xl);
 }
 
-.btn-nav {
-    padding: var(--space-sm) var(--space-lg);
-    font-size: 0.875rem;
-}
-
 .btn-icon {
     font-size: 1.2em;
 }
@@ -251,11 +246,30 @@ img {
     display: block;
 }
 
+/* Always a dropdown menu (toggled by the hamburger below), on every screen
+   size -- not just mobile. */
 .nav-menu {
-    display: flex;
-    align-items: center;
-    gap: var(--space-lg);
     list-style: none;
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background: var(--white);
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-lg);
+    gap: var(--space-md);
+    border-bottom: 1px solid var(--gray-200);
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-base);
+}
+
+.nav-menu.active {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
 }
 
 .nav-menu a {
@@ -269,7 +283,7 @@ img {
 }
 
 .nav-toggle {
-    display: none;
+    display: flex;
     flex-direction: column;
     gap: 5px;
     background: none;
@@ -1010,36 +1024,6 @@ img {
 
     .footer-brand {
         grid-column: span 2;
-    }
-}
-
-/* The nav has 7 links plus a button now, so it needs the hamburger sooner
-   than the rest of the mobile-only adjustments below. */
-@media (max-width: 1024px) {
-    .nav-menu {
-        position: fixed;
-        top: 70px;
-        left: 0;
-        right: 0;
-        background: var(--white);
-        flex-direction: column;
-        padding: var(--space-lg);
-        gap: var(--space-md);
-        border-bottom: 1px solid var(--gray-200);
-        transform: translateY(-100%);
-        opacity: 0;
-        visibility: hidden;
-        transition: all var(--transition-base);
-    }
-
-    .nav-menu.active {
-        transform: translateY(0);
-        opacity: 1;
-        visibility: visible;
-    }
-
-    .nav-toggle {
-        display: flex;
     }
 }
 
