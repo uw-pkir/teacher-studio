@@ -277,39 +277,33 @@ function renderMaterialsBlock(item, wrapperClass) {
     `;
 }
 
-// ===== Workshop schedule: every upcoming workshop, nearest first =====
+// ===== Workshop schedule: a condensed calendar of every upcoming date =====
+// Full detail on whichever one is next already lives in the Next Workshop
+// spotlight above, so this is intentionally just the dates.
 function renderSchedule(upcoming, settings) {
-    const grid = document.getElementById('workshop-grid');
+    const timeNote = document.getElementById('schedule-time-note');
+    if (timeNote) timeNote.textContent = settings.workshop_time ? `, ${settings.workshop_time}` : '';
+
+    const list = document.getElementById('schedule-dates');
     if (!upcoming.length) {
-        grid.innerHTML = '<p>Information coming soon.</p>';
+        list.innerHTML = '<p>Information coming soon.</p>';
         return;
     }
 
-    grid.innerHTML = upcoming.map((item, index) => {
+    list.innerHTML = upcoming.map((item, index) => {
         const itemDate = parseLocalDate(item.date);
-        const isFeatured = index === 0;
         const month = itemDate.toLocaleDateString('en-US', { month: 'short' });
         const day = itemDate.getDate();
 
         return `
-            <div class="workshop-card ${isFeatured ? 'featured' : ''}">
-                ${isFeatured ? '<div class="workshop-badge">Up Next!</div>' : ''}
-                <div class="workshop-date">
-                    <span class="month">${month}</span>
-                    <span class="day">${day}</span>
-                </div>
-                <div class="workshop-info">
-                    <span class="workshop-status upcoming">Upcoming</span>
-                    <h3><span class="workshop-icon">${renderIcon(item.icon)}</span> ${escapeHTML(item.title)}</h3>
-                    <p>${escapeHTML(item.description || '')}</p>
-                    <span class="workshop-time">${escapeHTML(settings.workshop_time || '')}</span>
-                    ${isFeatured ? '<a href="#next-event" class="btn btn-small">Register</a>' : ''}
-                </div>
+            <div class="schedule-date-chip c${index % 4}" title="${escapeAttr(item.title)}">
+                <span class="month">${month}</span>
+                <span class="day">${day}</span>
             </div>
         `;
     }).join('');
 
-    observeFadeIn(grid, '.workshop-card');
+    observeFadeIn(list, '.schedule-date-chip');
 }
 
 // ===== Resources / past workshop archive =====

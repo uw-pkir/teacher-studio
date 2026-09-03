@@ -24,9 +24,10 @@ const FALLBACK_ICON = '🧩';
 const PLACEHOLDER_TITLE = 'Topic announced a few weeks before the gathering';
 
 function parseUSDate(str) {
-    const m = (str || '').trim().match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+    const m = (str || '').trim().match(/^(\d{1,2})\/(\d{1,2})\/(\d{2}|\d{4})$/);
     if (!m) return null;
-    const [, mo, da, yr] = m;
+    const [, mo, da, yrRaw] = m;
+    const yr = yrRaw.length === 2 ? `20${yrRaw}` : yrRaw;
     return `${yr}-${mo.padStart(2, '0')}-${da.padStart(2, '0')}`;
 }
 
@@ -131,23 +132,21 @@ async function main() {
     if (seasonUrl) {
         try {
             const seasonRows = await fetchTSV(seasonUrl);
-            const seasonHeader = seasonRows[0];
-            const iSeasonDate = colIndex(seasonHeader, 'Date');
-            if (iSeasonDate !== -1) {
-                for (const r of seasonRows.slice(1)) {
-                    const date = parseUSDate(r[iSeasonDate]);
-                    if (!date || date < todayISO || byDate.has(date)) continue;
-                    byDate.set(date, {
-                        date,
-                        icon: FALLBACK_ICON,
-                        title: PLACEHOLDER_TITLE,
-                        description: '',
-                        required_materials: [],
-                        nice_to_have_materials: [],
-                        _linkUrls: [],
-                        _ts: 0
-                    });
-                }
+            // Just one column of dates -- always column 0, regardless of
+            // what its header happens to be worded ("Date", "Dates", ...).
+            for (const r of seasonRows.slice(1)) {
+                const date = parseUSDate(r[0]);
+                if (!date || date < todayISO || byDate.has(date)) continue;
+                byDate.set(date, {
+                    date,
+                    icon: FALLBACK_ICON,
+                    title: PLACEHOLDER_TITLE,
+                    description: '',
+                    required_materials: [],
+                    nice_to_have_materials: [],
+                    _linkUrls: [],
+                    _ts: 0
+                });
             }
         } catch (err) {
             console.warn(`Could not read season_dates_tsv_url, skipping: ${err.message}`);

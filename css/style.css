@@ -461,117 +461,52 @@ img {
     background: var(--bg-primary);
 }
 
-.workshop-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: var(--space-lg);
-}
-
-.workshop-card {
-    position: relative;
-    background: var(--white);
-    border-radius: var(--radius-lg);
-    padding: var(--space-lg);
+/* Condensed season calendar: just the dates, in colored boxes -- full
+   detail on the nearest one already lives in the Next Workshop spotlight
+   above, so repeating title/materials placeholders for every date here
+   would just be noise. */
+.schedule-dates {
     display: flex;
-    gap: var(--space-lg);
-    box-shadow: var(--shadow-sm);
-    transition: all var(--transition-base);
-    border: 2px solid transparent;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-md);
 }
 
-.workshop-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-md);
-}
-
-.workshop-card.featured {
-    border-color: var(--primary);
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.03), rgba(244, 114, 182, 0.03));
-}
-
-.workshop-card.past {
-    opacity: 0.6;
-}
-
-.workshop-badge {
-    position: absolute;
-    top: -10px;
-    right: var(--space-lg);
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
-    color: var(--white);
-    font-family: var(--font-display);
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: var(--space-xs) var(--space-md);
-    border-radius: var(--radius-full);
-}
-
-.workshop-date {
-    flex-shrink: 0;
-    width: 60px;
-    height: 70px;
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+.schedule-date-chip {
+    width: 72px;
+    height: 80px;
     border-radius: var(--radius-md);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     color: var(--white);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition-base);
 }
 
-.workshop-date .month {
+.schedule-date-chip:hover {
+    transform: translateY(-3px);
+}
+
+.schedule-date-chip .month {
     font-size: 0.75rem;
     font-weight: 500;
     text-transform: uppercase;
     opacity: 0.9;
 }
 
-.workshop-date .day {
+.schedule-date-chip .day {
     font-family: var(--font-display);
     font-size: 1.5rem;
     font-weight: 700;
     line-height: 1;
 }
 
-.workshop-info {
-    flex: 1;
-}
-
-.workshop-status {
-    display: inline-block;
-    font-size: 0.75rem;
-    font-weight: 500;
-    color: var(--gray-500);
-    margin-bottom: var(--space-xs);
-}
-
-.workshop-status.upcoming {
-    color: var(--accent-green);
-}
-
-.workshop-info h3 {
-    font-size: 1.125rem;
-    margin-bottom: var(--space-xs);
-}
-
-.workshop-icon {
-    font-size: 1.125rem;
-}
-
-.workshop-info p {
-    font-size: 0.875rem;
-    color: var(--gray-600);
-    margin-bottom: var(--space-sm);
-}
-
-.workshop-time {
-    font-size: 0.75rem;
-    color: var(--gray-500);
-}
-
-.workshop-info .btn {
-    margin-top: var(--space-sm);
-}
+.schedule-date-chip.c0 { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); }
+.schedule-date-chip.c1 { background: linear-gradient(135deg, var(--secondary), var(--primary-light)); }
+.schedule-date-chip.c2 { background: linear-gradient(135deg, var(--accent-orange), var(--accent-yellow)); }
+.schedule-date-chip.c3 { background: linear-gradient(135deg, var(--accent-cyan), var(--primary-light)); }
 
 /* ===== Register Section ===== */
 .register {
@@ -1156,7 +1091,6 @@ img {
         font-size: 2rem;
     }
 
-    .workshop-grid,
     .resources-grid,
     .hubs-grid,
     .team-grid {
@@ -1185,17 +1119,9 @@ img {
         width: 100%;
     }
 
-    .workshop-card {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .workshop-date {
-        width: 100%;
-        flex-direction: row;
-        height: auto;
-        padding: var(--space-sm);
-        gap: var(--space-sm);
+    .schedule-date-chip {
+        width: 64px;
+        height: 70px;
     }
 }
 
