@@ -1,44 +1,108 @@
-# Resume notes — Teacher Studio site rebuild
+# Teacher Studio — project status notes
 
-Where this stands as of the last session. Delete this file once everything below is resolved and you don't need it anymore.
+Read this first if you're picking this project up in a new session or on a
+different computer. Then `SETUP.md` for "how do I configure X" specifics,
+and `brand/BRAND.md` for logo/color/font usage.
 
-## Status
+## Where things stand
 
-All work is **committed locally but not pushed** to `origin/main` (7 commits on top of the original `264d41c` — run `git log --oneline` to see them). Nothing is live yet; the deployed GitHub Pages site still shows the old version. `git push` when ready to go live.
+Everything in `SETUP.md` is live and working — this isn't a partially-built
+project. Specifically:
+- `/admin` (Decap CMS) OAuth is configured and in active use.
+- Workshops (next-workshop banner, schedule grid, resource archive) sync
+  hourly from a Google Form/Sheet.
+- Show & Tell photos sync every 30 minutes from a separate, moderated
+  Google Form/Sheet.
+- Hub site map pins auto-geocode from a street address via a GitHub Action.
 
-## What was built
+**This repo's `main` branch is the live site** at
+https://uw-pkir.github.io/teacher-studio/ — every push deploys immediately.
+Sync bots (workshop sync, showcase sync, hub geocoding) and Decap CMS saves
+all commit directly to `main` on their own schedule, so **always
+`git pull --rebase origin main` before pushing** — expect to find bot
+commits waiting fairly often.
 
-A rebuild of https://github.com/uw-pkir/teacher-studio from a hardcoded static page into a data-driven site (see `SETUP.md` for full architecture/setup — start there). Short version:
-- Hub sites, organizers, and misc settings live in small JSON files under `data/`, edited via `/admin` (Decap CMS).
-- **Workshops (next-workshop banner, schedule grid, resource archive) are entirely driven by a Google Form/Sheet published as TSV**, not `/admin` — `scripts/sync-workshops.js` (run hourly by `.github/workflows/sync-workshops.yml`) builds `data/workshops.json` from it, and a workshop's date vs. today decides whether it's upcoming or archived. An optional second sheet (`season_dates_tsv_url`) can pre-populate the season's dates as placeholders. See SETUP.md section 2.
-- Show & Tell photos sync from a separate, moderated Google Form/Sheet via `.github/workflows/sync-showcase.yml` + `scripts/sync-showcase.js` (SETUP.md section 3).
-- `admin/` (Decap CMS) is **not yet wired up** — needs a GitHub OAuth App + a Cloudflare Worker deployed from `oauth-proxy/worker.js` (SETUP.md section 1). Until that's done, edits to hubs/organizers/settings have to go through Claude/git directly, not `/admin`.
+## How the site is put together
 
-## Local preview
+- Static HTML/CSS/JS, no build step, no npm install, no `node_modules` —
+  `index.html` + `css/style.css` + `js/main.js`, hand-written, no framework.
+- All page content is data-driven: `js/main.js`'s `loadAndRenderAll()`
+  fetches everything under `data/*.json` and renders it client-side.
+- `/admin` (Decap CMS) has three sections:
+  - **Site Content** — hub sites, organizers.
+  - **Update Section Text** — the headline + description shown at the top
+    of every section, plus About's icon/title/description feature rows.
+  - **Misc Settings** — registration link, workshop time, location note,
+    Show & Tell links, and the two published-sheet URLs used below.
+- Workshops and Show & Tell photos are **not** edited via `/admin` at all —
+  they come from Google Forms/Sheets, pulled in by scheduled GitHub Actions
+  (`scripts/sync-workshops.js`, `scripts/sync-showcase.js`).
+- Hub sites have two independent CMS checkboxes, **Hub** (`is_hub`) and
+  **Partner** (`is_partner`) — a location can be a meeting spot (map pin +
+  text list), an organizing partner (Partner Organizations list), both, or
+  split into two separate entries when the meeting spot and the partner org
+  differ (e.g. Appleton Public Library is Hub-only; Building for Kids
+  Children's Museum, the actual partner org in that city, is Partner-only).
+  Hubs, organizers, and partners all render alphabetically by name
+  (organizers by first name) regardless of CMS list order.
+- Hub map pins are geocoded automatically from a street address
+  (`scripts/geocode-hubs.js`, triggered on every push to `data/hubs.json`)
+  — no manual lat/lng entry needed; see `SETUP.md` section 5.
+- Section backgrounds alternate automatically based on their order in
+  `index.html` (CSS `main > section:nth-of-type(odd/even)`), so reordering
+  `<section>` blocks keeps the alternation correct with nothing to update
+  by hand. The nav menu order does need to be updated by hand to match,
+  though, if sections are ever reordered again.
 
-```powershell
-powershell -ExecutionPolicy Bypass -File scripts\serve-local.ps1
-```
-Then open http://localhost:8090/.
+## Where to look for what
 
-## Open items — what to pick up next
+- **First-time setup steps** (OAuth app, Cloudflare Worker, Google Sheets
+  wiring): `SETUP.md`.
+- **Logo/color/font usage, PNG exports, offline font files for flyers**:
+  `brand/BRAND.md`.
+- **Local preview** — this dev machine has no Node or Python installed, so
+  local testing uses a plain PowerShell static file server instead of a
+  real dev server:
+  ```powershell
+  powershell -ExecutionPolicy Bypass -File scripts\serve-local.ps1
+  ```
+  then open http://localhost:8090/. (The sync scripts themselves need
+  Node, but only ever run inside GitHub Actions, never locally.)
 
-1. **`/admin` CMS login isn't set up yet** (SETUP.md section 1) — needs a GitHub OAuth App + Cloudflare Worker deploy. `admin/config.yml`'s `base_url` still has a placeholder. Until this is live, edit `data/site-settings.json` etc. directly.
-2. **Workshops sync hasn't run for real yet** — `data/workshops.json` and `data/link-title-cache.json` were hand-built to match exactly what `scripts/sync-workshops.js` would produce (verified by running the same parsing logic against the real published TSV), but the Action itself won't run until this is pushed. First real run will re-fetch resource-link page titles server-side (Node has no CORS restriction, unlike the browser-based check used to validate this locally) — expect the placeholder `youtube.com`/`drive.google.com`-style link labels in the archive to become real page titles shortly after push.
-3. **`season_dates_tsv_url` is unset** — optional; without it the schedule grid only shows workshops that have actually been submitted to the Form (currently just one, for 2026-10-15).
-4. **`workshop_time` is set to "4:30-5:30 PM CST"** per Peter's correction — this is a single site-wide value now (not per-workshop), shown on both the spotlight and every schedule card.
-5. **Show & Tell pipeline is not functional yet.** The form URL is wired in (`https://forms.gle/mYfvcYatq97hKuVz8`), but still needed: the exact question order on that form (or the header row of its linked response Sheet, to write the right `QUERY()` formula), the "Approved" moderation column + "Public" tab + publish-to-web CSV, pasting that CSV URL into `show_tell_csv_url`, and sharing the form's Drive upload folder as "Anyone with the link – Viewer". See SETUP.md section 3.
-6. **Not pushed to GitHub yet.** Confirm with Peter before pushing (this repo is already live on Pages, so a push updates the deployed site immediately).
+## Known minor quirks (not urgent)
 
-## Decisions already made (don't re-litigate)
+- A couple of resource-archive links resolve to unhelpful auto-generated
+  titles ("Human Verification" for a bot-challenge page, bare "Amazon" for
+  an Amazon product link). `resolveLinkTitle()` in `scripts/sync-workshops.js`
+  already handles the common cases (YouTube/Vimeo oEmbed, junk-title
+  detection with a friendly fallback) but isn't exhaustive. Low-frequency
+  and cosmetic only — the real fix for any specific bad link is editing
+  that page's own `<title>`/`og:title` at the source.
+- The footer no longer links to `/admin` (removed along with the rest of
+  the footer links per an explicit request) — go to
+  `https://uw-pkir.github.io/teacher-studio/admin/` directly, or bookmark it.
 
-- GitHub Pages + Decap CMS chosen over staying on Google Sites (user wants a more custom design, still no-code editing).
-- OAuth via self-hosted Cloudflare Worker, not Netlify — user wanted to stay off Netlify.
-- Two editors need direct CMS access (Peter + one other); handled via plain GitHub collaborator invite, no custom roles needed.
-- Show & Tell is **moderated** (organizer approves via checkbox), not instant/unmoderated.
-- Both sync scripts read their source-sheet URLs from `data/site-settings.json`, not GitHub Actions secrets/variables — simpler, no GitHub Settings access needed, editable from `/admin`.
-- Esri Light Gray Base tiles for the hub map (Carto's free tier now requires an API key).
-- Hub sites use two independent booleans, `is_hub` and `is_partner` (in `data/hubs.json` / the CMS) — a location can be a meeting spot (map pin), an organizing partner (Partner Organizations list), both, or neither field forced to match the other. Fermilab MakerSpace is `is_hub: false, is_partner: true` (partner only, no map pin).
-- **Workshops moved from `/admin`-edited JSON to a Google Form/Sheet** (this session's main change) — one row per workshop, date decides upcoming vs. archived, no more manually copying data between a schedule file and an archive file. The 18 hand-migrated legacy archive entries from the original Google Sites import were retired in favor of this — the archive is now 100% sheet-driven, per explicit instruction.
-- Missing emoji (blank cell, or a synthesized season-date placeholder) always falls back to 🧩.
-- Archive resource-card layout stayed compact-grid-plus-modal (not redesigned into fuller inline cards) — modal just grew a second material list.
+## Decisions made (context — don't re-litigate)
+
+- GitHub Pages + Decap CMS chosen over staying on Google Sites.
+- OAuth via a self-hosted Cloudflare Worker (`oauth-proxy/worker.js`), not
+  Netlify.
+- Show & Tell is moderated (a checkbox column in the response sheet), not
+  instant/unmoderated.
+- Both sync scripts read their source-sheet URLs from
+  `data/site-settings.json` (CMS-editable), not GitHub Actions
+  secrets/variables — no GitHub Settings access needed to change them.
+- Esri Light Gray Base map tiles (Carto's free tier now requires an API key).
+- The 18 hand-migrated legacy archive entries from the original Google
+  Sites import were retired — the resource archive is 100% sheet-driven.
+- Missing emoji (a blank cell, or a synthesized season-date placeholder)
+  always falls back to 🧩; a workshop icon otherwise gets a random
+  quilt-flourish patch.
+- Current section order: Hero, Next Workshop, Schedule, Show & Tell, Past
+  Workshops, About Us, Hubs, Organizers — nav menu order matches.
+- The interactive hero quilt-logo animation plays for everyone regardless
+  of the OS "reduce motion" setting, since testing showed that setting is
+  commonly on for reasons unrelated to actual motion sensitivity
+  (IT-managed machines, Remote Desktop, performance tuning), and the
+  animation itself is a brief, click-triggered effect rather than
+  autoplaying motion.

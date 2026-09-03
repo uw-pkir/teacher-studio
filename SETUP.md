@@ -75,3 +75,12 @@ The sync runs automatically every 30 minutes (`.github/workflows/sync-showcase.y
 ## 5. Hub site map pins
 
 Each physical hub's map pin is placed automatically from its **Street Address** field in `/admin` (Site Content → Hub Sites / Organizing Partners) — type a normal address like `201 W Mifflin St, Madison, WI 53703` and save. That push triggers `.github/workflows/geocode-hubs.yml`, which looks the address up via OpenStreetMap's free Nominatim geocoder (`scripts/geocode-hubs.js`) and commits the resulting Latitude/Longitude back into `data/hubs.json` within a minute or two — no need to touch those two fields yourself; leave them blank. Results are cached in `data/hub-geocode-cache.json` so re-runs don't re-query an address that hasn't changed. If an address can't be found (typo, or too vague), the workflow logs a warning and leaves that hub's existing pin (if any) untouched rather than removing it — check the **Actions** tab → "Geocode hub site addresses" if a pin doesn't show up where expected.
+
+## 6. Hub vs. Partner
+
+Each entry in Site Content → Hub Sites / Organizing Partners has two independent checkboxes:
+
+- **Hub** — shows this entry as a pin on the map and in the text list of hub sites below it.
+- **Partner** — shows this entry in the "Partner Organizations" list at the bottom of the page.
+
+An entry can be either, both, or (by unchecking both) neither. This matters when the physical meeting spot in a city isn't the same organization as the actual organizing partner there — e.g. a workshop might meet at a public library (Hub: yes, Partner: no), while the real organizing partner for that region is a museum across town (Hub: no, Partner: yes). Give each its own entry rather than trying to force one entry to cover both roles. All three lists (hubs, the hub text list, and partners) render alphabetically by name, so there's no need to keep them in any particular order in the CMS.

@@ -27,7 +27,7 @@ Each has a matching PNG (512×512, transparent background) alongside its SVG, fo
 
 | Swatch | Name | Hex | Use it for |
 |---|---|---|---|
-| 🟣 | Primary (Indigo) | `#6366f1` | Buttons, links, headings, primary UI accents |
+| 🟣 | Primary (Indigo) | `#5a5dea` | Buttons, links, headings, primary UI accents |
 | 🟣 | Primary Light | `#818cf8` | Gradient partner for Primary |
 | 🟣 | Primary Dark | `#4f46e5` | Gradient partner for Primary, hover states |
 | 🩷 | Secondary (Pink) | `#f472b6` | Secondary accents, gradient partner for Primary |
@@ -39,6 +39,8 @@ Each has a matching PNG (512×512, transparent background) alongside its SVG, fo
 | ⚪ | Backgrounds | `#faf7ff` (tinted), `#ffffff` (white) | Page/section backgrounds |
 
 The site's overall "vibe" colors — the four that show up most, especially in the logo and decorative quilt patches — are **orange, purple (indigo), pink, and teal**. Yellow and green exist in the palette but are used more sparingly, mostly in gradients.
+
+Note: the logo and flourish patches use a slightly brighter indigo (`#6366f1`, `QUILT_PALETTE` in `js/main.js`) than the UI's `--primary` (`#5a5dea`) — the two started out matching, but `--primary` was darkened later to meet AA text-contrast requirements on white buttons/links, a constraint that doesn't apply to a decorative quilt patch. Use `#6366f1` for anything matching the logo/patches, `#5a5dea` for anything matching a button or link.
 
 ## Typography
 
