@@ -721,7 +721,12 @@ img {
     background: var(--bg-primary);
     border-radius: var(--radius-lg);
     padding: var(--space-xl);
-    box-shadow: var(--shadow-sm);
+    /* Stronger than --shadow-sm (used on the Show & Tell cards) on purpose:
+       these cards sit on a plain white section, and their own tinted
+       background is close enough in hue to --shadow-sm that it read as
+       nearly invisible there -- the Show & Tell cards get their separation
+       mostly from the white-card-on-tinted-section contrast instead. */
+    box-shadow: 0 4px 14px rgba(30, 27, 75, 0.12);
     transition: all var(--transition-base);
     border: 2px solid transparent;
 }
