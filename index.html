@@ -94,11 +94,13 @@
                     </div>
                 </div>
                 <button type="button" class="btn btn-secondary btn-small" id="showcase-shuffle">🔀 Shuffle</button>
+                <p class="sr-only" role="status" id="showcase-shuffle-status"></p>
             </div>
             <div class="gallery-submit">
                 <p>Made something awesome at a workshop? We want to see it!</p>
                 <a href="#" id="show-tell-form-link" target="_blank" class="btn btn-primary">
                     Submit a Project
+                    <span class="sr-only"> (opens in a new tab)</span>
                     <span class="btn-icon" aria-hidden="true">↑</span>
                 </a>
             </div>
@@ -117,6 +119,7 @@
                 <p>Loading resources&hellip;</p>
             </div>
             <button type="button" class="btn btn-secondary btn-small" id="resources-shuffle">🔀 Shuffle</button>
+            <p class="sr-only" role="status" id="resources-shuffle-status"></p>
         </div>
     </section>
 
@@ -201,15 +204,15 @@
             <h2 class="modal-title" id="modal-title"></h2>
             <p class="modal-description"></p>
             <div class="modal-materials modal-materials-required">
-                <h4>Required Materials</h4>
+                <h3>Required Materials</h3>
                 <ul class="materials-list"></ul>
             </div>
             <div class="modal-materials modal-materials-nice">
-                <h4>Nice to Have</h4>
+                <h3>Nice to Have</h3>
                 <ul class="materials-list"></ul>
             </div>
             <div class="modal-links">
-                <h4>Shared Resources</h4>
+                <h3>Shared Resources</h3>
                 <ul class="modal-links-list"></ul>
             </div>
         </div>

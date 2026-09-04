@@ -8,6 +8,13 @@
     --primary-light: #818cf8;
     --primary-dark: #4f46e5;
     --secondary: #f472b6;     /* Pink */
+    /* A darker pink used only for the hero's gradient-clipped highlight
+       text -- --secondary is tuned for backgrounds sitting behind light or
+       dark text, but gradient TEXT needs every point along the gradient to
+       independently clear contrast on its own, and --secondary's light end
+       measured as low as 2.5:1 against the hero background. This pairs
+       with --primary at 5.0-6.3:1 across the whole gradient. */
+    --highlight-pink: #be185d;
     --accent-yellow: #fbbf24;
     --accent-green: #34d399;
     --accent-orange: #fb923c;
@@ -107,6 +114,21 @@ main > section:nth-of-type(even) {
 
 .skip-link:focus {
     top: var(--space-md);
+}
+
+/* Visually hidden but still reachable by screen readers -- used for status
+   messages (e.g. "Showing 3 new resources") that only assistive tech needs
+   to hear, since the visual update is already obvious on screen. */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -354,7 +376,11 @@ img {
 .nav-toggle {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
     gap: 5px;
+    min-width: 44px;
+    min-height: 44px;
     background: none;
     border: none;
     cursor: pointer;
@@ -446,7 +472,7 @@ img {
 }
 
 .hero .highlight {
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    background: linear-gradient(135deg, var(--primary), var(--highlight-pink));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -509,7 +535,7 @@ img {
     line-height: 1;
 }
 
-.feature h4 {
+.feature h3 {
     font-size: 1.125rem;
     margin-bottom: var(--space-xs);
 }
@@ -1353,7 +1379,7 @@ img {
     margin-bottom: var(--space-xl);
 }
 
-.modal-materials h4 {
+.modal-materials h3 {
     font-size: 1rem;
     margin-bottom: var(--space-md);
     color: var(--dark);
@@ -1394,7 +1420,7 @@ img {
     padding-top: var(--space-lg);
 }
 
-.modal-links h4 {
+.modal-links h3 {
     font-size: 1rem;
     margin-bottom: var(--space-md);
     color: var(--dark);
@@ -1486,7 +1512,7 @@ img {
     margin-bottom: var(--space-lg);
 }
 
-.next-event-materials h4 {
+.next-event-materials h3 {
     font-size: 0.9375rem;
     margin-bottom: var(--space-sm);
     color: var(--white);

@@ -108,6 +108,9 @@ function randomQuiltColor() {
     return QUILT_PALETTE[Math.floor(Math.random() * QUILT_PALETTE.length)];
 }
 
+// Set the moment anyone manually clicks a tile -- see scheduleAmbientFlip.
+let ambientFlipStopped = false;
+
 function initHeroLogo() {
     const grid = document.getElementById('hero-logo-grid');
     if (!grid) return;
@@ -134,7 +137,13 @@ function initHeroLogo() {
         tile.className = 'hero-tile';
         tile.style.background = background;
         tile.setAttribute('aria-label', `Shuffle quilt square ${index + 1}`);
-        tile.addEventListener('click', () => flipTile(tile));
+        tile.addEventListener('click', () => {
+            // A manual click is treated as the pause control for the ambient
+            // auto-flip below (WCAG 2.2.2) -- once someone's found the
+            // interaction, the ambient hint has done its job.
+            ambientFlipStopped = true;
+            flipTile(tile);
+        });
         grid.appendChild(tile);
     });
 
@@ -149,8 +158,10 @@ function initHeroLogo() {
 }
 
 function scheduleAmbientFlip(grid) {
+    if (ambientFlipStopped) return;
     const delay = 5000 + Math.random() * 5000;
     setTimeout(() => {
+        if (ambientFlipStopped) return;
         const tiles = grid.querySelectorAll('.hero-tile');
         if (tiles.length) flipTile(tiles[Math.floor(Math.random() * tiles.length)]);
         scheduleAmbientFlip(grid);
@@ -291,7 +302,7 @@ function renderAboutFeatures(features) {
         <div class="feature">
             <span class="feature-icon" aria-hidden="true">${escapeHTML(f.icon)}</span>
             <div>
-                <h4>${escapeHTML(f.title)}</h4>
+                <h3>${escapeHTML(f.title)}</h3>
                 <p>${escapeHTML(f.description)}</p>
             </div>
         </div>
@@ -340,6 +351,7 @@ function renderNextEvent(event, settings) {
                 <p class="next-event-description">We're finalizing the schedule for our next gathering &mdash; check back soon, or register below to be notified.</p>
                 <a href="${escapeAttr(registerUrl)}" target="_blank" class="btn btn-primary btn-large">
                     Register
+                    <span class="sr-only"> (opens in a new tab)</span>
                     <span class="btn-icon" aria-hidden="true">→</span>
                 </a>
                 <p class="next-event-location">${escapeHTML(locationNote)}</p>
@@ -357,6 +369,7 @@ function renderNextEvent(event, settings) {
             ${renderMaterialsBlock(event, 'next-event-materials')}
             <a href="${escapeAttr(registerUrl)}" target="_blank" class="btn btn-primary btn-large">
                 Register for ${parseLocalDate(event.date).toLocaleDateString('en-US', { month: 'long' })}
+                <span class="sr-only"> (opens in a new tab)</span>
                 <span class="btn-icon" aria-hidden="true">→</span>
             </a>
             <p class="next-event-location">${escapeHTML(locationNote)}</p>
@@ -372,8 +385,8 @@ function renderMaterialsBlock(item, wrapperClass) {
     if (!hasRequired && !hasNice) return '';
     return `
         <div class="${wrapperClass}">
-            ${hasRequired ? `<div><h4>Required Materials</h4><ul>${renderBullets(item.required_materials)}</ul></div>` : ''}
-            ${hasNice ? `<div><h4>Nice to Have</h4><ul>${renderBullets(item.nice_to_have_materials)}</ul></div>` : ''}
+            ${hasRequired ? `<div><h3>Required Materials</h3><ul>${renderBullets(item.required_materials)}</ul></div>` : ''}
+            ${hasNice ? `<div><h3>Nice to Have</h3><ul>${renderBullets(item.nice_to_have_materials)}</ul></div>` : ''}
         </div>
     `;
 }
@@ -446,6 +459,20 @@ function renderResourceSample() {
     });
 
     observeFadeIn(grid, '.resource-card');
+
+    // Shuffling swaps the cards with no focus change, so screen-reader
+    // users get no other signal that anything happened -- announce it.
+    announceStatus('resources-shuffle-status', `Showing ${visibleResources.length} new resources.`);
+}
+
+// Sets a role="status" element's text so assistive tech announces it --
+// clearing first forces the announcement even when the new text is
+// identical to what was already there (e.g. shuffling always lands on 3).
+function announceStatus(id, text) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = '';
+    setTimeout(() => { el.textContent = text; }, 50);
 }
 
 // Fisher-Yates, then take the first n.
@@ -514,7 +541,7 @@ function openResourceModal(resource, triggerEl) {
     const linksList = modal.querySelector('.modal-links-list');
     if (resource.links && resource.links.length) {
         linksList.innerHTML = resource.links
-            .map(l => `<li><a href="${escapeAttr(l.url)}" target="_blank" rel="noopener">${escapeHTML(l.label)}</a></li>`)
+            .map(l => `<li><a href="${escapeAttr(l.url)}" target="_blank" rel="noopener">${escapeHTML(l.label)}<span class="sr-only"> (opens in a new tab)</span></a></li>`)
             .join('');
         linksBlock.style.display = '';
     } else {
@@ -561,7 +588,7 @@ function renderHubs(hubs) {
                     <h3>${escapeHTML(hub.name)}</h3>
                     <span class="hub-list-location">${escapeHTML(hub.location)}</span>
                     <p>${escapeHTML(hub.description)}</p>
-                    <a href="${escapeAttr(hub.website)}" target="_blank" rel="noopener">Visit Website →</a>
+                    <a href="${escapeAttr(hub.website)}" target="_blank" rel="noopener">Visit Website →<span class="sr-only"> (opens in a new tab)</span></a>
                 </div>
             </li>
         `).join('');
@@ -601,7 +628,7 @@ function renderHubs(hubs) {
                 <h3>${escapeHTML(hub.name)}</h3>
                 <span class="hub-popup-location">${escapeHTML(hub.location)}</span>
                 <p>${escapeHTML(hub.description)}</p>
-                <a href="${escapeAttr(hub.website)}" target="_blank" class="hub-popup-link">Visit Website →</a>
+                <a href="${escapeAttr(hub.website)}" target="_blank" class="hub-popup-link">Visit Website →<span class="sr-only"> (opens in a new tab)</span></a>
             </div>
         `, { maxWidth: 300, className: 'hub-popup-wrapper' });
         return marker;
@@ -622,6 +649,7 @@ function renderPartners(hubs) {
             <a href="${escapeAttr(h.website)}" target="_blank" rel="noopener">
                 <img class="partner-icon" src="${randomFlourish()}" alt="">
                 ${escapeHTML(h.name)}
+                <span class="sr-only"> (opens in a new tab)</span>
             </a>
         `)
         .join('');
@@ -685,6 +713,7 @@ function renderShowcaseSample() {
     `).join('');
 
     observeFadeIn(grid, '.showcase-card');
+    announceStatus('showcase-shuffle-status', `Showing ${sample.length} new photos.`);
 }
 
 // ===== Small helpers =====
