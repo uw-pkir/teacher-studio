@@ -8,16 +8,14 @@
     --primary-light: #818cf8;
     --primary-dark: #4f46e5;
     --secondary: #f472b6;     /* Pink */
-    /* A pink/orange pair used only for the hero's gradient-clipped
-       highlight text -- --secondary and --accent-orange are tuned for
-       backgrounds sitting behind light or dark text, but gradient TEXT
-       needs every point along the gradient to independently clear
-       contrast on its own, and both of those measured well under 3:1
-       against the hero background on their own. These two stay
-       3.6-4.6:1 across the whole gradient while still reading as bright,
-       saturated pink/orange rather than a dark, muddy tone. */
-    --highlight-pink: #db2777;
-    --highlight-orange: #ea580c;
+    /* Indigo/teal pair used only for the hero's gradient-clipped highlight
+       text, matching the quilt logo's own palette. The indigo is the
+       logo's exact hue (6366f1, 4.47:1 alone); the logo's teal (22d3d3)
+       only measures 1.85:1 on its own, so this uses a darker teal from
+       the same hue instead -- together they hold 3.7-4.5:1 across the
+       whole gradient, clear of the 3:1 minimum for large text. */
+    --highlight-indigo: #6366f1;
+    --highlight-teal: #0d9488;
     --accent-yellow: #fbbf24;
     --accent-green: #34d399;
     --accent-orange: #fb923c;
@@ -475,7 +473,7 @@ img {
 }
 
 .hero .highlight {
-    background: linear-gradient(135deg, var(--highlight-pink), var(--highlight-orange));
+    background: linear-gradient(135deg, var(--highlight-indigo), var(--highlight-teal));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
