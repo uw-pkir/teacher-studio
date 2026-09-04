@@ -228,6 +228,14 @@ img {
     font-size: 1.125rem;
 }
 
+#hubs-register-mount {
+    margin-top: var(--space-lg);
+}
+
+#hubs-register-mount:empty {
+    display: none;
+}
+
 #resources-shuffle {
     display: block;
     margin: var(--space-lg) auto 0;

@@ -238,7 +238,7 @@ async function loadAndRenderAll() {
     renderNextEvent(upcoming[0] || null, settings);
     renderSchedule(upcoming);
     renderResources(archive);
-    renderHubs(hubs);
+    renderHubs(hubs, upcoming[0] || null, settings);
     renderTeam(organizersData.organizers || [], organizersData.emeriti || []);
     renderPartners(hubs);
     renderShowcase(showcase);
@@ -576,7 +576,26 @@ function closeResourceModal() {
 }
 
 // ===== Hub sites map =====
-function renderHubs(hubs) {
+function renderHubs(hubs, nextEvent, settings) {
+    // An evergreen register button for anyone who reads this far down the
+    // page without having registered from the Next Workshop spotlight above
+    // -- same register_url and "Register for <Month>" pattern as that
+    // spotlight, so it always points at whatever's actually next.
+    const registerMount = document.getElementById('hubs-register-mount');
+    if (registerMount) {
+        const registerUrl = (settings && settings.register_url) || '#';
+        const label = nextEvent
+            ? `Register for ${parseLocalDate(nextEvent.date).toLocaleDateString('en-US', { month: 'long' })}`
+            : 'Register';
+        registerMount.innerHTML = `
+            <a href="${escapeHref(registerUrl)}" target="_blank" class="btn btn-primary">
+                ${label}
+                <span class="sr-only"> (opens in a new tab)</span>
+                <span class="btn-icon" aria-hidden="true">→</span>
+            </a>
+        `;
+    }
+
     const mapContainer = document.getElementById('hubs-map');
     // "Hub" and "Partner" are independent flags -- some entries are only a
     // meeting location (a hub with no organizing-partner role), some are
