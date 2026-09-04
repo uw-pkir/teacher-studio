@@ -766,8 +766,26 @@ function renderShowcaseSample() {
         </figure>
     `).join('');
 
+    // Bound via addEventListener rather than an inline onerror="" attribute
+    // -- the CSP's script-src has no 'unsafe-inline', so an inline handler
+    // attribute would just be silently blocked.
+    grid.querySelectorAll('.showcase-card img').forEach(img => {
+        img.addEventListener('error', () => handleShowcaseImageError(img), { once: true });
+    });
+
     observeFadeIn(grid, '.showcase-card');
     announceStatus('showcase-shuffle-status', `Showing ${sample.length} new photos.`);
+}
+
+// If a Show & Tell photo's Google Drive link is broken (file deleted, or
+// its sharing permission reverted to private after approval) the browser's
+// default broken-image glyph would otherwise show -- swap in a dimmed
+// quilt flourish instead, so it reads as "no photo" rather than "error".
+// The caption/maker/title in the same card is still real content worth
+// showing even when the photo itself isn't available.
+function handleShowcaseImageError(img) {
+    img.src = randomFlourish();
+    img.classList.add('showcase-image-broken');
 }
 
 // ===== Small helpers =====

@@ -65,6 +65,13 @@ commits waiting fairly often.
   `<section>` blocks keeps the alternation correct with nothing to update
   by hand. The nav menu order does need to be updated by hand to match,
   though, if sections are ever reordered again.
+- **The CSP's `script-src` has no `'unsafe-inline'`** -- an inline event
+  handler attribute (`onerror="..."`, `onclick="..."`, etc.) written into a
+  template string is silently blocked, not an error you'll see logged in
+  an obvious way. Wire up events with `addEventListener` after the markup
+  is in the DOM instead (see `handleShowcaseImageError` in `js/main.js`
+  for the pattern), the same way the resource-card click handlers already
+  do it.
 
 ## Where to look for what
 
@@ -83,6 +90,15 @@ commits waiting fairly often.
 
 ## Known minor quirks (not urgent)
 
+- The oldest archived workshop ("Cardboard Mask Making," Oct 2022) links to
+  a Squarespace-hosted PDF that now 404s. Same situation as above -- the
+  fix is deleting/replacing that link at the source (the Website Entry
+  form's response sheet), not something to hand-edit in `data/workshops.json`
+  directly, since the next hourly sync would just overwrite it.
+- No `robots.txt`, canonical `<link>` tag, or `schema.org` structured data
+  (an `Event` block for the workshop) yet -- meta description and Open
+  Graph/Twitter tags were added, but these three weren't, pending a
+  decision on whether they're worth doing for a single-page site.
 - A couple of resource-archive links resolve to unhelpful auto-generated
   titles ("Human Verification" for a bot-challenge page, bare "Amazon" for
   an Amazon product link). `resolveLinkTitle()` in `scripts/sync-workshops.js`
@@ -123,3 +139,16 @@ commits waiting fairly often.
   (IT-managed machines, Remote Desktop, performance tuning), and the
   animation itself is a brief, click-triggered effect rather than
   autoplaying motion.
+- Organizer photos are resized to fit within 250×250px before being
+  committed (they render as a ~100×100px circle, so that's already
+  retina-quality) -- the original, much larger uploads were bloating page
+  weight for no visual benefit. The CMS's Photo field now has a hint
+  saying so, so new uploads hopefully start off reasonably sized; if one
+  doesn't, there's no automatic resizing step, it just needs doing by hand
+  again (any image editor's "resize/scale" export, or ask to have it done
+  the same way as the rest).
+- A broken or removed Show & Tell photo (a deleted Drive file, or its
+  sharing permission reverted to private after approval) no longer shows
+  the browser's default broken-image icon -- `handleShowcaseImageError` in
+  `js/main.js` swaps in a small, dimmed quilt flourish instead, so the
+  card's caption/maker/title still reads fine even without the photo.

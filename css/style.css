@@ -1468,6 +1468,14 @@ img {
     background: var(--gray-100);
 }
 
+/* Broken-photo fallback -- see handleShowcaseImageError in js/main.js.
+   Insets and dims the swapped-in flourish so it reads as "no photo"
+   rather than filling the frame like a real photo would. */
+.showcase-card img.showcase-image-broken {
+    padding: 2.5rem;
+    opacity: 0.35;
+}
+
 .showcase-card figcaption {
     padding: var(--space-lg);
 }

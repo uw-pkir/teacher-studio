@@ -52,7 +52,7 @@ collections:
             fields:
               - { label: "Name", name: "name", widget: "string" }
               - { label: "Organization", name: "org", widget: "string" }
-              - { label: "Photo", name: "photo", widget: "image" }
+              - { label: "Photo", name: "photo", widget: "image", hint: "Shown as a small circular photo (about 100x100px) -- a square-ish image around 250x250px keeps the page fast to load. A much larger photo will still work, just adds unnecessary load time." }
           - label: "Organizers Emeriti (past organizers, shown as plain names below the current team)"
             name: "emeriti"
             widget: "list"
