@@ -860,7 +860,11 @@ img {
     padding: var(--space-lg);
     background: var(--bg-primary);
     border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
+    /* Same shadow as .resource-card -- both sit on a plain white section
+       with an off-white card background, so they need the same boost over
+       --shadow-sm to actually separate from it. No hover here, unlike the
+       resource cards: these aren't clickable. */
+    box-shadow: 0 4px 14px rgba(30, 27, 75, 0.12);
 }
 
 .hub-list-icon {
