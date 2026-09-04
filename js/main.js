@@ -137,6 +137,24 @@ function initHeroLogo() {
         tile.addEventListener('click', () => flipTile(tile));
         grid.appendChild(tile);
     });
+
+    // Flips one random tile on its own every 5-10s, so the block feels
+    // alive before anyone clicks anything. Unlike the click-triggered flip
+    // above, this *is* autoplaying/ambient motion -- exactly what reduced
+    // motion is meant to suppress -- so it's skipped entirely for anyone
+    // with that setting on, rather than exempted like the click case.
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        scheduleAmbientFlip(grid);
+    }
+}
+
+function scheduleAmbientFlip(grid) {
+    const delay = 5000 + Math.random() * 5000;
+    setTimeout(() => {
+        const tiles = grid.querySelectorAll('.hero-tile');
+        if (tiles.length) flipTile(tiles[Math.floor(Math.random() * tiles.length)]);
+        scheduleAmbientFlip(grid);
+    }, delay);
 }
 
 function randomQuiltFill() {
