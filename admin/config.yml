@@ -72,6 +72,28 @@ collections:
             fields:
               - { label: "Headline", name: "headline", widget: "string", hint: "Put a single asterisk on either side of a word to highlight it in color, e.g. \"Where Educators *Make* & *Learn* Together\"." }
               - { label: "Description", name: "description", widget: "text" }
+          - label: "Schedule"
+            name: "schedule"
+            widget: "object"
+            collapsed: true
+            fields:
+              - { label: "Headline", name: "headline", widget: "string" }
+              - { label: "Description", name: "description", widget: "text", hint: "Include the token {{time}} wherever the workshop time (set in Settings -> General Settings) should be inserted, e.g. \"...on Thursdays{{time}} — topics are...\"." }
+          - label: "Show & Tell"
+            name: "gallery"
+            widget: "object"
+            collapsed: true
+            fields:
+              - { label: "Headline", name: "headline", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+              - { label: "Submission note (shown above the Submit a Project button)", name: "submit_note", widget: "string", required: false }
+          - label: "Past Workshops (Resource Archive)"
+            name: "resources"
+            widget: "object"
+            collapsed: true
+            fields:
+              - { label: "Headline", name: "headline", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
           - label: "About Us"
             name: "about"
             widget: "object"
@@ -88,20 +110,6 @@ collections:
                   - { label: "Icon (an emoji)", name: "icon", widget: "string" }
                   - { label: "Title", name: "title", widget: "string" }
                   - { label: "Description", name: "description", widget: "text" }
-          - label: "Schedule"
-            name: "schedule"
-            widget: "object"
-            collapsed: true
-            fields:
-              - { label: "Headline", name: "headline", widget: "string" }
-              - { label: "Description", name: "description", widget: "text", hint: "Include the token {{time}} wherever the workshop time (set in Settings -> General Settings) should be inserted, e.g. \"...on Thursdays{{time}} — topics are...\"." }
-          - label: "Past Workshops (Resource Archive)"
-            name: "resources"
-            widget: "object"
-            collapsed: true
-            fields:
-              - { label: "Headline", name: "headline", widget: "string" }
-              - { label: "Description", name: "description", widget: "text" }
           - label: "Hubs"
             name: "hubs"
             widget: "object"
@@ -116,14 +124,6 @@ collections:
             fields:
               - { label: "Headline", name: "headline", widget: "string" }
               - { label: "Description", name: "description", widget: "text" }
-          - label: "Show & Tell"
-            name: "gallery"
-            widget: "object"
-            collapsed: true
-            fields:
-              - { label: "Headline", name: "headline", widget: "string" }
-              - { label: "Description", name: "description", widget: "text" }
-              - { label: "Submission note (shown above the Submit a Project button)", name: "submit_note", widget: "string", required: false }
 
   - name: "settings"
     label: "Settings"
