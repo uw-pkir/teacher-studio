@@ -66,7 +66,7 @@ The sync runs automatically every 30 minutes (`.github/workflows/sync-showcase.y
 
 ## 4. Monthly update (the whole point of this)
 
-**Entering a new workshop:** fill out the workshops Google Form (title, emoji, description, materials, and — once it's happened — resource links). That's it; no `/admin`, no git. It shows up as the Next Workshop banner automatically once its date is nearest, and moves itself into the archive once the date passes.
+**Entering a new workshop:** fill out the [Website Entry form](https://forms.gle/ST8NH8y8HczTDKbb8) (title, emoji, description, materials, and — once it's happened — resource links). That's it; no `/admin`, no git. It shows up as the Next Workshop banner automatically once its date is nearest, and moves itself into the archive once the date passes. This link, and a link to the Show & Tell approval sheet, are also shown right on the Settings page in `/admin`.
 
 **Everything else** (hub sites, organizers, every section's headline/description text, Show & Tell settings) is still edited at `https://uw-pkir.github.io/teacher-studio/admin/` — no code, no git. `/admin` has three sections:
 - **Hubs & Organizers** — hub sites/organizing partners, current organizers, and organizers emeriti.
