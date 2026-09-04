@@ -3,6 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- GitHub Pages can't set a real Content-Security-Policy header, so
+         this is the closest available equivalent. frame-ancestors can only
+         be set via a real header, not this meta tag, so it's left out here
+         -- see SETUP.md for why that's an accepted, unfixable-from-the-repo
+         gap on GitHub Pages. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com; style-src 'self' 'unsafe-inline' https://unpkg.com https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://server.arcgisonline.com https://drive.google.com; base-uri 'self'; form-action 'self'; object-src 'none'">
     <title>Teacher Studio | A Maker Learning Community for Educators</title>
     <link rel="icon" type="image/svg+xml" href="images/quilt-icon.svg">
     <link rel="stylesheet" href="css/style.css">

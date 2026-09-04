@@ -244,7 +244,7 @@ async function loadAndRenderAll() {
     renderShowcase(showcase);
     renderAboutFeatures((sectionText.about || {}).features);
 
-    if (settings.show_tell_form_url) {
+    if (settings.show_tell_form_url && isSafeHref(settings.show_tell_form_url)) {
         document.getElementById('show-tell-form-link').href = settings.show_tell_form_url;
     }
 }
@@ -349,7 +349,7 @@ function renderNextEvent(event, settings) {
                 <span class="section-tag">Next Workshop</span>
                 <h2>Information coming soon</h2>
                 <p class="next-event-description">We're finalizing the schedule for our next gathering &mdash; check back soon, or register below to be notified.</p>
-                <a href="${escapeAttr(registerUrl)}" target="_blank" class="btn btn-primary btn-large">
+                <a href="${escapeHref(registerUrl)}" target="_blank" class="btn btn-primary btn-large">
                     Register
                     <span class="sr-only"> (opens in a new tab)</span>
                     <span class="btn-icon" aria-hidden="true">→</span>
@@ -367,7 +367,7 @@ function renderNextEvent(event, settings) {
             <p class="next-event-when"><strong>When:</strong> ${formatLongDate(event.date)}, ${escapeHTML(settings.workshop_time || '')}</p>
             <p class="next-event-description">${escapeHTML(event.description)}</p>
             ${renderMaterialsBlock(event, 'next-event-materials')}
-            <a href="${escapeAttr(registerUrl)}" target="_blank" class="btn btn-primary btn-large">
+            <a href="${escapeHref(registerUrl)}" target="_blank" class="btn btn-primary btn-large">
                 Register for ${parseLocalDate(event.date).toLocaleDateString('en-US', { month: 'long' })}
                 <span class="sr-only"> (opens in a new tab)</span>
                 <span class="btn-icon" aria-hidden="true">→</span>
@@ -541,7 +541,7 @@ function openResourceModal(resource, triggerEl) {
     const linksList = modal.querySelector('.modal-links-list');
     if (resource.links && resource.links.length) {
         linksList.innerHTML = resource.links
-            .map(l => `<li><a href="${escapeAttr(l.url)}" target="_blank" rel="noopener">${escapeHTML(l.label)}<span class="sr-only"> (opens in a new tab)</span></a></li>`)
+            .map(l => `<li><a href="${escapeHref(l.url)}" target="_blank" rel="noopener">${escapeHTML(l.label)}<span class="sr-only"> (opens in a new tab)</span></a></li>`)
             .join('');
         linksBlock.style.display = '';
     } else {
@@ -588,7 +588,7 @@ function renderHubs(hubs) {
                     <h3>${escapeHTML(hub.name)}</h3>
                     <span class="hub-list-location">${escapeHTML(hub.location)}</span>
                     <p>${escapeHTML(hub.description)}</p>
-                    <a href="${escapeAttr(hub.website)}" target="_blank" rel="noopener">Visit Website →<span class="sr-only"> (opens in a new tab)</span></a>
+                    <a href="${escapeHref(hub.website)}" target="_blank" rel="noopener">Visit Website →<span class="sr-only"> (opens in a new tab)</span></a>
                 </div>
             </li>
         `).join('');
@@ -628,7 +628,7 @@ function renderHubs(hubs) {
                 <h3>${escapeHTML(hub.name)}</h3>
                 <span class="hub-popup-location">${escapeHTML(hub.location)}</span>
                 <p>${escapeHTML(hub.description)}</p>
-                <a href="${escapeAttr(hub.website)}" target="_blank" class="hub-popup-link">Visit Website →<span class="sr-only"> (opens in a new tab)</span></a>
+                <a href="${escapeHref(hub.website)}" target="_blank" class="hub-popup-link">Visit Website →<span class="sr-only"> (opens in a new tab)</span></a>
             </div>
         `, { maxWidth: 300, className: 'hub-popup-wrapper' });
         return marker;
@@ -646,7 +646,7 @@ function renderPartners(hubs) {
     list.innerHTML = hubs.filter(h => h.is_partner !== false)
         .sort((a, b) => a.name.localeCompare(b.name))
         .map(h => `
-            <a href="${escapeAttr(h.website)}" target="_blank" rel="noopener">
+            <a href="${escapeHref(h.website)}" target="_blank" rel="noopener">
                 <img class="partner-icon" src="${randomFlourish()}" alt="">
                 ${escapeHTML(h.name)}
                 <span class="sr-only"> (opens in a new tab)</span>
@@ -726,6 +726,30 @@ function escapeHTML(str) {
 
 function escapeAttr(str) {
     return escapeHTML(str);
+}
+
+// Rejects anything but a fully-qualified http(s)/mailto URL -- blocks a
+// "javascript:" or "data:" URI from ever becoming a live link, whether
+// it's set via an HTML string or a direct .href property assignment (the
+// latter skips HTML-escaping entirely, but a bad scheme works either way).
+// No relative URLs are expected here (every field this feeds is meant to
+// be a full external link), so a bare New URL(url) with no base -- rather
+// than resolving oddball input against the current page -- is deliberate.
+function isSafeHref(url) {
+    try {
+        const protocol = new URL(url).protocol;
+        return protocol === 'http:' || protocol === 'https:' || protocol === 'mailto:';
+    } catch {
+        return false;
+    }
+}
+
+// For href values built into an HTML string -- combines the scheme check
+// above with HTML-escaping. Applied to every dynamic href on the site,
+// not just ones sourced from the public workshop-entry form, since
+// defense-in-depth here is cheap and a CMS field could be wrong too.
+function escapeHref(url) {
+    return isSafeHref(url) ? escapeAttr(url) : '#';
 }
 
 // Easter egg: press "c" for confetti!

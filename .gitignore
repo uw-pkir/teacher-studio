@@ -1,0 +1,10 @@
+# Local secrets -- this project has none checked in today (Cloudflare Worker
+# secrets live in the Cloudflare dashboard, not a file), but this guards
+# against an accidental future commit of one.
+.env
+.env.*
+
+# Editor/OS cruft
+.DS_Store
+Thumbs.db
+*.swp

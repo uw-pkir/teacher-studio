@@ -23,6 +23,19 @@ const CACHE_PATH = path.join(__dirname, '..', 'data', 'link-title-cache.json');
 const FALLBACK_ICON = '🧩';
 const PLACEHOLDER_TITLE = 'Topic announced a few weeks before the gathering';
 
+// Only http(s) links are ever safe to render as a clickable <a href> on
+// the site -- anything else (javascript:, data:, etc.) gets dropped here.
+// These come straight from a public, unauthenticated Google Form, so
+// they can't be trusted at face value.
+function isSafeUrl(url) {
+    try {
+        const protocol = new URL(url).protocol;
+        return protocol === 'http:' || protocol === 'https:';
+    } catch {
+        return false;
+    }
+}
+
 function parseUSDate(str) {
     const m = (str || '').trim().match(/^(\d{1,2})\/(\d{1,2})\/(\d{2}|\d{4})$/);
     if (!m) return null;
@@ -209,7 +222,7 @@ async function main() {
             description: (r[iDesc] || '').trim(),
             required_materials: splitList(r[iReq]),
             nice_to_have_materials: splitList(r[iNice]),
-            _linkUrls: linkCols.map(i => (r[i] || '').trim()).filter(Boolean),
+            _linkUrls: linkCols.map(i => (r[i] || '').trim()).filter(Boolean).filter(isSafeUrl),
             _ts: ts
         });
     }

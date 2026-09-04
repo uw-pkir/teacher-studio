@@ -79,6 +79,16 @@ commits waiting fairly often.
   then open http://localhost:8090/. (The sync scripts themselves need
   Node, but only ever run inside GitHub Actions, never locally.)
 
+## ⚠️ Action needed: redeploy the OAuth Worker
+
+`oauth-proxy/worker.js` was hardened in a security review (origin-checked
+postMessage, a CSRF `state` cookie) -- **this only takes effect once the
+updated code is pasted into the actual Cloudflare Worker and saved.**
+Unlike everything else in this repo, the Worker doesn't auto-deploy from
+`git push`. Until that's done, `/admin` login still works, just without
+these protections. After redeploying, do one real login through `/admin`
+to confirm the flow still completes end to end.
+
 ## Known minor quirks (not urgent)
 
 - A couple of resource-archive links resolve to unhelpful auto-generated

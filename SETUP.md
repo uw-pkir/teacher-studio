@@ -46,6 +46,15 @@ The sync runs hourly, or trigger it immediately from the repo's **Actions** tab 
 
 **How resource link labels are chosen:** a plain scrape of a page's `<title>` is often useless (a cookie-consent wall, a bot challenge, or just "- YouTube" with nothing else) — so the sync tries, in order: (1) for YouTube/Vimeo links, the real video title via their public oEmbed APIs; (2) the page's `<title>`, or its `og:title` if the `<title>` looks like junk; (3) if everything looks like junk, a friendly label naming the resource type instead (e.g. "Google Doc", "Instagram post", "YouTube video") rather than a blank or unhelpful string. If a link's label still isn't great, the most reliable fix is editing the page's own title/`og:title` at the source, since that's what feeds all of this — there's no per-link description field to hand-edit in the sheet.
 
+**Resource links are filtered to http(s) only** before they're ever written to `data/workshops.json` — anything else (e.g. a `javascript:` URL) is silently dropped rather than becoming a clickable link on the site, since this field ultimately comes from a public, unauthenticated Google Form.
+
+**Workshop entries currently publish with no moderation step** — unlike Show & Tell (section 3), anything submitted to the Website Entry form goes live on the schedule/archive on the very next hourly sync, with no review in between. If that ever becomes a concern (the form link gets shared more widely, for instance), you can add the same two-tab moderation pattern Show & Tell uses:
+1. Add an **Approved** checkbox column to the raw response sheet.
+2. Add a second tab with a `QUERY()` formula selecting only `WHERE Approved = TRUE` (same pattern as the Show & Tell setup in section 3 below — the exact formula depends on your column order).
+3. Publish *that* tab to the web as TSV, and point `workshops_tsv_url` at its URL instead of the raw sheet's.
+
+This isn't set up today, since it adds a manual approval step to what's currently a fully automatic monthly workflow — worth weighing that tradeoff before turning it on.
+
 ## 3. Set up Show & Tell photo submissions
 
 The form is already live: https://forms.gle/mYfvcYatq97hKuVz8 (set as `show_tell_form_url` in `data/site-settings.json`). What's left:
