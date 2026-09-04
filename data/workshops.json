@@ -1,5 +1,131 @@
 [
   {
+    "date": "2022-10-20",
+    "icon": "👺",
+    "title": "Cardboard Mask Making",
+    "description": "What is your alter ego? If you were to become a superhero what would it be and what would your superpower be?",
+    "required_materials": [
+      "Scrap cardboard",
+      "tape",
+      "rivets (paper fasteners)",
+      "drawing tool like pen/marker/sharpie",
+      "sturdy blade or scissor for cutting cardboard",
+      "table top where cutting will occur"
+    ],
+    "nice_to_have_materials": [
+      "Hot glue",
+      "exacto blade for precision cutting",
+      "canary cutter blade",
+      "utility blade",
+      "straight edge or ruler"
+    ],
+    "links": [
+      {
+        "label": "static1.squarespace.com",
+        "url": "https://static1.squarespace.com/static/51bd298be4b09566e1107784/t/5e6d2637a53943154a8c9a48/1584211556966/Cardboard+Construction%2C+facilitation+guide+small+file.pdf"
+      },
+      {
+        "label": "Home | Cardboard Superheroes",
+        "url": "http://cardboardsuperheroes.com"
+      },
+      {
+        "label": "Human Verification",
+        "url": "https://www.exploratorium.edu/tinkering/projects/creature-construction"
+      },
+      {
+        "label": "Human Verification",
+        "url": "https://www.exploratorium.edu/tinkering/projects/cardboard-automata"
+      },
+      {
+        "label": "Be Kind Rewind Montage",
+        "url": "https://www.youtube.com/watch?v=tPVm8eIeY5k"
+      }
+    ]
+  },
+  {
+    "date": "2022-11-17",
+    "icon": "🌬️",
+    "title": "Wind Powered Vehicles",
+    "description": "Create a vehicle from miscellaneous supplies that can be powered by the wind.",
+    "required_materials": [],
+    "nice_to_have_materials": [],
+    "links": [
+      {
+        "label": "Make a Wind-Powered Car with Martha!",
+        "url": "https://www.youtube.com/watch?v=UXGN9XZipmo"
+      },
+      {
+        "label": "Theo Jansen’s Wind-Powered Sculptures | The New Yorker",
+        "url": "https://www.youtube.com/watch?v=Pj-NqWDH2qE"
+      }
+    ]
+  },
+  {
+    "date": "2023-01-19",
+    "icon": "😸",
+    "title": "Scratch Programming",
+    "description": "Let's write code that does something unexpected!",
+    "required_materials": [
+      "Computer",
+      "internet connection"
+    ],
+    "nice_to_have_materials": [],
+    "links": [
+      {
+        "label": "scratch.mit.edu",
+        "url": "scratch.mit.edu"
+      }
+    ]
+  },
+  {
+    "date": "2023-02-16",
+    "icon": "👥",
+    "title": "Shadow Remix",
+    "description": "What stories and characters do you see in the shadows?",
+    "required_materials": [
+      "Photos of shadows",
+      "digital tool to draw on photos"
+    ],
+    "nice_to_have_materials": [],
+    "links": [
+      {
+        "label": "Human Verification",
+        "url": "https://www.exploratorium.edu/tinkering/projects/shadow-remix"
+      }
+    ]
+  },
+  {
+    "date": "2023-03-23",
+    "icon": "🌊",
+    "title": "Will it Float?",
+    "description": "Can we make something float that also moves on its own?",
+    "required_materials": [],
+    "nice_to_have_materials": [],
+    "links": []
+  },
+  {
+    "date": "2023-04-17",
+    "icon": "🖇️",
+    "title": "Pliers and Wires",
+    "description": "Create a one-line drawing and then build it with wire.",
+    "required_materials": [
+      "Pencil",
+      "paper",
+      "wires (paper clips or thinner gauge wire) pliers"
+    ],
+    "nice_to_have_materials": [],
+    "links": []
+  },
+  {
+    "date": "2023-05-18",
+    "icon": "🧵",
+    "title": "Threads & Things",
+    "description": "How can we use textiles to tell a story?",
+    "required_materials": [],
+    "nice_to_have_materials": [],
+    "links": []
+  },
+  {
     "date": "2023-10-26",
     "icon": "😵‍💫",
     "title": "Art & Motion",
