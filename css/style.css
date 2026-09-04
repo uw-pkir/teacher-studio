@@ -8,13 +8,16 @@
     --primary-light: #818cf8;
     --primary-dark: #4f46e5;
     --secondary: #f472b6;     /* Pink */
-    /* A darker pink used only for the hero's gradient-clipped highlight
-       text -- --secondary is tuned for backgrounds sitting behind light or
-       dark text, but gradient TEXT needs every point along the gradient to
-       independently clear contrast on its own, and --secondary's light end
-       measured as low as 2.5:1 against the hero background. This pairs
-       with --primary at 5.0-6.3:1 across the whole gradient. */
-    --highlight-pink: #be185d;
+    /* A pink/orange pair used only for the hero's gradient-clipped
+       highlight text -- --secondary and --accent-orange are tuned for
+       backgrounds sitting behind light or dark text, but gradient TEXT
+       needs every point along the gradient to independently clear
+       contrast on its own, and both of those measured well under 3:1
+       against the hero background on their own. These two stay
+       3.6-4.6:1 across the whole gradient while still reading as bright,
+       saturated pink/orange rather than a dark, muddy tone. */
+    --highlight-pink: #db2777;
+    --highlight-orange: #ea580c;
     --accent-yellow: #fbbf24;
     --accent-green: #34d399;
     --accent-orange: #fb923c;
@@ -472,7 +475,7 @@ img {
 }
 
 .hero .highlight {
-    background: linear-gradient(135deg, var(--primary), var(--highlight-pink));
+    background: linear-gradient(135deg, var(--highlight-pink), var(--highlight-orange));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
