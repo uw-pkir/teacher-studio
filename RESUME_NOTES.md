@@ -29,11 +29,21 @@ commits waiting fairly often.
 - All page content is data-driven: `js/main.js`'s `loadAndRenderAll()`
   fetches everything under `data/*.json` and renders it client-side.
 - `/admin` (Decap CMS) has three sections:
-  - **Site Content** — hub sites, organizers.
+  - **Hubs & Organizers** — hub sites/organizing partners, current
+    organizers, and organizers emeriti (`data/hubs.json`, `data/organizers.json`).
   - **Update Section Text** — the headline + description shown at the top
-    of every section, plus About's icon/title/description feature rows.
-  - **Misc Settings** — registration link, workshop time, location note,
-    Show & Tell links, and the two published-sheet URLs used below.
+    of every section (Hero included), plus About's icon/title/description
+    feature rows, each collapsed by default (`data/section-text.json`).
+  - **Settings**, split into two files by how often each is touched:
+    **General Settings** (registration link, workshop time, location note,
+    Show & Tell form link — `data/site-settings.json`) and **Google Sheet
+    Links (Advanced)** (the workshops/season-dates/show-tell published-sheet
+    URLs — `data/sync-settings.json`, set up once and rarely touched again).
+- `media_folder`/`public_folder` in `admin/config.yml` is `"images"`, matching
+  where every image on the site (organizer photos included) actually lives.
+  If this ever drifts from wherever images are actually kept, the image
+  widget shows broken previews for anything not uploaded through the CMS,
+  and those files won't show up in the CMS's Media Library either.
 - Workshops and Show & Tell photos are **not** edited via `/admin` at all —
   they come from Google Forms/Sheets, pulled in by scheduled GitHub Actions
   (`scripts/sync-workshops.js`, `scripts/sync-showcase.js`).
@@ -90,8 +100,9 @@ commits waiting fairly often.
 - Show & Tell is moderated (a checkbox column in the response sheet), not
   instant/unmoderated.
 - Both sync scripts read their source-sheet URLs from
-  `data/site-settings.json` (CMS-editable), not GitHub Actions
-  secrets/variables — no GitHub Settings access needed to change them.
+  `data/sync-settings.json` (CMS-editable, under Settings → Google Sheet
+  Links (Advanced)), not GitHub Actions secrets/variables — no GitHub
+  Settings access needed to change them.
 - Esri Light Gray Base map tiles (Carto's free tier now requires an API key).
 - The 18 hand-migrated legacy archive entries from the original Google
   Sites import were retired — the resource archive is 100% sheet-driven.

@@ -9,5 +9,12 @@
     { "name": "Peter Wardrip", "org": "UW-Madison Curriculum & Instruction", "photo": "images/PeterW.jpg" },
     { "name": "Rebecca Millerjohn", "org": "UW-Madison College of Computing & AI", "photo": "images/RebeccaM.jpg" },
     { "name": "Sara Milewski", "org": "Henderson Elementary Fablab - Madison, WI", "photo": "images/SaraM.jpg" }
+  ],
+  "emeriti": [
+    "Abby Krueger",
+    "Bill Pariso",
+    "David Wells",
+    "Emily Schindler",
+    "Tori Pagel"
   ]
 }

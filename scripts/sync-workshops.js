@@ -17,7 +17,7 @@ const fs = require('fs');
 const path = require('path');
 const { parseDelimited } = require('./lib/parse-delimited');
 
-const SETTINGS_PATH = path.join(__dirname, '..', 'data', 'site-settings.json');
+const SETTINGS_PATH = path.join(__dirname, '..', 'data', 'sync-settings.json');
 const OUTPUT_PATH = path.join(__dirname, '..', 'data', 'workshops.json');
 const CACHE_PATH = path.join(__dirname, '..', 'data', 'link-title-cache.json');
 const FALLBACK_ICON = '🧩';
@@ -169,7 +169,7 @@ async function main() {
     const seasonUrl = settings.season_dates_tsv_url;
 
     if (!workshopsUrl) {
-        console.log('workshops_tsv_url is not set yet in data/site-settings.json. Leaving data/workshops.json unchanged.');
+        console.log('workshops_tsv_url is not set yet in data/sync-settings.json. Leaving data/workshops.json unchanged.');
         return;
     }
 

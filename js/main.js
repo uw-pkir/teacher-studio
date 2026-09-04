@@ -208,10 +208,10 @@ async function loadJSON(path) {
 }
 
 async function loadAndRenderAll() {
-    const [workshops, hubs, organizers, settings, showcase, sectionText] = await Promise.all([
+    const [workshops, hubs, organizersData, settings, showcase, sectionText] = await Promise.all([
         loadJSON('data/workshops.json').catch(() => []),
         loadJSON('data/hubs.json').then(d => d.hubs || []).catch(() => []),
-        loadJSON('data/organizers.json').then(d => d.organizers || []).catch(() => []),
+        loadJSON('data/organizers.json').catch(() => ({})),
         loadJSON('data/site-settings.json').catch(() => ({})),
         loadJSON('data/showcase.json').catch(() => []),
         loadJSON('data/section-text.json').catch(() => ({}))
@@ -228,7 +228,7 @@ async function loadAndRenderAll() {
     renderSchedule(upcoming);
     renderResources(archive);
     renderHubs(hubs);
-    renderTeam(organizers, settings);
+    renderTeam(organizersData.organizers || [], organizersData.emeriti || []);
     renderPartners(hubs);
     renderShowcase(showcase);
     renderAboutFeatures((sectionText.about || {}).features);
@@ -628,7 +628,7 @@ function renderPartners(hubs) {
 }
 
 // ===== Team =====
-function renderTeam(organizers, settings) {
+function renderTeam(organizers, emeriti) {
     const grid = document.getElementById('team-grid');
     const sorted = [...organizers].sort((a, b) =>
         (a.name || '').split(' ')[0].localeCompare((b.name || '').split(' ')[0])
@@ -643,8 +643,7 @@ function renderTeam(organizers, settings) {
     observeFadeIn(grid, '.team-card');
 
     const emeritiList = document.getElementById('emeriti-list');
-    const emeriti = (settings && settings.emeriti) || [];
-    emeritiList.innerHTML = emeriti.map(name => `<span>${escapeHTML(name)}</span>`).join('');
+    emeritiList.innerHTML = (emeriti || []).map(name => `<span>${escapeHTML(name)}</span>`).join('');
 }
 
 // ===== Show & Tell =====

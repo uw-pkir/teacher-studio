@@ -4,26 +4,31 @@ backend:
   branch: main
   base_url: https://teacher-studio-cms-auth.kirschmann.workers.dev
 
-media_folder: "images/uploads"
-public_folder: "images/uploads"
+# Matches where organizer photos (and every other site image) actually
+# live -- if this doesn't match, the image widget shows a broken preview
+# for anything not uploaded through the CMS itself, and the Media Library
+# can't find those files either.
+media_folder: "images"
+public_folder: "images"
 
 collections:
   - name: "content"
-    label: "Site Content"
+    label: "Hubs & Organizers"
     files:
       # Workshops (the Next Workshop banner, the schedule grid, and the
       # resource archive) are no longer edited here — they're entirely
-      # driven by the published Google Sheets set in workshops_tsv_url /
-      # season_dates_tsv_url under Misc Settings. See SETUP.md.
+      # driven by the published Google Sheets set up under Settings ->
+      # Google Sheet Links. See SETUP.md.
       - name: "hubs"
         label: "Hub Sites / Organizing Partners"
         file: "data/hubs.json"
-        description: "Shown on the map and used to build the partners list automatically."
+        description: "Shown on the map (and the text list below it) and used to build the Partner Organizations list automatically."
         fields:
           - label: "Hubs"
             name: "hubs"
             widget: "list"
-            summary: "{{name}}"
+            collapsed: true
+            summary: "{{fields.name}} — {{fields.location}}"
             fields:
               - { label: "Name", name: "name", widget: "string" }
               - { label: "City, State", name: "location", widget: "string" }
@@ -39,14 +44,18 @@ collections:
         label: "Organizers"
         file: "data/organizers.json"
         fields:
-          - label: "Organizers"
+          - label: "Current Organizers"
             name: "organizers"
             widget: "list"
-            summary: "{{name}}"
+            collapsed: true
+            summary: "{{fields.name}} — {{fields.org}}"
             fields:
               - { label: "Name", name: "name", widget: "string" }
               - { label: "Organization", name: "org", widget: "string" }
               - { label: "Photo", name: "photo", widget: "image" }
+          - label: "Organizers Emeriti (past organizers, shown as plain names below the current team)"
+            name: "emeriti"
+            widget: "list"
 
   - name: "section_text"
     label: "Update Section Text"
@@ -54,24 +63,27 @@ collections:
       - name: "section_text"
         label: "Section Headlines & Descriptions"
         file: "data/section-text.json"
-        description: "The headline and description shown at the top of each section of the site. (The small label above each headline, like \"Hubs\" or \"Organizers\", isn't editable here.)"
+        description: "The headline and description shown at the top of each section of the site. (The small label above each headline, like \"Hubs\" or \"Organizers\", isn't editable here.) Click a section below to expand it."
         fields:
           - label: "Hero (top of the homepage)"
             name: "hero"
             widget: "object"
+            collapsed: true
             fields:
               - { label: "Headline", name: "headline", widget: "string", hint: "Put a single asterisk on either side of a word to highlight it in color, e.g. \"Where Educators *Make* & *Learn* Together\"." }
               - { label: "Description", name: "description", widget: "text" }
           - label: "About Us"
             name: "about"
             widget: "object"
+            collapsed: true
             fields:
               - { label: "Headline", name: "headline", widget: "string" }
               - { label: "Description", name: "description", widget: "text" }
               - label: "Icon/title/description rows"
                 name: "features"
                 widget: "list"
-                summary: "{{title}}"
+                collapsed: true
+                summary: "{{fields.title}}"
                 fields:
                   - { label: "Icon (an emoji)", name: "icon", widget: "string" }
                   - { label: "Title", name: "title", widget: "string" }
@@ -79,46 +91,57 @@ collections:
           - label: "Schedule"
             name: "schedule"
             widget: "object"
+            collapsed: true
             fields:
               - { label: "Headline", name: "headline", widget: "string" }
-              - { label: "Description", name: "description", widget: "text", hint: "Include the token {{time}} wherever the workshop time (set in Misc Settings) should be inserted, e.g. \"...on Thursdays{{time}} — topics are...\"." }
+              - { label: "Description", name: "description", widget: "text", hint: "Include the token {{time}} wherever the workshop time (set in Settings -> General Settings) should be inserted, e.g. \"...on Thursdays{{time}} — topics are...\"." }
           - label: "Past Workshops (Resource Archive)"
             name: "resources"
             widget: "object"
+            collapsed: true
             fields:
               - { label: "Headline", name: "headline", widget: "string" }
               - { label: "Description", name: "description", widget: "text" }
           - label: "Hubs"
             name: "hubs"
             widget: "object"
+            collapsed: true
             fields:
               - { label: "Headline", name: "headline", widget: "string" }
               - { label: "Description", name: "description", widget: "text" }
           - label: "Organizers"
             name: "team"
             widget: "object"
+            collapsed: true
             fields:
               - { label: "Headline", name: "headline", widget: "string" }
               - { label: "Description", name: "description", widget: "text" }
           - label: "Show & Tell"
             name: "gallery"
             widget: "object"
+            collapsed: true
             fields:
               - { label: "Headline", name: "headline", widget: "string" }
               - { label: "Description", name: "description", widget: "text" }
 
   - name: "settings"
-    label: "Misc Settings"
+    label: "Settings"
     files:
       - name: "settings"
-        label: "Registration, Timing & Sheet Links"
+        label: "General Settings"
         file: "data/site-settings.json"
+        description: "Registration, timing, and location details -- safe to update any time."
         fields:
-          - { label: "Workshops sheet (published TSV URL — see SETUP.md)", name: "workshops_tsv_url", widget: "string" }
-          - { label: "Season dates sheet (published TSV URL, optional — see SETUP.md)", name: "season_dates_tsv_url", widget: "string", required: false }
           - { label: "Workshop time (same for every workshop)", name: "workshop_time", widget: "string", hint: "e.g. 4:30-5:30 PM CST" }
           - { label: "Registration link (Google Form URL)", name: "register_url", widget: "string" }
           - { label: "Location note", name: "location_note", widget: "text" }
           - { label: "Show & Tell submission form (Google Form URL)", name: "show_tell_form_url", widget: "string" }
+
+      - name: "sync_settings"
+        label: "Google Sheet Links (Advanced)"
+        file: "data/sync-settings.json"
+        description: "Technical plumbing for the workshop schedule and Show & Tell pipelines -- set up once (see SETUP.md) and rarely touched again. Only change these if you're replacing which Google Sheet the site pulls from."
+        fields:
+          - { label: "Workshops sheet (published TSV URL — see SETUP.md)", name: "workshops_tsv_url", widget: "string" }
+          - { label: "Season dates sheet (published TSV URL, optional — see SETUP.md)", name: "season_dates_tsv_url", widget: "string", required: false }
           - { label: "Show & Tell published CSV URL (from the response sheet's 'Public' tab — see SETUP.md)", name: "show_tell_csv_url", widget: "string", required: false }
-          - { label: "Organizers Emeriti (names)", name: "emeriti", widget: "list" }
