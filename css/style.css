@@ -1037,6 +1037,17 @@ img {
     margin-bottom: var(--space-lg);
 }
 
+.gallery-submit-note {
+    font-size: 0.875rem;
+    color: var(--gray-500);
+    margin-top: calc(-1 * var(--space-md));
+}
+
+.gallery-submit-note:empty {
+    display: none;
+    margin: 0;
+}
+
 .showcase-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));

@@ -283,6 +283,13 @@ function renderSectionText(sectionText, settings) {
             descriptionEl.textContent = text.description.replace('{{time}}', timeStr);
         }
     });
+
+    // Show & Tell's one extra field: a note above the Submit a Project
+    // button (e.g. flagging the Google sign-in the linked form requires).
+    const submitNoteEl = document.getElementById('gallery-submit-note');
+    if (submitNoteEl) {
+        submitNoteEl.textContent = (sectionText.gallery || {}).submit_note || '';
+    }
 }
 
 // Wraps *word* in a <span class="highlight"> -- the only place on the site

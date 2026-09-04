@@ -123,6 +123,7 @@ collections:
             fields:
               - { label: "Headline", name: "headline", widget: "string" }
               - { label: "Description", name: "description", widget: "text" }
+              - { label: "Submission note (shown above the Submit a Project button)", name: "submit_note", widget: "string", required: false }
 
   - name: "settings"
     label: "Settings"
