@@ -402,6 +402,19 @@
     "links": []
   },
   {
+    "date": "2026-11-15",
+    "icon": "❤️",
+    "title": "Test Nov Workshop",
+    "description": "Does this show up if it is not the next but is in the future?",
+    "required_materials": [
+      "pen",
+      "paper",
+      "imagination"
+    ],
+    "nice_to_have_materials": [],
+    "links": []
+  },
+  {
     "date": "2026-11-19",
     "icon": "🧩",
     "title": "Topic announced a few weeks before the gathering",
