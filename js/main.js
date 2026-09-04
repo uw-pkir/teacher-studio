@@ -523,7 +523,7 @@ function renderHubs(hubs) {
     if (list) {
         list.innerHTML = physicalHubs.map(hub => `
             <li class="hub-list-item">
-                <span class="hub-list-icon" aria-hidden="true">${escapeHTML(hub.icon || '📍')}</span>
+                <img class="hub-list-icon" src="${randomFlourish()}" alt="">
                 <div class="hub-list-body">
                     <h3>${escapeHTML(hub.name)}</h3>
                     <span class="hub-list-location">${escapeHTML(hub.location)}</span>
@@ -545,16 +545,24 @@ function renderHubs(hubs) {
         maxZoom: 16
     }).addTo(map);
 
-    const createCustomIcon = (emoji) => L.divIcon({
+    // A plain, standard-shaped map pin (not a quilt patch -- an abstract
+    // geometric square doesn't read as a location marker) colored to match
+    // the site's theme instead.
+    const PIN_SVG = `<svg viewBox="0 0 24 32" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 0C5.4 0 0 5.4 0 12c0 9 12 20 12 20s12-11 12-20C24 5.4 18.6 0 12 0z" fill="var(--primary)"/>
+        <circle cx="12" cy="12" r="5" fill="#ffffff"/>
+    </svg>`;
+
+    const createCustomIcon = () => L.divIcon({
         className: 'custom-marker-container',
-        html: `<div class="custom-hub-marker">${emoji}</div>`,
-        iconSize: [36, 36],
-        iconAnchor: [18, 18],
-        popupAnchor: [0, -20]
+        html: `<div class="custom-hub-marker">${PIN_SVG}</div>`,
+        iconSize: [28, 36],
+        iconAnchor: [14, 36],
+        popupAnchor: [0, -34]
     });
 
     const markers = physicalHubs.map(hub => {
-        const marker = L.marker([hub.lat, hub.lng], { icon: createCustomIcon(hub.icon) }).addTo(map);
+        const marker = L.marker([hub.lat, hub.lng], { icon: createCustomIcon() }).addTo(map);
         marker.bindPopup(`
             <div class="hub-popup">
                 <h3>${escapeHTML(hub.name)}</h3>

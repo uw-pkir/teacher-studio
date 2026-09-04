@@ -29,7 +29,6 @@ collections:
               - { label: "City, State", name: "location", widget: "string" }
               - { label: "Description", name: "description", widget: "text" }
               - { label: "Website", name: "website", widget: "string" }
-              - { label: "Icon (an emoji)", name: "icon", widget: "string" }
               - { label: "Hub? (a gathering location -- shown as a pin on the map and in the text list of hub sites)", name: "is_hub", widget: "boolean", default: true }
               - { label: "Organizing Partner? (shown in the Partner Organizations list at the bottom -- independent of Hub, since some entries are one, the other, or both)", name: "is_partner", widget: "boolean", default: true }
               - { label: "Street Address (only used if this is a hub — a robot turns this into a map pin automatically within a minute or two of saving)", name: "address", widget: "string", required: false }

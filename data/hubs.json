@@ -7,7 +7,6 @@
       "is_partner": true,
       "address": "1201 Tompkins Dr, Madison, WI 53716",
       "location": "Madison, WI",
-      "icon": "🏫",
       "website": "https://www.facebook.com/HendersonFABLab/",
       "description": "Elementary school-based makerspace in a public elementary school in Madison, WI.",
       "lat": 43.058657
@@ -19,7 +18,6 @@
       "is_partner": true,
       "address": "200 N Appleton St, Appleton, WI 54911",
       "location": "Appleton, WI",
-      "icon": "🏛️",
       "website": "https://buildingforkids.org",
       "description": "A hands-on children's museum focused on play-based learning.",
       "lat": 44.263068
@@ -30,7 +28,6 @@
       "name": "Fermilab MakerSpace",
       "is_partner": true,
       "location": "Batavia, IL",
-      "icon": "⚛️",
       "website": "https://education.fnal.gov/makerspace",
       "description": "Making and STEM education at America's particle physics laboratory.",
       "lat": 41.8421
@@ -42,7 +39,6 @@
       "is_partner": true,
       "address": "5454 Venoy Rd, Wayne, MI 48184",
       "location": "Wayne, MI",
-      "icon": "🎓",
       "website": "https://resa.net",
       "description": "Regional educational service agency supporting schools across Wayne County.",
       "lat": 42.2693704
@@ -53,7 +49,6 @@
       "name": "UW-Madison School of Education",
       "is_partner": true,
       "location": "Madison, WI",
-      "icon": "🏫",
       "website": "https://education.wisc.edu",
       "description": "School of Education",
       "lat": 43.0766
@@ -66,7 +61,6 @@
       "description": "Host location for the Appleton Hub, which is organized by Building for Kids.",
       "website": "https://apl.org/",
       "address": "200 N Appleton St, Appleton, WI 54911",
-      "icon": "📖",
       "lat": 44.263068,
       "lng": -88.407147
     },
@@ -76,7 +70,6 @@
       "name": "UW-Madison College of Computing & AI",
       "location": "Madison, WI",
       "website": "https://cai.wisc.edu/",
-      "icon": "💻",
       "description": "College of Computing and AI"
     }
   ]
