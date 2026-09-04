@@ -79,7 +79,7 @@ The sync runs automatically every 30 minutes (`.github/workflows/sync-showcase.y
 
 **Everything else** (hub sites, organizers, every section's headline/description text, Show & Tell settings) is still edited at `https://uw-pkir.github.io/teacher-studio/admin/` — no code, no git. `/admin` has three sections:
 - **Hubs & Organizers** — hub sites/organizing partners, current organizers, and organizers emeriti.
-- **Update Section Text** — the headline and description at the top of each section (Hero, About Us, Schedule, Past Workshops, Hubs, Organizers, Show & Tell), one collapsible group per section.
+- **Update Section Text** — the headline and description at the top of each section (Hero, Schedule, Show & Tell, Past Workshops, About Us, Hubs, Organizers), one collapsible group per section, plus a Footer group (tagline, contact email) and the hero's two CTA button labels.
 - **Settings** — split into **General Settings** (registration link, workshop time, location note, Show & Tell form link — safe to change any time) and **Google Sheet Links (Advanced)** (the published-sheet URLs from sections 2–3 above — set up once, rarely touched again).
 
 ## 5. Hub site map pins

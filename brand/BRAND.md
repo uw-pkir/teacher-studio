@@ -19,7 +19,7 @@ On the site itself, a big interactive version of this logo sits in the homepage 
 
 Ten small single-patch icons — `quilt-flourish.svg` through `quilt-flourish-10.svg` in this folder — are the individual quilt pieces the logo is built from: six two-color half-square-triangle patches (each pair of brand colors, both diagonal directions) plus one solid square in each of the four colors. Use any of these as a small bullet, divider, or accent wherever a single quilt patch fits better than the full logo.
 
-On the site, one of these ten is picked at random next to every section label ("Past Workshops," "Season Schedule," etc.) so headers don't all repeat the same patch, and the same pool fills in for a workshop's icon whenever one hasn't been given yet.
+On the site, one of these ten is picked at random next to every section label ("Past Workshops," "Schedule," etc.) so headers don't all repeat the same patch, and the same pool fills in for a workshop's icon whenever one hasn't been given yet.
 
 Each has a matching PNG (512×512, transparent background) alongside its SVG, for drag-and-drop into flyers or slides.
 

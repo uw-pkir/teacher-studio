@@ -10,6 +10,17 @@
          gap on GitHub Pages. -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com; style-src 'self' 'unsafe-inline' https://unpkg.com https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://server.arcgisonline.com https://drive.google.com https://*.googleusercontent.com; base-uri 'self'; form-action 'self'; object-src 'none'">
     <title>Teacher Studio | A Maker Learning Community for Educators</title>
+    <!-- Static fallback text for search engines and link-preview crawlers,
+         which don't run js/main.js -- keep roughly in sync with the hero
+         description in data/section-text.json, but this copy doesn't need
+         to match it word-for-word. -->
+    <meta name="description" content="Teacher Studio is a free, hybrid learning community for classroom teachers, librarians, museum educators, and other facilitators exploring hands-on, maker-based learning -- gathering monthly in person at hub sites across the Midwest and online.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://uw-pkir.github.io/teacher-studio/">
+    <meta property="og:title" content="Teacher Studio | A Maker Learning Community for Educators">
+    <meta property="og:description" content="A free, hybrid learning community for educators exploring hands-on, maker-based learning -- gathering monthly in person and online.">
+    <meta property="og:image" content="https://uw-pkir.github.io/teacher-studio/brand/teacher-studio-logo.png">
+    <meta name="twitter:card" content="summary">
     <link rel="icon" type="image/svg+xml" href="images/quilt-icon.svg">
     <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -54,8 +65,8 @@
                 <h1 id="hero-headline">Where Educators <span class="highlight">Make</span> &amp; <span class="highlight">Learn</span> Together</h1>
                 <p class="hero-subtitle" id="hero-description">A hybrid learning community for formal and informal educators interested in hands-on, maker-based learning. Gather monthly to create projects and exchange pedagogical strategies.</p>
                 <div class="hero-cta">
-                    <a href="#next-event" class="btn btn-primary">See the Next Workshop</a>
-                    <a href="#about" class="btn btn-secondary">Learn More</a>
+                    <a href="#next-event" class="btn btn-primary" id="hero-cta-primary">See the Next Workshop</a>
+                    <a href="#about" class="btn btn-secondary" id="hero-cta-secondary">Learn More</a>
                 </div>
             </div>
         </div>
@@ -103,7 +114,7 @@
                 <p class="sr-only" role="status" id="showcase-shuffle-status"></p>
             </div>
             <div class="gallery-submit">
-                <p>Made something awesome at a workshop? We want to see it!</p>
+                <p id="gallery-submit-intro">Made something awesome at a workshop? We want to see it!</p>
                 <p class="gallery-submit-note" id="gallery-submit-note"></p>
                 <a href="#" id="show-tell-form-link" target="_blank" class="btn btn-primary">
                     Submit a Project
@@ -197,8 +208,8 @@
             <div class="footer-brand">
                 <img class="logo-icon" src="images/quilt-icon.svg" alt="">
                 <span class="logo-text">Teacher Studio</span>
-                <p>A hybrid learning community for educators interested in hands-on, maker-based learning.</p>
-                <p class="footer-contact"><span class="footer-contact-label">Questions?</span> <a href="mailto:wardrip@wisc.edu">Contact Us</a></p>
+                <p id="footer-tagline">A hybrid learning community for educators interested in hands-on, maker-based learning.</p>
+                <p class="footer-contact"><span class="footer-contact-label">Questions?</span> <a id="footer-contact-link" href="mailto:wardrip@wisc.edu">Contact Us</a></p>
             </div>
         </div>
     </footer>
@@ -212,11 +223,11 @@
             <h2 class="modal-title" id="modal-title"></h2>
             <p class="modal-description"></p>
             <div class="modal-materials modal-materials-required">
-                <h3>Required Materials</h3>
+                <h3></h3>
                 <ul class="materials-list"></ul>
             </div>
             <div class="modal-materials modal-materials-nice">
-                <h3>Nice to Have</h3>
+                <h3></h3>
                 <ul class="materials-list"></ul>
             </div>
             <div class="modal-links">

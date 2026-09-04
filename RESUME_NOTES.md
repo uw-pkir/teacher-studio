@@ -33,7 +33,9 @@ commits waiting fairly often.
     organizers, and organizers emeriti (`data/hubs.json`, `data/organizers.json`).
   - **Update Section Text** — the headline + description shown at the top
     of every section (Hero included), plus About's icon/title/description
-    feature rows, each collapsed by default (`data/section-text.json`).
+    feature rows, the hero's two CTA button labels, and a Footer group
+    (tagline, contact email), each collapsed by default
+    (`data/section-text.json`).
   - **Settings**, split into two files by how often each is touched:
     **General Settings** (registration link, workshop time, location note,
     Show & Tell form link — `data/site-settings.json`) and **Google Sheet
@@ -79,16 +81,6 @@ commits waiting fairly often.
   then open http://localhost:8090/. (The sync scripts themselves need
   Node, but only ever run inside GitHub Actions, never locally.)
 
-## ⚠️ Action needed: redeploy the OAuth Worker
-
-`oauth-proxy/worker.js` was hardened in a security review (origin-checked
-postMessage, a CSRF `state` cookie) -- **this only takes effect once the
-updated code is pasted into the actual Cloudflare Worker and saved.**
-Unlike everything else in this repo, the Worker doesn't auto-deploy from
-`git push`. Until that's done, `/admin` login still works, just without
-these protections. After redeploying, do one real login through `/admin`
-to confirm the flow still completes end to end.
-
 ## Known minor quirks (not urgent)
 
 - A couple of resource-archive links resolve to unhelpful auto-generated
@@ -106,7 +98,11 @@ to confirm the flow still completes end to end.
 
 - GitHub Pages + Decap CMS chosen over staying on Google Sites.
 - OAuth via a self-hosted Cloudflare Worker (`oauth-proxy/worker.js`), not
-  Netlify.
+  Netlify. Hardened (origin-checked `postMessage`, a CSRF `state` cookie)
+  and redeployed/confirmed working with a real `/admin` login. Remember the
+  Worker doesn't auto-deploy from `git push` -- any future edit to
+  `oauth-proxy/worker.js` needs to be manually pasted into the Cloudflare
+  dashboard and saved.
 - Show & Tell is moderated (a checkbox column in the response sheet), not
   instant/unmoderated.
 - Both sync scripts read their source-sheet URLs from

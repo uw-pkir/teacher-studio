@@ -1,7 +1,9 @@
 {
   "hero": {
     "headline": "Where Educators *Make* & *Learn* Together",
-    "description": "Teacher Studio is a free learning community for formal and informal educators interested in hands-on, maker-based learning. We gather monthly in person and online to create projects and exchange pedagogical strategies."
+    "description": "Teacher Studio is a free learning community for formal and informal educators interested in hands-on, maker-based learning. We gather monthly in person and online to create projects and exchange pedagogical strategies.",
+    "cta_primary_label": "See the Next Workshop",
+    "cta_secondary_label": "Learn More"
   },
   "about": {
     "headline": "Making is Learning",
@@ -43,6 +45,11 @@
   "gallery": {
     "headline": "Share What You Made",
     "description": "Check out some projects made during past Teacher Studio workshops and add you own.",
+    "submit_intro": "Made something awesome at a workshop? We want to see it!",
     "submit_note": "A Google login is required to submit a project through this form."
+  },
+  "footer": {
+    "tagline": "A hybrid learning community for educators interested in hands-on, maker-based learning.",
+    "contact_email": "wardrip@wisc.edu"
   }
 }

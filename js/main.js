@@ -284,12 +284,32 @@ function renderSectionText(sectionText, settings) {
         }
     });
 
-    // Show & Tell's one extra field: a note above the Submit a Project
+    // A handful of one-off fields that don't fit the generic
+    // headline/description pattern above.
+    const gallery = sectionText.gallery || {};
+    setTextIfPresent('hero-cta-primary', (sectionText.hero || {}).cta_primary_label);
+    setTextIfPresent('hero-cta-secondary', (sectionText.hero || {}).cta_secondary_label);
+    setTextIfPresent('gallery-submit-intro', gallery.submit_intro);
+    // Show & Tell's other extra field: a note above the Submit a Project
     // button (e.g. flagging the Google sign-in the linked form requires).
     const submitNoteEl = document.getElementById('gallery-submit-note');
-    if (submitNoteEl) {
-        submitNoteEl.textContent = (sectionText.gallery || {}).submit_note || '';
+    if (submitNoteEl) submitNoteEl.textContent = gallery.submit_note || '';
+
+    const footer = sectionText.footer || {};
+    setTextIfPresent('footer-tagline', footer.tagline);
+    if (footer.contact_email) {
+        const contactLink = document.getElementById('footer-contact-link');
+        if (contactLink) contactLink.href = escapeHref(`mailto:${footer.contact_email}`);
     }
+}
+
+// Sets an element's text only when both the element exists and there's
+// actual text to put in it -- otherwise leaves whatever's already there
+// (the hardcoded fallback text in index.html) rather than blanking it out.
+function setTextIfPresent(id, text) {
+    if (!text) return;
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
 }
 
 // Wraps *word* in a <span class="highlight"> -- the only place on the site
@@ -384,6 +404,12 @@ function renderNextEvent(event, settings) {
     `;
 }
 
+// Single source of truth for these two labels -- also used to fill in the
+// resource-archive modal's static headers (see initModal), so there's only
+// one place to edit if the wording should ever change.
+const REQUIRED_MATERIALS_LABEL = 'Required Materials';
+const NICE_TO_HAVE_LABEL = 'Nice to Have';
+
 // Shared by the spotlight and the resource-archive modal: two labeled
 // bulleted lists built from comma-separated material strings.
 function renderMaterialsBlock(item, wrapperClass) {
@@ -392,8 +418,8 @@ function renderMaterialsBlock(item, wrapperClass) {
     if (!hasRequired && !hasNice) return '';
     return `
         <div class="${wrapperClass}">
-            ${hasRequired ? `<div><h3>Required Materials</h3><ul>${renderBullets(item.required_materials)}</ul></div>` : ''}
-            ${hasNice ? `<div><h3>Nice to Have</h3><ul>${renderBullets(item.nice_to_have_materials)}</ul></div>` : ''}
+            ${hasRequired ? `<div><h3>${REQUIRED_MATERIALS_LABEL}</h3><ul>${renderBullets(item.required_materials)}</ul></div>` : ''}
+            ${hasNice ? `<div><h3>${NICE_TO_HAVE_LABEL}</h3><ul>${renderBullets(item.nice_to_have_materials)}</ul></div>` : ''}
         </div>
     `;
 }
@@ -505,6 +531,8 @@ let modalTriggerElement = null;
 function initModal() {
     const modal = document.getElementById('resource-modal');
     if (!modal) return;
+    modal.querySelector('.modal-materials-required h3').textContent = REQUIRED_MATERIALS_LABEL;
+    modal.querySelector('.modal-materials-nice h3').textContent = NICE_TO_HAVE_LABEL;
     modal.querySelector('.modal-overlay').addEventListener('click', closeResourceModal);
     modal.querySelector('.modal-close').addEventListener('click', closeResourceModal);
     document.addEventListener('keydown', e => {

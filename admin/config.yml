@@ -72,6 +72,8 @@ collections:
             fields:
               - { label: "Headline", name: "headline", widget: "string", hint: "Put a single asterisk on either side of a word to highlight it in color, e.g. \"Where Educators *Make* & *Learn* Together\"." }
               - { label: "Description", name: "description", widget: "text" }
+              - { label: "Primary button label", name: "cta_primary_label", widget: "string", required: false, hint: "Links to the Next Workshop section." }
+              - { label: "Secondary button label", name: "cta_secondary_label", widget: "string", required: false, hint: "Links to the About Us section." }
           - label: "Schedule"
             name: "schedule"
             widget: "object"
@@ -86,7 +88,8 @@ collections:
             fields:
               - { label: "Headline", name: "headline", widget: "string" }
               - { label: "Description", name: "description", widget: "text" }
-              - { label: "Submission note (shown above the Submit a Project button)", name: "submit_note", widget: "string", required: false }
+              - { label: "Submission prompt (shown above the Submit a Project button)", name: "submit_intro", widget: "string", required: false }
+              - { label: "Submission note (shown just below the prompt)", name: "submit_note", widget: "string", required: false }
           - label: "Past Workshops (Resource Archive)"
             name: "resources"
             widget: "object"
@@ -124,6 +127,13 @@ collections:
             fields:
               - { label: "Headline", name: "headline", widget: "string" }
               - { label: "Description", name: "description", widget: "text" }
+          - label: "Footer"
+            name: "footer"
+            widget: "object"
+            collapsed: true
+            fields:
+              - { label: "Tagline", name: "tagline", widget: "string", required: false }
+              - { label: "Contact email", name: "contact_email", widget: "string", required: false, hint: "Just the address, e.g. wardrip@wisc.edu -- the \"Questions? Contact Us\" wording around it isn't editable here." }
 
   - name: "settings"
     label: "Settings"

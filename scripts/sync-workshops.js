@@ -253,17 +253,21 @@ async function main() {
     }
 
     // ----- Resolve link titles for past entries only -----
+    // Fetched in parallel across every entry/link needing one -- cached
+    // titles resolve instantly anyway, so this only speeds up the (rare)
+    // case of brand-new links, but it does so for the whole archive at
+    // once instead of one fetch at a time as the archive keeps growing.
     const cache = fs.existsSync(CACHE_PATH) ? JSON.parse(fs.readFileSync(CACHE_PATH, 'utf8')) : {};
 
+    const entriesNeedingLinks = [...byDate.values()].filter(e => e.date < todayISO && e._linkUrls.length);
+    await Promise.all(entriesNeedingLinks.map(async entry => {
+        entry.links = await Promise.all(
+            entry._linkUrls.map(async url => ({ label: await resolveLinkTitle(url, cache), url }))
+        );
+    }));
+
     for (const entry of byDate.values()) {
-        if (entry.date < todayISO && entry._linkUrls.length) {
-            entry.links = [];
-            for (const url of entry._linkUrls) {
-                entry.links.push({ label: await resolveLinkTitle(url, cache), url });
-            }
-        } else {
-            entry.links = [];
-        }
+        if (!entry.links) entry.links = [];
         delete entry._linkUrls;
         delete entry._ts;
     }
