@@ -56,6 +56,12 @@ collections:
         file: "data/section-text.json"
         description: "The headline and description shown at the top of each section of the site. (The small label above each headline, like \"Hubs\" or \"Organizers\", isn't editable here.)"
         fields:
+          - label: "Hero (top of the homepage)"
+            name: "hero"
+            widget: "object"
+            fields:
+              - { label: "Headline", name: "headline", widget: "string", hint: "Put a single asterisk on either side of a word to highlight it in color, e.g. \"Where Educators *Make* & *Learn* Together\"." }
+              - { label: "Description", name: "description", widget: "text" }
           - label: "About Us"
             name: "about"
             widget: "object"

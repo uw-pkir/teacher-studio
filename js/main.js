@@ -246,6 +246,7 @@ async function loadAndRenderAll() {
 function renderSectionText(sectionText, settings) {
     const timeStr = settings.workshop_time ? `, ${settings.workshop_time}` : '';
     const sections = {
+        hero: sectionText.hero,
         about: sectionText.about,
         schedule: sectionText.schedule,
         resources: sectionText.resources,
@@ -258,11 +259,25 @@ function renderSectionText(sectionText, settings) {
         if (!text) return;
         const headlineEl = document.getElementById(`${key}-headline`);
         const descriptionEl = document.getElementById(`${key}-description`);
-        if (headlineEl && text.headline) headlineEl.textContent = text.headline;
+        if (headlineEl && text.headline) {
+            // Only the hero headline supports *word* -> highlighted <span>;
+            // every other section's headline is plain text.
+            if (key === 'hero') {
+                headlineEl.innerHTML = renderHighlightedText(text.headline);
+            } else {
+                headlineEl.textContent = text.headline;
+            }
+        }
         if (descriptionEl && text.description) {
             descriptionEl.textContent = text.description.replace('{{time}}', timeStr);
         }
     });
+}
+
+// Wraps *word* in a <span class="highlight"> -- the only place on the site
+// that needs inline word-level styling within an otherwise plain heading.
+function renderHighlightedText(text) {
+    return escapeHTML(text).replace(/\*(.+?)\*/g, '<span class="highlight">$1</span>');
 }
 
 // The 3 icon/title/description rows under the About paragraph -- editable
