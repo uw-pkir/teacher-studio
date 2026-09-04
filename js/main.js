@@ -585,7 +585,12 @@ function renderPartners(hubs) {
     const list = document.getElementById('partners-list');
     list.innerHTML = hubs.filter(h => h.is_partner !== false)
         .sort((a, b) => a.name.localeCompare(b.name))
-        .map(h => `<a href="${escapeAttr(h.website)}" target="_blank" rel="noopener">${escapeHTML(h.name)}</a>`)
+        .map(h => `
+            <a href="${escapeAttr(h.website)}" target="_blank" rel="noopener">
+                <img class="partner-icon" src="${randomFlourish()}" alt="">
+                ${escapeHTML(h.name)}
+            </a>
+        `)
         .join('');
 }
 
