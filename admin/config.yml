@@ -126,7 +126,7 @@ collections:
 
   - name: "settings"
     label: "Settings"
-    description: "**Handy links:**\n- [Website Entry form](https://forms.gle/ST8NH8y8HczTDKbb8) -- fill this out to submit a new workshop each month; it's what feeds the Workshops sheet below.\n- [Show & Tell approval sheet](https://docs.google.com/spreadsheets/d/1Nzr8J_jMU8ZNi_II-rbkn2dwDvceIUZAt_30aJs-h0w/edit?usp=drive_link) -- check the Approved box here to publish a submitted photo."
+    description: "**Handy link:** [Website Entry form](https://forms.gle/ST8NH8y8HczTDKbb8) -- fill this out to submit a new workshop each month; it's what feeds the Workshops sheet below. (The Show & Tell approval sheet's link isn't listed here since this file is publicly fetchable -- see the organizer reference doc instead.)"
     files:
       - name: "settings"
         label: "General Settings"
