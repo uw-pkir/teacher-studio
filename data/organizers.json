@@ -1,14 +1,50 @@
 {
   "organizers": [
-    { "name": "Beth Vanderloop", "org": "Building for Kids", "photo": "images/BETHV.jpg" },
-    { "name": "Judy Bowling", "org": "Wayne RESA", "photo": "images/Judy.jpg" },
-    { "name": "Laura Gabrion", "org": "Wayne RESA", "photo": "images/Laura.jpg" },
-    { "name": "Lisa Ogiemwonyi", "org": "Wayne RESA", "photo": "images/Lisa.jpg" },
-    { "name": "Mari Oates", "org": "Fermilab MakerSpace", "photo": "images/Mari.jpg" },
-    { "name": "Peter Kirschmann", "org": "UW-Madison Computer Sciences", "photo": "images/PeterK.jpg" },
-    { "name": "Peter Wardrip", "org": "UW-Madison Curriculum & Instruction", "photo": "images/PeterW.jpg" },
-    { "name": "Rebecca Millerjohn", "org": "UW-Madison College of Computing & AI", "photo": "images/RebeccaM.jpg" },
-    { "name": "Sara Milewski", "org": "Henderson Elementary Fablab - Madison, WI", "photo": "images/SaraM.jpg" }
+    {
+      "name": "Beth Vanderloop",
+      "org": "Building for Kids",
+      "photo": "images/beth.png"
+    },
+    {
+      "name": "Judy Bowling",
+      "org": "Wayne RESA",
+      "photo": "images/judy.jpg"
+    },
+    {
+      "name": "Laura Gabrion",
+      "org": "Wayne RESA",
+      "photo": "images/Laura.jpg"
+    },
+    {
+      "name": "Lisa Ogiemwonyi",
+      "org": "Wayne RESA",
+      "photo": "images/lisa.png"
+    },
+    {
+      "name": "Mari Oates",
+      "org": "Fermilab MakerSpace",
+      "photo": "images/Mari.jpg"
+    },
+    {
+      "name": "Peter Kirschmann",
+      "org": "UW-Madison Computer Sciences",
+      "photo": "images/pk.jpg"
+    },
+    {
+      "name": "Peter Wardrip",
+      "org": "UW-Madison Curriculum & Instruction",
+      "photo": "images/PeterW.jpg"
+    },
+    {
+      "name": "Rebecca Millerjohn",
+      "org": "UW-Madison College of Computing & AI",
+      "photo": "images/rebecca.png"
+    },
+    {
+      "name": "Sara Milewski",
+      "org": "Henderson Elementary Fablab - Madison, WI",
+      "photo": "images/SaraM.jpg"
+    }
   ],
   "emeriti": [
     "Abby Krueger",
