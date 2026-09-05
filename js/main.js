@@ -726,7 +726,6 @@ function renderHubs(hubs, nextEvent, settings) {
                     <h3>${escapeHTML(hub.name)}</h3>
                     ${hub.location ? `<span class="hub-list-location">${escapeHTML(hub.location)}</span>` : ''}
                     <p>${escapeHTML(hub.description)}</p>
-                    ${hub.website ? `<a href="${escapeHref(hub.website)}" target="_blank" rel="noopener">Visit Website →<span class="sr-only"> (opens in a new tab)</span></a>` : ''}
                 </div>
             </li>
         `).join('');
@@ -766,7 +765,6 @@ function renderHubs(hubs, nextEvent, settings) {
                 <h3>${escapeHTML(hub.name)}</h3>
                 <span class="hub-popup-location">${escapeHTML(hub.location)}</span>
                 <p>${escapeHTML(hub.description)}</p>
-                ${hub.website ? `<a href="${escapeHref(hub.website)}" target="_blank" class="hub-popup-link">Visit Website →<span class="sr-only"> (opens in a new tab)</span></a>` : ''}
             </div>
         `, { maxWidth: 300, className: 'hub-popup-wrapper' });
         return marker;

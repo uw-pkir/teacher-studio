@@ -745,17 +745,6 @@ img {
     font-size: 0.875rem;
     color: var(--gray-600);
     line-height: 1.5;
-    margin-bottom: var(--space-sm);
-}
-
-.hub-list-body a {
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--primary);
-}
-
-.hub-list-body a:hover {
-    color: var(--primary-dark);
 }
 
 /* ===== Team Section ===== */
@@ -1134,17 +1123,6 @@ img {
     color: var(--gray-600);
     margin-bottom: var(--space-md);
     line-height: 1.5;
-}
-
-.hub-popup-link {
-    display: inline-block;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--primary);
-}
-
-.hub-popup-link:hover {
-    color: var(--primary-dark);
 }
 
 /* Custom map marker: a standard pin shape (not a quilt patch -- an
