@@ -675,7 +675,9 @@ img {
 
 .resource-meta span {
     font-size: 0.75rem;
-    color: var(--gray-600);
+    /* --gray-600 measures 4.40:1 against --gray-100 -- just under the
+       4.5:1 AA minimum for text this size (12px isn't "large text"). */
+    color: var(--gray-800);
     background: var(--gray-100);
     padding: var(--space-xs) var(--space-sm);
     border-radius: var(--radius-sm);
@@ -735,7 +737,9 @@ img {
     display: inline-block;
     font-size: 0.75rem;
     font-weight: 500;
-    color: var(--gray-600);
+    /* --gray-600 measures 4.40:1 against --gray-100 -- just under the
+       4.5:1 AA minimum for text this size (12px isn't "large text"). */
+    color: var(--gray-800);
     background: var(--gray-100);
     padding: 2px 8px;
     border-radius: var(--radius-full);
@@ -933,7 +937,9 @@ img {
 
 .gallery-placeholder p {
     font-size: 0.875rem;
-    color: var(--gray-600);
+    /* --gray-600 measures 4.40:1 against --gray-100 -- just under the
+       4.5:1 AA minimum for text this size. */
+    color: var(--gray-800);
 }
 
 /* ===== Footer ===== */
@@ -1105,7 +1111,9 @@ img {
     display: inline-block;
     font-size: 0.75rem;
     font-weight: 500;
-    color: var(--gray-600);
+    /* --gray-600 measures 4.40:1 against --gray-100 -- just under the
+       4.5:1 AA minimum for text this size (12px isn't "large text"). */
+    color: var(--gray-800);
     background: var(--gray-100);
     padding: 2px 8px;
     border-radius: var(--radius-full);
@@ -1244,7 +1252,10 @@ img {
     align-items: center;
     gap: var(--space-sm);
     font-size: 0.9375rem;
-    color: var(--gray-600);
+    /* Sits inside .modal-materials' --gray-100 background, where
+       --gray-600 measures 4.40:1 -- just under the 4.5:1 AA minimum for
+       text this size. */
+    color: var(--gray-800);
 }
 
 .materials-list li::before {

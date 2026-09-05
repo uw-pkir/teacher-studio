@@ -913,9 +913,14 @@ function renderShowcaseSample() {
 // default broken-image glyph would otherwise show -- swap in a dimmed
 // quilt flourish instead, so it reads as "no photo" rather than "error".
 // The caption/maker/title in the same card is still real content worth
-// showing even when the photo itself isn't available.
+// showing even when the photo itself isn't available. The alt text is
+// updated too, not just the image -- otherwise a screen reader would
+// still announce the original photo's title as if it had loaded fine,
+// while sighted visitors clearly see a plain placeholder icon instead.
 function handleShowcaseImageError(img) {
+    const original = img.alt;
     img.src = randomFlourish();
+    img.alt = original ? `Photo unavailable for "${original}"` : 'Photo unavailable';
     img.classList.add('showcase-image-broken');
 }
 
