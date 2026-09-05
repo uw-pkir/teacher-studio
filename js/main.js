@@ -699,22 +699,34 @@ function renderHubs(hubs, nextEvent, settings) {
     const mapContainer = document.getElementById('hubs-map');
     // "Hub" and "Partner" are independent flags -- some entries are only a
     // meeting location (a hub with no organizing-partner role), some are
-    // only an organizing partner (no map pin), and some are both.
-    const physicalHubs = hubs.filter(hub => hub.is_hub !== false)
-        .sort((a, b) => a.name.localeCompare(b.name));
+    // only an organizing partner (no map pin), and some are both. A hub can
+    // also be virtual-only (e.g. an "Online" entry) -- no address, so no
+    // lat/lng and nothing to place a map pin at. Those still belong in the
+    // text list, just sorted after the ones with a real pin instead of
+    // slotting alphabetically among them, and they're kept out of the
+    // Leaflet marker loop below entirely -- L.marker() throws on missing/
+    // NaN coordinates, which would otherwise take out every remaining
+    // render call this function's caller makes (Organizers, Partners,
+    // Show & Tell all render after this one).
+    const hasMapPin = hub => typeof hub.lat === 'number' && typeof hub.lng === 'number' && !isNaN(hub.lat) && !isNaN(hub.lng);
+    const byName = (a, b) => a.name.localeCompare(b.name);
+    const listedHubs = hubs.filter(hub => hub.is_hub !== false);
+    const physicalHubs = listedHubs.filter(hasMapPin).sort(byName);
+    const virtualHubs = listedHubs.filter(hub => !hasMapPin(hub)).sort(byName);
+    const orderedHubs = [...physicalHubs, ...virtualHubs];
 
     // Text equivalent of the map, for screen-reader/keyboard users and
     // anyone whose browser can't or won't load Leaflet/the map tiles.
     const list = document.getElementById('hubs-list');
     if (list) {
-        list.innerHTML = physicalHubs.map(hub => `
+        list.innerHTML = orderedHubs.map(hub => `
             <li class="hub-list-item">
                 <img class="hub-list-icon" src="${randomFlourish()}" alt="">
                 <div class="hub-list-body">
                     <h3>${escapeHTML(hub.name)}</h3>
-                    <span class="hub-list-location">${escapeHTML(hub.location)}</span>
+                    ${hub.location ? `<span class="hub-list-location">${escapeHTML(hub.location)}</span>` : ''}
                     <p>${escapeHTML(hub.description)}</p>
-                    <a href="${escapeHref(hub.website)}" target="_blank" rel="noopener">Visit Website →<span class="sr-only"> (opens in a new tab)</span></a>
+                    ${hub.website ? `<a href="${escapeHref(hub.website)}" target="_blank" rel="noopener">Visit Website →<span class="sr-only"> (opens in a new tab)</span></a>` : ''}
                 </div>
             </li>
         `).join('');
@@ -754,7 +766,7 @@ function renderHubs(hubs, nextEvent, settings) {
                 <h3>${escapeHTML(hub.name)}</h3>
                 <span class="hub-popup-location">${escapeHTML(hub.location)}</span>
                 <p>${escapeHTML(hub.description)}</p>
-                <a href="${escapeHref(hub.website)}" target="_blank" class="hub-popup-link">Visit Website →<span class="sr-only"> (opens in a new tab)</span></a>
+                ${hub.website ? `<a href="${escapeHref(hub.website)}" target="_blank" class="hub-popup-link">Visit Website →<span class="sr-only"> (opens in a new tab)</span></a>` : ''}
             </div>
         `, { maxWidth: 300, className: 'hub-popup-wrapper' });
         return marker;
