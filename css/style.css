@@ -707,7 +707,7 @@ img {
 
 .hub-list-item {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: var(--space-md);
     padding: var(--space-md) var(--space-lg);
     background: var(--bg-primary);
