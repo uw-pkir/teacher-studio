@@ -725,7 +725,6 @@ function renderHubs(hubs, nextEvent, settings) {
                 <div class="hub-list-body">
                     <h3>${escapeHTML(hub.name)}</h3>
                     ${hub.location ? `<span class="hub-list-location">${escapeHTML(hub.location)}</span>` : ''}
-                    <p>${escapeHTML(hub.description)}</p>
                 </div>
             </li>
         `).join('');
@@ -764,7 +763,6 @@ function renderHubs(hubs, nextEvent, settings) {
             <div class="hub-popup">
                 <h3>${escapeHTML(hub.name)}</h3>
                 <span class="hub-popup-location">${escapeHTML(hub.location)}</span>
-                <p>${escapeHTML(hub.description)}</p>
             </div>
         `, { maxWidth: 300, className: 'hub-popup-wrapper' });
         return marker;

@@ -741,12 +741,6 @@ img {
     margin-bottom: var(--space-sm);
 }
 
-.hub-list-body p {
-    font-size: 0.875rem;
-    color: var(--gray-600);
-    line-height: 1.5;
-}
-
 /* ===== Team Section ===== */
 .team {
     padding: var(--space-3xl) 0;
@@ -1116,13 +1110,6 @@ img {
     padding: 2px 8px;
     border-radius: var(--radius-full);
     margin-bottom: var(--space-sm);
-}
-
-.hub-popup p {
-    font-size: 0.875rem;
-    color: var(--gray-600);
-    margin-bottom: var(--space-md);
-    line-height: 1.5;
 }
 
 /* Custom map marker: a standard pin shape (not a quilt patch -- an
