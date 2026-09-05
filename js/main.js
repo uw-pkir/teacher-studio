@@ -18,22 +18,33 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // All quilt-patch flourish variants -- also used as the random fallback
-// icon (renderIcon) when a workshop has no emoji of its own.
-const FLOURISH_ICONS = [
-    'images/quilt-flourish.svg',
-    'images/quilt-flourish-2.svg',
-    'images/quilt-flourish-3.svg',
-    'images/quilt-flourish-4.svg',
-    'images/quilt-flourish-5.svg',
-    'images/quilt-flourish-6.svg',
-    'images/quilt-flourish-7.svg',
-    'images/quilt-flourish-8.svg',
-    'images/quilt-flourish-9.svg',
-    'images/quilt-flourish-10.svg'
+// icon (renderIcon) when a workshop has no emoji of its own. Each entry's
+// `color` is that specific SVG's first fill (the two-color diagonal
+// patches use one of their two colors; the four solid-square patches use
+// their only color) -- kept in sync with the actual files by hand, since
+// there's no way to read an SVG's fill from a plain <img src>. Used to
+// give a hub's map pin the same color as whichever flourish its card
+// happens to get (see renderHubs), not just the icon list below.
+const FLOURISH_VARIANTS = [
+    { src: 'images/quilt-flourish.svg', color: '#fb923c' },
+    { src: 'images/quilt-flourish-2.svg', color: '#6366f1' },
+    { src: 'images/quilt-flourish-3.svg', color: '#f472b6' },
+    { src: 'images/quilt-flourish-4.svg', color: '#22d3d3' },
+    { src: 'images/quilt-flourish-5.svg', color: '#fb923c' },
+    { src: 'images/quilt-flourish-6.svg', color: '#6366f1' },
+    { src: 'images/quilt-flourish-7.svg', color: '#fb923c' },
+    { src: 'images/quilt-flourish-8.svg', color: '#6366f1' },
+    { src: 'images/quilt-flourish-9.svg', color: '#f472b6' },
+    { src: 'images/quilt-flourish-10.svg', color: '#22d3d3' }
 ];
+const FLOURISH_ICONS = FLOURISH_VARIANTS.map(v => v.src);
 
 function randomFlourish() {
     return FLOURISH_ICONS[Math.floor(Math.random() * FLOURISH_ICONS.length)];
+}
+
+function randomFlourishVariant() {
+    return FLOURISH_VARIANTS[Math.floor(Math.random() * FLOURISH_VARIANTS.length)];
 }
 
 // Gives each section-tag pill a different quilt-patch flourish instead of
@@ -715,13 +726,18 @@ function renderHubs(hubs, nextEvent, settings) {
     const virtualHubs = listedHubs.filter(hub => !hasMapPin(hub)).sort(byName);
     const orderedHubs = [...physicalHubs, ...virtualHubs];
 
+    // One random flourish per hub, picked once per render pass and reused
+    // for both the card's icon and (below) that hub's map pin color, so
+    // the two visibly match instead of being colored independently.
+    const hubVariants = new Map(orderedHubs.map(hub => [hub, randomFlourishVariant()]));
+
     // Text equivalent of the map, for screen-reader/keyboard users and
     // anyone whose browser can't or won't load Leaflet/the map tiles.
     const list = document.getElementById('hubs-list');
     if (list) {
         list.innerHTML = orderedHubs.map(hub => `
             <li class="hub-list-item">
-                <img class="hub-list-icon" src="${randomFlourish()}" alt="">
+                <img class="hub-list-icon" src="${hubVariants.get(hub).src}" alt="">
                 <div class="hub-list-body">
                     <h3>${escapeHTML(hub.name)}</h3>
                     ${hub.location ? `<span class="hub-list-location">${escapeHTML(hub.location)}</span>` : ''}
@@ -742,23 +758,24 @@ function renderHubs(hubs, nextEvent, settings) {
     }).addTo(map);
 
     // A plain, standard-shaped map pin (not a quilt patch -- an abstract
-    // geometric square doesn't read as a location marker) colored to match
-    // the site's theme instead.
-    const PIN_SVG = `<svg viewBox="0 0 24 32" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 0C5.4 0 0 5.4 0 12c0 9 12 20 12 20s12-11 12-20C24 5.4 18.6 0 12 0z" fill="var(--primary)"/>
+    // geometric square doesn't read as a location marker), colored to
+    // match that same hub's card icon (see hubVariants above) rather than
+    // one fixed color for every pin.
+    const pinSvg = color => `<svg viewBox="0 0 24 32" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 0C5.4 0 0 5.4 0 12c0 9 12 20 12 20s12-11 12-20C24 5.4 18.6 0 12 0z" fill="${color}"/>
         <circle cx="12" cy="12" r="5" fill="#ffffff"/>
     </svg>`;
 
-    const createCustomIcon = () => L.divIcon({
+    const createCustomIcon = color => L.divIcon({
         className: 'custom-marker-container',
-        html: `<div class="custom-hub-marker">${PIN_SVG}</div>`,
+        html: `<div class="custom-hub-marker">${pinSvg(color)}</div>`,
         iconSize: [28, 36],
         iconAnchor: [14, 36],
         popupAnchor: [0, -34]
     });
 
     const markers = physicalHubs.map(hub => {
-        const marker = L.marker([hub.lat, hub.lng], { icon: createCustomIcon() }).addTo(map);
+        const marker = L.marker([hub.lat, hub.lng], { icon: createCustomIcon(hubVariants.get(hub).color) }).addTo(map);
         marker.bindPopup(`
             <div class="hub-popup">
                 <h3>${escapeHTML(hub.name)}</h3>
