@@ -21,8 +21,8 @@
     ],
     "links": [
       {
-        "label": "static1.squarespace.com",
-        "url": "https://static1.squarespace.com/static/51bd298be4b09566e1107784/t/5e6d2637a53943154a8c9a48/1584211556966/Cardboard+Construction%2C+facilitation+guide+small+file.pdf"
+        "label": "Be Kind Rewind Montage",
+        "url": "https://www.youtube.com/watch?v=tPVm8eIeY5k"
       },
       {
         "label": "Home | Cardboard Superheroes",
@@ -35,10 +35,6 @@
       {
         "label": "Human Verification",
         "url": "https://www.exploratorium.edu/tinkering/projects/cardboard-automata"
-      },
-      {
-        "label": "Be Kind Rewind Montage",
-        "url": "https://www.youtube.com/watch?v=tPVm8eIeY5k"
       }
     ]
   },
@@ -70,7 +66,12 @@
       "internet connection"
     ],
     "nice_to_have_materials": [],
-    "links": []
+    "links": [
+      {
+        "label": "Scratch - Imagine, Program, Share",
+        "url": "https://scratch.mit.edu"
+      }
+    ]
   },
   {
     "date": "2023-02-16",
@@ -106,7 +107,8 @@
     "required_materials": [
       "Pencil",
       "paper",
-      "wires (paper clips or thinner gauge wire) pliers"
+      "wires (paper clips or thinner gauge wire)",
+      "pliers"
     ],
     "nice_to_have_materials": [],
     "links": []
@@ -128,7 +130,8 @@
     "required_materials": [
       "Liquid art media like paint",
       "ink",
-      "dye. Markers",
+      "dye",
+      "Markers",
       "spinning mechanisms like small motors",
       "salad spinners",
       "fans",
@@ -145,7 +148,12 @@
     "title": "Trash Boats for the Bubbler Regatta",
     "description": "Create a boat that is wind powered. You may supply your own wind by blowing on the sail or think about a box fan to generate wind. Create a testing arena to make sure your boat floats and that you are able to navigate it effectively.",
     "required_materials": [
-      "Things that float - pool noodles; shipping foam; corks; cardboard boxes or juice containers. Other recycled or reused containers or materials   Mast materials - skewers; toothpicks; lollipop or popsicle sticks; straws   Sail materials - old library cards; cardstock; mylar sheeting; fabric   Joinery - twisty ties; pipe cleaners; hot glue (we often just stick things together into pool noodle foam)   Ballast - pennies; washers; brads; nails or screws"
+      "Things that float - pool noodles; shipping foam; corks; cardboard boxes or juice containers",
+      "Other recycled or reused containers or materials",
+      "Mast materials - skewers; toothpicks; lollipop or popsicle sticks; straws",
+      "Sail materials - old library cards; cardstock; mylar sheeting; fabric",
+      "Joinery - twisty ties; pipe cleaners; hot glue (we often just stick things together into pool noodle foam)",
+      "Ballast - pennies; washers; brads; nails or screws"
     ],
     "nice_to_have_materials": [],
     "links": []
@@ -286,7 +294,9 @@
     "title": "Drawing Data",
     "description": "Inspired by Spotify Unwrapped and other shared examples: Create a “_____” Unwrapped for 2025. Visualize some data, patterns, or trends from your life this year.",
     "required_materials": [
-      "Paper (post-its; copy paper; the back of an envelope) Drawing materials (your favorite pen; some markers; colored pencils; highlighters) Craft materials (pony beads; pipe cleaners; paper clips; whatever is lying around)"
+      "Paper (post-its; copy paper; the back of an envelope)",
+      "Drawing materials (your favorite pen; some markers; colored pencils; highlighters)",
+      "Craft materials (pony beads; pipe cleaners; paper clips; whatever is lying around)"
     ],
     "nice_to_have_materials": [
       "Collect some data about your year. It doesn't have to be precise or serious. How many times did you go outside each week; was the sun out? Which song did you listen to most each month? Which are your most used emojis?"
@@ -369,8 +379,7 @@
       "glue"
     ],
     "nice_to_have_materials": [
-      "Popsicle sticks (to spread glue",
-      "or use fingers)",
+      "Popsicle sticks (to spread glue/or use fingers)",
       "wax paper or tray",
       "paper towels"
     ],
@@ -397,19 +406,6 @@
     "required_materials": [
       "Computer or chromebook",
       "internet connection"
-    ],
-    "nice_to_have_materials": [],
-    "links": []
-  },
-  {
-    "date": "2026-11-15",
-    "icon": "❤️",
-    "title": "Test Nov Workshop",
-    "description": "Does this show up if it is not the next but is in the future?",
-    "required_materials": [
-      "pen",
-      "paper",
-      "imagination"
     ],
     "nice_to_have_materials": [],
     "links": []
