@@ -72,6 +72,16 @@ commits waiting fairly often.
   is in the DOM instead (see `handleShowcaseImageError` in `js/main.js`
   for the pattern), the same way the resource-card click handlers already
   do it.
+- SEO basics: `robots.txt` (disallows `/admin/` only), a canonical `<link>`
+  tag in `index.html`, and a `schema.org` `Event` block for the Next
+  Workshop. The Event block is injected/updated by
+  `renderEventStructuredData()` in `js/main.js` (a `<script
+  type="application/ld+json">` built from the same data the spotlight
+  card renders) rather than hand-written in `index.html`, since the next
+  workshop changes monthly -- confirmed this works fine even under the
+  strict CSP, since `application/ld+json` is inert data, not executable
+  script. It's skipped entirely when there's no upcoming workshop yet, or
+  the nearest one is still just a placeholder with no real topic decided.
 
 ## Where to look for what
 
@@ -95,10 +105,6 @@ commits waiting fairly often.
   fix is deleting/replacing that link at the source (the Website Entry
   form's response sheet), not something to hand-edit in `data/workshops.json`
   directly, since the next hourly sync would just overwrite it.
-- No `robots.txt`, canonical `<link>` tag, or `schema.org` structured data
-  (an `Event` block for the workshop) yet -- meta description and Open
-  Graph/Twitter tags were added, but these three weren't, pending a
-  decision on whether they're worth doing for a single-page site.
 - A couple of resource-archive links resolve to unhelpful auto-generated
   titles ("Human Verification" for a bot-challenge page, bare "Amazon" for
   an Amazon product link). `resolveLinkTitle()` in `scripts/sync-workshops.js`

@@ -236,6 +236,7 @@ async function loadAndRenderAll() {
 
     renderSectionText(sectionText, settings);
     renderNextEvent(upcoming[0] || null, settings);
+    renderEventStructuredData(upcoming[0] || null, settings, hubs);
     renderSchedule(upcoming);
     renderResources(archive);
     renderHubs(hubs, upcoming[0] || null, settings);
@@ -402,6 +403,77 @@ function renderNextEvent(event, settings) {
             <p class="next-event-location">${escapeHTML(locationNote)}</p>
         </div>
     `;
+}
+
+// ===== Structured data (schema.org Event) for the Next Workshop =====
+// Search engines execute page JS before reading structured data, so this
+// mirrors whatever the spotlight above shows instead of needing a second,
+// hand-maintained copy of the same info in index.html.
+const TZ_OFFSETS = {
+    EST: '-05:00', EDT: '-04:00', ET: '-05:00',
+    CST: '-06:00', CDT: '-05:00', CT: '-06:00',
+    MST: '-07:00', MDT: '-06:00', MT: '-07:00',
+    PST: '-08:00', PDT: '-07:00', PT: '-08:00'
+};
+
+// Best-effort: pulls a start time + timezone out of a free-text string
+// like "4:30-5:30 PM CST" (Settings -> General Settings -> Workshop time).
+// That field is meant for a human to read first, so a wording change
+// shouldn't be able to break anything -- returns null on no match, and
+// callers fall back to a date-only startDate, which schema.org also
+// accepts.
+function parseStartTime(workshopTime) {
+    const m = (workshopTime || '').match(/(\d{1,2})(?::(\d{2}))?\s*(?:-|–|to)\s*\d{1,2}(?::\d{2})?\s*(AM|PM)\s*([A-Z]{2,3})?/i);
+    if (!m) return null;
+    let hour = parseInt(m[1], 10);
+    const minute = m[2] || '00';
+    const period = m[3].toUpperCase();
+    if (period === 'PM' && hour !== 12) hour += 12;
+    if (period === 'AM' && hour === 12) hour = 0;
+    const tz = m[4] ? TZ_OFFSETS[m[4].toUpperCase()] : null;
+    const hh = String(hour).padStart(2, '0');
+    return tz ? `${hh}:${minute}:00${tz}` : `${hh}:${minute}:00`;
+}
+
+function renderEventStructuredData(event, settings, hubs) {
+    const existing = document.getElementById('event-structured-data');
+    // Nothing to emit when there's no upcoming workshop, or the nearest
+    // one is just a placeholder with no real topic decided yet (every
+    // placeholder from sync-workshops.js has an empty description, unlike
+    // a real submitted workshop) -- a placeholder isn't a real event
+    // worth a search engine indexing.
+    if (!event || !event.description) {
+        if (existing) existing.remove();
+        return;
+    }
+
+    const siteUrl = 'https://uw-pkir.github.io/teacher-studio/';
+    const physicalHubs = (hubs || []).filter(h => h.is_hub !== false);
+    const startTime = parseStartTime(settings.workshop_time);
+
+    const jsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'Event',
+        name: event.title,
+        startDate: startTime ? `${event.date}T${startTime}` : event.date,
+        eventAttendanceMode: 'https://schema.org/MixedEventAttendanceMode',
+        eventStatus: 'https://schema.org/EventScheduled',
+        description: event.description,
+        location: [
+            ...physicalHubs.map(h => ({ '@type': 'Place', name: h.name, address: h.location })),
+            { '@type': 'VirtualLocation', url: siteUrl }
+        ],
+        organizer: { '@type': 'Organization', name: 'Teacher Studio', url: siteUrl },
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', availability: 'https://schema.org/InStock', url: siteUrl },
+        image: `${siteUrl}brand/teacher-studio-logo.png`,
+        url: siteUrl
+    };
+
+    const script = existing || document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'event-structured-data';
+    script.textContent = JSON.stringify(jsonLd);
+    if (!existing) document.head.appendChild(script);
 }
 
 // Single source of truth for these two labels -- also used to fill in the
