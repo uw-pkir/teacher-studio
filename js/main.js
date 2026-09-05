@@ -43,8 +43,29 @@ function randomFlourish() {
     return FLOURISH_ICONS[Math.floor(Math.random() * FLOURISH_ICONS.length)];
 }
 
-function randomFlourishVariant() {
-    return FLOURISH_VARIANTS[Math.floor(Math.random() * FLOURISH_VARIANTS.length)];
+// Fixed, non-random flourish per hub, so a card's icon and its map pin
+// always match (see renderHubs) *and* two hubs don't end up with the same
+// color by chance the way a random pick occasionally did. Indices 6-9 are
+// the four solid-color swatches -- deliberately assigned one each so all
+// four current hubs are visually distinct at a glance.
+const HUB_FLOURISH_BY_NAME = {
+    'Appleton Public Library': 6,       // quilt-flourish-7.svg -- solid orange
+    'Fablab @ Henderson Elementary': 8, // quilt-flourish-9.svg -- solid pink
+    'Wayne RESA': 7,                    // quilt-flourish-8.svg -- solid indigo
+    'Online': 9                         // quilt-flourish-10.svg -- solid teal/aqua
+};
+
+// A hub added later that isn't in the list above still gets a fixed (not
+// random) variant, derived from its own name so it's stable across page
+// loads without needing a code change for every new hub -- add a name
+// above instead if a specific color is wanted for it.
+function flourishVariantForHub(name) {
+    if (Object.prototype.hasOwnProperty.call(HUB_FLOURISH_BY_NAME, name)) {
+        return FLOURISH_VARIANTS[HUB_FLOURISH_BY_NAME[name]];
+    }
+    let hash = 0;
+    for (let i = 0; i < name.length; i++) hash = (hash * 31 + name.charCodeAt(i)) | 0;
+    return FLOURISH_VARIANTS[Math.abs(hash) % FLOURISH_VARIANTS.length];
 }
 
 // Gives each section-tag pill a different quilt-patch flourish instead of
@@ -726,18 +747,13 @@ function renderHubs(hubs, nextEvent, settings) {
     const virtualHubs = listedHubs.filter(hub => !hasMapPin(hub)).sort(byName);
     const orderedHubs = [...physicalHubs, ...virtualHubs];
 
-    // One random flourish per hub, picked once per render pass and reused
-    // for both the card's icon and (below) that hub's map pin color, so
-    // the two visibly match instead of being colored independently.
-    const hubVariants = new Map(orderedHubs.map(hub => [hub, randomFlourishVariant()]));
-
     // Text equivalent of the map, for screen-reader/keyboard users and
     // anyone whose browser can't or won't load Leaflet/the map tiles.
     const list = document.getElementById('hubs-list');
     if (list) {
         list.innerHTML = orderedHubs.map(hub => `
             <li class="hub-list-item">
-                <img class="hub-list-icon" src="${hubVariants.get(hub).src}" alt="">
+                <img class="hub-list-icon" src="${flourishVariantForHub(hub.name).src}" alt="">
                 <div class="hub-list-body">
                     <h3>${escapeHTML(hub.name)}</h3>
                     ${hub.location ? `<span class="hub-list-location">${escapeHTML(hub.location)}</span>` : ''}
@@ -759,8 +775,8 @@ function renderHubs(hubs, nextEvent, settings) {
 
     // A plain, standard-shaped map pin (not a quilt patch -- an abstract
     // geometric square doesn't read as a location marker), colored to
-    // match that same hub's card icon (see hubVariants above) rather than
-    // one fixed color for every pin.
+    // match that same hub's card icon (see flourishVariantForHub above)
+    // rather than one fixed color for every pin.
     const pinSvg = color => `<svg viewBox="0 0 24 32" xmlns="http://www.w3.org/2000/svg">
         <path d="M12 0C5.4 0 0 5.4 0 12c0 9 12 20 12 20s12-11 12-20C24 5.4 18.6 0 12 0z" fill="${color}"/>
         <circle cx="12" cy="12" r="5" fill="#ffffff"/>
@@ -775,7 +791,7 @@ function renderHubs(hubs, nextEvent, settings) {
     });
 
     const markers = physicalHubs.map(hub => {
-        const marker = L.marker([hub.lat, hub.lng], { icon: createCustomIcon(hubVariants.get(hub).color) }).addTo(map);
+        const marker = L.marker([hub.lat, hub.lng], { icon: createCustomIcon(flourishVariantForHub(hub.name).color) }).addTo(map);
         marker.bindPopup(`
             <div class="hub-popup">
                 <h3>${escapeHTML(hub.name)}</h3>
