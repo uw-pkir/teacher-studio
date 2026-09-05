@@ -8,7 +8,6 @@
       "address": "1201 Tompkins Dr, Madison, WI 53716",
       "location": "Madison, WI",
       "website": "https://www.facebook.com/HendersonFABLab/",
-      "description": "Elementary school-based makerspace in a public elementary school in Madison, WI.",
       "lat": 43.058657
     },
     {
@@ -19,7 +18,6 @@
       "address": "200 N Appleton St, Appleton, WI 54911",
       "location": "Appleton, WI",
       "website": "https://buildingforkids.org",
-      "description": "A hands-on children's museum focused on play-based learning.",
       "lat": 44.263068
     },
     {
@@ -29,7 +27,6 @@
       "is_partner": true,
       "location": "Batavia, IL",
       "website": "https://education.fnal.gov/makerspace",
-      "description": "Making and STEM education at America's particle physics laboratory.",
       "lat": 41.8421
     },
     {
@@ -40,7 +37,6 @@
       "address": "5454 Venoy Rd, Wayne, MI 48184",
       "location": "Wayne, MI",
       "website": "https://resa.net",
-      "description": "Regional educational service agency supporting schools across Wayne County.",
       "lat": 42.2693704
     },
     {
@@ -50,7 +46,6 @@
       "is_partner": true,
       "location": "Madison, WI",
       "website": "https://education.wisc.edu",
-      "description": "School of Education",
       "lat": 43.0766
     },
     {
@@ -61,7 +56,6 @@
       "address": "200 N Appleton St, Appleton, WI 54911",
       "location": "Appleton, WI",
       "website": "https://apl.org/",
-      "description": "Host location for the Appleton Hub, which is organized by Building for Kids.",
       "lat": 44.263068
     },
     {
@@ -69,15 +63,13 @@
       "is_partner": true,
       "name": "UW-Madison College of Computing & AI",
       "location": "Madison, WI",
-      "website": "https://cai.wisc.edu/",
-      "description": "College of Computing and AI"
+      "website": "https://cai.wisc.edu/"
     },
     {
       "is_hub": true,
       "is_partner": false,
       "name": "Online",
-      "location": "Zoom Meeting",
-      "description": "Link provided when you register."
+      "location": "Zoom Meeting"
     }
   ]
 }

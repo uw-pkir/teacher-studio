@@ -705,8 +705,9 @@ img {
 
 .hub-list-item {
     display: flex;
+    align-items: center;
     gap: var(--space-md);
-    padding: var(--space-lg);
+    padding: var(--space-md) var(--space-lg);
     background: var(--bg-primary);
     border-radius: var(--radius-lg);
     /* Same shadow as .resource-card -- both sit on a plain white section
@@ -738,7 +739,6 @@ img {
     background: var(--gray-100);
     padding: 2px 8px;
     border-radius: var(--radius-full);
-    margin-bottom: var(--space-sm);
 }
 
 /* ===== Team Section ===== */
@@ -1109,7 +1109,6 @@ img {
     background: var(--gray-100);
     padding: 2px 8px;
     border-radius: var(--radius-full);
-    margin-bottom: var(--space-sm);
 }
 
 /* Custom map marker: a standard pin shape (not a quilt patch -- an

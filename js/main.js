@@ -243,6 +243,22 @@ const animateInStyle = document.createElement('style');
 animateInStyle.textContent = `.animate-in { opacity: 1 !important; transform: translateY(0) !important; }`;
 document.head.appendChild(animateInStyle);
 
+// Each section's data is edited independently (CMS, sync bots, or a
+// hand-typed CMS field with something unexpected in it), so one section's
+// render throwing shouldn't take every section after it down with it. A
+// real incident -- a hub with no coordinates crashing the Leaflet marker
+// code -- took out Organizers, Partners, and Show & Tell site-wide with
+// no visible error to anyone, simply because they render after Hubs in
+// the list below. This wrapper is the fix for that class of bug, not
+// just the one trigger that happened to cause it.
+function safeRender(name, fn) {
+    try {
+        fn();
+    } catch (err) {
+        console.error(`Failed to render ${name}:`, err);
+    }
+}
+
 // ===== Data loading =====
 async function loadJSON(path) {
     const res = await fetch(path, { cache: 'no-cache' });
@@ -266,20 +282,22 @@ async function loadAndRenderAll() {
     const upcoming = workshops.filter(w => w.date >= todayISO).sort((a, b) => a.date.localeCompare(b.date));
     const archive = workshops.filter(w => w.date < todayISO).sort((a, b) => b.date.localeCompare(a.date));
 
-    renderSectionText(sectionText, settings);
-    renderNextEvent(upcoming[0] || null, settings);
-    renderEventStructuredData(upcoming[0] || null, settings, hubs);
-    renderSchedule(upcoming);
-    renderResources(archive);
-    renderHubs(hubs, upcoming[0] || null, settings);
-    renderTeam(organizersData.organizers || [], organizersData.emeriti || []);
-    renderPartners(hubs);
-    renderShowcase(showcase);
-    renderAboutFeatures((sectionText.about || {}).features);
+    safeRender('section text', () => renderSectionText(sectionText, settings));
+    safeRender('next event', () => renderNextEvent(upcoming[0] || null, settings));
+    safeRender('event structured data', () => renderEventStructuredData(upcoming[0] || null, settings, hubs));
+    safeRender('schedule', () => renderSchedule(upcoming));
+    safeRender('resources', () => renderResources(archive));
+    safeRender('hubs', () => renderHubs(hubs, upcoming[0] || null, settings));
+    safeRender('team', () => renderTeam(organizersData.organizers || [], organizersData.emeriti || []));
+    safeRender('partners', () => renderPartners(hubs));
+    safeRender('showcase', () => renderShowcase(showcase));
+    safeRender('about features', () => renderAboutFeatures((sectionText.about || {}).features));
 
-    if (settings.show_tell_form_url && isSafeHref(settings.show_tell_form_url)) {
-        document.getElementById('show-tell-form-link').href = settings.show_tell_form_url;
-    }
+    safeRender('show & tell form link', () => {
+        if (settings.show_tell_form_url && isSafeHref(settings.show_tell_form_url)) {
+            document.getElementById('show-tell-form-link').href = settings.show_tell_form_url;
+        }
+    });
 }
 
 // Each section's headline + description text -- editable via /admin
