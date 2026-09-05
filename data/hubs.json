@@ -55,14 +55,14 @@
     },
     {
       "is_hub": true,
-      "is_partner": false,
+      "lng": -88.407147,
       "name": "Appleton Public Library",
-      "location": "Appleton, WI",
-      "description": "Host location for the Appleton Hub, which is organized by Building for Kids.",
-      "website": "https://apl.org/",
+      "is_partner": false,
       "address": "200 N Appleton St, Appleton, WI 54911",
-      "lat": 44.263068,
-      "lng": -88.407147
+      "location": "Appleton, WI",
+      "website": "https://apl.org/",
+      "description": "Host location for the Appleton Hub, which is organized by Building for Kids.",
+      "lat": 44.263068
     },
     {
       "is_hub": false,
@@ -71,6 +71,14 @@
       "location": "Madison, WI",
       "website": "https://cai.wisc.edu/",
       "description": "College of Computing and AI"
+    },
+    {
+      "is_hub": true,
+      "is_partner": false,
+      "name": "Online",
+      "location": "Zoom Meeting",
+      "description": "Link provided when you register.",
+      "website": "n/a"
     }
   ]
 }
