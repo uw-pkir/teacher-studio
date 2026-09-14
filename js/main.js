@@ -5,13 +5,9 @@
 
 document.addEventListener('DOMContentLoaded', function () {
     initNav();
-    initModal();
     initHeroLogo();
     randomizeFlourishes();
     loadAndRenderAll();
-
-    const shuffleBtn = document.getElementById('resources-shuffle');
-    if (shuffleBtn) shuffleBtn.addEventListener('click', renderResourceSample);
 
     const showcaseShuffleBtn = document.getElementById('showcase-shuffle');
     if (showcaseShuffleBtn) showcaseShuffleBtn.addEventListener('click', renderShowcaseSample);
@@ -392,17 +388,6 @@ function renderBullets(items) {
     return (items || []).map(m => `<li>${escapeHTML(m)}</li>`).join('');
 }
 
-// Shows/hides one of the modal's two material blocks depending on whether
-// there's anything to show in it.
-function setMaterialsBlock(block, items) {
-    if (items && items.length) {
-        block.querySelector('.materials-list').innerHTML = renderBullets(items);
-        block.style.display = '';
-    } else {
-        block.style.display = 'none';
-    }
-}
-
 // Parses a "YYYY-MM-DD" string as a local date (avoids UTC off-by-one).
 function parseLocalDate(isoDate) {
     const [y, m, d] = isoDate.split('-').map(Number);
@@ -526,22 +511,26 @@ function renderEventStructuredData(event, settings, hubs) {
     if (!existing) document.head.appendChild(script);
 }
 
-// Single source of truth for these two labels -- also used to fill in the
-// resource-archive modal's static headers (see initModal), so there's only
-// one place to edit if the wording should ever change.
+// Single source of truth for these two labels, used by both the spotlight
+// card and the resource archive, so there's only one place to edit if the
+// wording should ever change.
 const REQUIRED_MATERIALS_LABEL = 'Required Materials';
 const NICE_TO_HAVE_LABEL = 'Nice to Have';
 
 // Shared by the spotlight and the resource-archive modal: two labeled
 // bulleted lists built from comma-separated material strings.
-function renderMaterialsBlock(item, wrapperClass) {
+// headingTag defaults to h3 (correct one level below the spotlight's own
+// h2 workshop title); the resource archive passes h5 instead, since its
+// workshop titles already sit two levels deeper (h2 Resource Archive >
+// h3 school year > h4 workshop title -- see renderArchiveItem).
+function renderMaterialsBlock(item, wrapperClass, headingTag = 'h3') {
     const hasRequired = item.required_materials && item.required_materials.length;
     const hasNice = item.nice_to_have_materials && item.nice_to_have_materials.length;
     if (!hasRequired && !hasNice) return '';
     return `
         <div class="${wrapperClass}">
-            ${hasRequired ? `<div><h3>${REQUIRED_MATERIALS_LABEL}</h3><ul>${renderBullets(item.required_materials)}</ul></div>` : ''}
-            ${hasNice ? `<div><h3>${NICE_TO_HAVE_LABEL}</h3><ul>${renderBullets(item.nice_to_have_materials)}</ul></div>` : ''}
+            ${hasRequired ? `<div><${headingTag}>${REQUIRED_MATERIALS_LABEL}</${headingTag}><ul>${renderBullets(item.required_materials)}</ul></div>` : ''}
+            ${hasNice ? `<div><${headingTag}>${NICE_TO_HAVE_LABEL}</${headingTag}><ul>${renderBullets(item.nice_to_have_materials)}</ul></div>` : ''}
         </div>
     `;
 }
@@ -575,49 +564,90 @@ function renderSchedule(upcoming) {
 }
 
 // ===== Resources / past workshop archive =====
-// Shows 3 random cards from the full archive at a time; the shuffle button
-// re-samples a fresh 3 without reloading anything.
-const RESOURCE_SAMPLE_SIZE = 3;
-let resourceArchive = [];
-let visibleResources = [];
-
+// Grouped by school year (Sept-May, matching the actual workshop season --
+// see schoolYearLabel), newest first, as a two-level accordion -- only the
+// year headers are always visible, so the always-on-screen list stays
+// compact no matter how many workshops accumulate over time. The most
+// recent school year starts open; every workshop inside it is browsable
+// without re-rolling a random sample like the old shuffle-3-cards pattern
+// did.
 function renderResources(resources) {
-    resourceArchive = resources;
-    const shuffleBtn = document.getElementById('resources-shuffle');
-    if (shuffleBtn) shuffleBtn.style.display = resources.length > RESOURCE_SAMPLE_SIZE ? '' : 'none';
-    renderResourceSample();
-}
-
-function renderResourceSample() {
-    const grid = document.getElementById('resources-grid');
-    if (!resourceArchive.length) {
-        grid.innerHTML = '<p>Resources coming soon.</p>';
+    const container = document.getElementById('resources-accordion');
+    if (!resources.length) {
+        container.innerHTML = '<p>Resources coming soon.</p>';
         return;
     }
 
-    visibleResources = sampleRandom(resourceArchive, Math.min(RESOURCE_SAMPLE_SIZE, resourceArchive.length));
-
-    grid.innerHTML = visibleResources.map((r, index) => `
-        <div class="resource-card" data-resource-index="${index}">
-            <div class="resource-icon">${renderIcon(r.icon)}</div>
-            <h3>${escapeHTML(r.title)}</h3>
-            <p>${escapeHTML(r.description || '')}</p>
-            <div class="resource-meta">
-                <span>${escapeHTML(formatMediumDate(r.date))}</span>
-            </div>
-            <button class="resource-link">View Details →</button>
-        </div>
-    `).join('');
-
-    document.querySelectorAll('.resource-card[data-resource-index]').forEach(card => {
-        card.addEventListener('click', () => openResourceModal(visibleResources[Number(card.dataset.resourceIndex)]));
+    // resources arrives already sorted newest-first (see loadAndRenderAll).
+    // Grouping preserves that order within each school year too, since a
+    // Map's key order follows first insertion and every workshop in a given
+    // school year -- however scattered across that Sept-to-May span --
+    // still gets collected under the one key for it.
+    const byYear = new Map();
+    resources.forEach(r => {
+        const year = schoolYearLabel(parseLocalDate(r.date));
+        if (!byYear.has(year)) byYear.set(year, []);
+        byYear.get(year).push(r);
     });
 
-    observeFadeIn(grid, '.resource-card');
+    container.innerHTML = [...byYear.entries()].map(([year, items], index) => `
+        <details class="archive-year" name="resource-archive-years"${index === 0 ? ' open' : ''}>
+            <summary class="archive-year-summary">
+                <span class="archive-year-label" role="heading" aria-level="3">${year}</span>
+                <span class="archive-year-count">${items.length} workshop${items.length === 1 ? '' : 's'}</span>
+                <span class="archive-chevron" aria-hidden="true"></span>
+            </summary>
+            <div class="archive-year-body">
+                ${items.map(renderArchiveItem).join('')}
+            </div>
+        </details>
+    `).join('');
 
-    // Shuffling swaps the cards with no focus change, so screen-reader
-    // users get no other signal that anything happened -- announce it.
-    announceStatus('resources-shuffle-status', `Showing ${visibleResources.length} new resources.`);
+    observeFadeIn(container, '.archive-item');
+}
+
+// Heading levels here nest under the school-year label above (role=heading
+// aria-level=3): the workshop title is level 4, and its own Required
+// Materials/Nice to Have/Shared Resources sub-headings are level 5 -- see
+// renderMaterialsBlock's headingTag param and renderArchiveLinks below.
+// role=heading + aria-level (rather than a real <h4> tag) is used for the
+// title because it sits inside <summary> alongside the icon/date/chevron;
+// a native heading element is only valid there if it's summary's *entire*
+// content, which would mean dropping those. This still exposes the same
+// heading semantics to screen readers.
+function renderArchiveItem(r) {
+    return `
+        <details class="archive-item" name="resource-archive-item">
+            <summary class="archive-summary">
+                <span class="archive-icon">${renderIcon(r.icon)}</span>
+                <span class="archive-summary-text">
+                    <span class="archive-title" role="heading" aria-level="4">${escapeHTML(r.title)}</span>
+                    <span class="archive-date">${escapeHTML(formatMediumDate(r.date))}</span>
+                </span>
+                <span class="archive-chevron" aria-hidden="true"></span>
+            </summary>
+            <div class="archive-body">
+                ${r.description ? `<p class="archive-description">${escapeHTML(r.description)}</p>` : ''}
+                ${renderMaterialsBlock(r, 'archive-materials', 'h5')}
+                ${renderArchiveLinks(r.links)}
+            </div>
+        </details>
+    `;
+}
+
+// Same link-list shape the old modal used, just rendered inline in each
+// accordion row's body instead of a popup. h5 to match renderMaterialsBlock
+// above -- see the nesting comment on renderArchiveItem.
+function renderArchiveLinks(links) {
+    if (!links || !links.length) return '';
+    return `
+        <div class="archive-links">
+            <h5>Shared Resources</h5>
+            <ul class="archive-links-list">
+                ${links.map(l => `<li><a href="${escapeHref(l.url)}" target="_blank" rel="noopener">${escapeHTML(l.label)}<span class="sr-only"> (opens in a new tab)</span></a></li>`).join('')}
+            </ul>
+        </div>
+    `;
 }
 
 // Sets a role="status" element's text so assistive tech announces it --
@@ -644,85 +674,17 @@ function formatMediumDate(isoDate) {
     return parseLocalDate(isoDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 }
 
-// ===== Modal (shared by resource cards) =====
-// Focus moves into the modal on open, is trapped inside it while open (Tab
-// wraps at both ends), and returns to whatever opened it on close --
-// standard expected dialog behavior for keyboard and screen-reader users.
-let modalTriggerElement = null;
-
-function initModal() {
-    const modal = document.getElementById('resource-modal');
-    if (!modal) return;
-    modal.querySelector('.modal-materials-required h3').textContent = REQUIRED_MATERIALS_LABEL;
-    modal.querySelector('.modal-materials-nice h3').textContent = NICE_TO_HAVE_LABEL;
-    modal.querySelector('.modal-overlay').addEventListener('click', closeResourceModal);
-    modal.querySelector('.modal-close').addEventListener('click', closeResourceModal);
-    document.addEventListener('keydown', e => {
-        if (!modal.classList.contains('active')) return;
-        if (e.key === 'Escape') {
-            closeResourceModal();
-        } else if (e.key === 'Tab') {
-            trapFocus(e, modal.querySelector('.modal-content'));
-        }
-    });
-}
-
-function trapFocus(e, container) {
-    const focusable = Array.from(container.querySelectorAll(
-        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
-    ));
-    if (!focusable.length) return;
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
-
-    if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault();
-        last.focus();
-    } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
-    }
-}
-
-function openResourceModal(resource, triggerEl) {
-    const modal = document.getElementById('resource-modal');
-    modalTriggerElement = triggerEl || document.activeElement;
-    modal.querySelector('.modal-eyebrow').textContent = formatMediumDate(resource.date);
-    modal.querySelector('.modal-title').innerHTML = `${renderIcon(resource.icon)} ${escapeHTML(resource.title)}`;
-    modal.querySelector('.modal-description').textContent = resource.description || '';
-
-    setMaterialsBlock(modal.querySelector('.modal-materials-required'), resource.required_materials);
-    setMaterialsBlock(modal.querySelector('.modal-materials-nice'), resource.nice_to_have_materials);
-
-    const linksBlock = modal.querySelector('.modal-links');
-    const linksList = modal.querySelector('.modal-links-list');
-    if (resource.links && resource.links.length) {
-        linksList.innerHTML = resource.links
-            .map(l => `<li><a href="${escapeHref(l.url)}" target="_blank" rel="noopener">${escapeHTML(l.label)}<span class="sr-only"> (opens in a new tab)</span></a></li>`)
-            .join('');
-        linksBlock.style.display = '';
-    } else {
-        linksBlock.style.display = 'none';
-    }
-
-    modal.hidden = false;
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-    modal.querySelector('.modal-close').focus();
-}
-
-function closeResourceModal() {
-    const modal = document.getElementById('resource-modal');
-    modal.classList.remove('active');
-    document.body.style.overflow = '';
-    if (modalTriggerElement) {
-        modalTriggerElement.focus();
-        modalTriggerElement = null;
-    }
-    // Wait for the fade-out (see .modal's transition) before fully removing
-    // it from layout/the accessibility tree, so the closing animation still
-    // plays instead of cutting off instantly.
-    setTimeout(() => { modal.hidden = true; }, 250);
+// Workshops run on the school calendar, not the January-December one --
+// a September 2025 workshop and a May 2026 one are the same season, so
+// the resource archive groups by this instead of by calendar year.
+// Anything in the Jun-Aug gap (no workshops happen then, but just in
+// case) is counted as closing out the school year that started the
+// previous September, rather than starting the next one.
+function schoolYearLabel(date) {
+    const calendarYear = date.getFullYear();
+    const startYear = date.getMonth() >= 8 ? calendarYear : calendarYear - 1;
+    const endYearShort = String((startYear + 1) % 100).padStart(2, '0');
+    return `${startYear}-${endYearShort}`;
 }
 
 // ===== Hub sites map =====
