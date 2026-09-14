@@ -560,11 +560,13 @@ function renderSchedule(upcoming) {
 }
 
 // ===== Resources / past workshop archive =====
-// Grouped by year, newest first, as a two-level accordion -- only the
+// Grouped by school year (Sept-May, matching the actual workshop season --
+// see schoolYearLabel), newest first, as a two-level accordion -- only the
 // year headers are always visible, so the always-on-screen list stays
 // compact no matter how many workshops accumulate over time. The most
-// recent year starts open; every workshop inside it is browsable without
-// re-rolling a random sample like the old shuffle-3-cards pattern did.
+// recent school year starts open; every workshop inside it is browsable
+// without re-rolling a random sample like the old shuffle-3-cards pattern
+// did.
 function renderResources(resources) {
     const container = document.getElementById('resources-accordion');
     if (!resources.length) {
@@ -572,11 +574,14 @@ function renderResources(resources) {
         return;
     }
 
-    // resources arrives already sorted newest-first (see loadAndRenderAll),
-    // so grouping by year preserves that order within each year too.
+    // resources arrives already sorted newest-first (see loadAndRenderAll).
+    // Grouping preserves that order within each school year too, since a
+    // Map's key order follows first insertion and every workshop in a given
+    // school year -- however scattered across that Sept-to-May span --
+    // still gets collected under the one key for it.
     const byYear = new Map();
     resources.forEach(r => {
-        const year = parseLocalDate(r.date).getFullYear();
+        const year = schoolYearLabel(parseLocalDate(r.date));
         if (!byYear.has(year)) byYear.set(year, []);
         byYear.get(year).push(r);
     });
@@ -653,6 +658,19 @@ function sampleRandom(arr, n) {
 
 function formatMediumDate(isoDate) {
     return parseLocalDate(isoDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+}
+
+// Workshops run on the school calendar, not the January-December one --
+// a September 2025 workshop and a May 2026 one are the same season, so
+// the resource archive groups by this instead of by calendar year.
+// Anything in the Jun-Aug gap (no workshops happen then, but just in
+// case) is counted as closing out the school year that started the
+// previous September, rather than starting the next one.
+function schoolYearLabel(date) {
+    const calendarYear = date.getFullYear();
+    const startYear = date.getMonth() >= 8 ? calendarYear : calendarYear - 1;
+    const endYearShort = String((startYear + 1) % 100).padStart(2, '0');
+    return `${startYear}-${endYearShort}`;
 }
 
 // ===== Hub sites map =====
