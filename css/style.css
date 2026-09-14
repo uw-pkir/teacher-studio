@@ -625,67 +625,160 @@ img {
     padding: var(--space-3xl) 0;
 }
 
-.resources-grid {
+.resources-accordion {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: var(--space-lg);
+    gap: var(--space-md);
+    max-width: 760px;
+    margin: 0 auto;
 }
 
-.resource-card {
+/* Native <details>/<summary> -- gets expand/collapse, keyboard support,
+   and correct screen-reader state announcements for free, and the
+   name="resource-archive" attribute on each <details> (see main.js) makes
+   them an exclusive accordion in browsers that support it, degrading
+   harmlessly to independently-toggleable ones where it isn't supported. */
+.archive-item {
     background: var(--bg-primary);
     border-radius: var(--radius-lg);
-    padding: var(--space-xl);
-    /* Stronger than --shadow-sm (used on the Show & Tell cards) on purpose:
-       these cards sit on a plain white section, and their own tinted
-       background is close enough in hue to --shadow-sm that it read as
-       nearly invisible there -- the Show & Tell cards get their separation
-       mostly from the white-card-on-tinted-section contrast instead. */
-    box-shadow: 0 4px 14px rgba(30, 27, 75, 0.12);
-    transition: all var(--transition-base);
     border: 2px solid transparent;
+    box-shadow: 0 4px 14px rgba(30, 27, 75, 0.12);
+    transition: border-color var(--transition-base);
+    overflow: hidden;
 }
 
-.resource-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-md);
+.archive-item[open] {
     border-color: var(--primary-light);
 }
 
-.resource-icon {
-    font-size: 2.5rem;
-    margin-bottom: var(--space-md);
+.archive-summary {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-lg) var(--space-xl);
+    cursor: pointer;
+    list-style: none;
 }
 
-.resource-card h3 {
-    font-size: 1.25rem;
-    margin-bottom: var(--space-sm);
+/* Hides the default disclosure triangle so the custom .archive-chevron
+   can take its place consistently across browsers. */
+.archive-summary::-webkit-details-marker {
+    display: none;
 }
 
-.resource-card p {
+.archive-icon {
+    font-size: 1.75rem;
+    flex-shrink: 0;
+}
+
+.archive-summary-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex-grow: 1;
+    min-width: 0;
+}
+
+.archive-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--dark);
+}
+
+.archive-date {
+    font-size: 0.8125rem;
+    color: var(--gray-600);
+}
+
+.archive-chevron {
+    flex-shrink: 0;
+    width: 10px;
+    height: 10px;
+    border-right: 2px solid var(--gray-400);
+    border-bottom: 2px solid var(--gray-400);
+    transform: rotate(45deg);
+    transition: transform var(--transition-fast);
+    margin-top: -4px;
+}
+
+.archive-item[open] .archive-chevron {
+    transform: rotate(-135deg);
+    margin-top: 4px;
+}
+
+.archive-body {
+    padding: 0 var(--space-xl) var(--space-xl);
+}
+
+.archive-description {
     color: var(--gray-600);
     font-size: 0.9375rem;
-    margin-bottom: var(--space-md);
+    margin-bottom: var(--space-lg);
 }
 
-.resource-meta {
-    display: flex;
+.archive-materials {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: var(--space-md);
-    margin-bottom: var(--space-md);
-}
-
-.resource-meta span {
-    font-size: 0.75rem;
-    /* --gray-600 measures 4.40:1 against --gray-100 -- just under the
-       4.5:1 AA minimum for text this size (12px isn't "large text"). */
-    color: var(--gray-800);
     background: var(--gray-100);
-    padding: var(--space-xs) var(--space-sm);
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+    margin-bottom: var(--space-lg);
 }
 
-.resource-link {
-    font-weight: 500;
+.archive-materials h3 {
     font-size: 0.9375rem;
+    margin-bottom: var(--space-sm);
+    color: var(--dark);
+}
+
+.archive-materials ul {
+    list-style: none;
+    display: grid;
+    gap: var(--space-sm);
+}
+
+.archive-materials li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: 0.9375rem;
+    /* Sits inside --gray-100, where --gray-600 measures 4.40:1 -- just
+       under the 4.5:1 AA minimum for text this size, same reasoning as
+       the schedule/hub cards elsewhere in this file. */
+    color: var(--gray-800);
+}
+
+.archive-materials li::before {
+    content: "•";
+    color: var(--primary);
+    font-weight: bold;
+}
+
+.archive-links {
+    border-top: 1px solid var(--gray-200);
+    padding-top: var(--space-lg);
+}
+
+.archive-links h3 {
+    font-size: 0.9375rem;
+    margin-bottom: var(--space-md);
+    color: var(--dark);
+}
+
+.archive-links-list {
+    list-style: none;
+    display: grid;
+    gap: var(--space-sm);
+}
+
+.archive-links-list a {
+    color: var(--primary);
+    text-decoration: none;
+    font-size: 0.9375rem;
+}
+
+.archive-links-list a:hover {
+    text-decoration: underline;
 }
 
 /* ===== Hubs Section ===== */
@@ -1033,7 +1126,6 @@ img {
         font-size: 2rem;
     }
 
-    .resources-grid,
     .team-grid {
         grid-template-columns: 1fr;
     }
@@ -1068,18 +1160,6 @@ img {
     display: block;
     border: 4px solid var(--white);
     box-shadow: var(--shadow-md);
-}
-
-/* ===== Resource Cards Clickable ===== */
-.resource-card[data-resource] {
-    cursor: pointer;
-}
-
-.resource-card .resource-link {
-    background: none;
-    border: none;
-    font-family: inherit;
-    cursor: pointer;
 }
 
 /* ===== Hub Map ===== */
@@ -1139,168 +1219,6 @@ img {
     transform: scale(1.12);
 }
 
-/* ===== Resource Modal ===== */
-/* display is intentionally NOT set here -- the native [hidden] attribute
-   (toggled in JS, removed slightly after the fade-out finishes) handles
-   removing this from layout and the accessibility tree entirely when
-   closed; .active handles the visible/flex state while open. */
-.modal {
-    position: fixed;
-    inset: 0;
-    z-index: 2000;
-    align-items: center;
-    justify-content: center;
-    padding: var(--space-lg);
-    opacity: 0;
-    visibility: hidden;
-    transition: all var(--transition-base);
-}
-
-.modal.active {
-    display: flex;
-    opacity: 1;
-    visibility: visible;
-}
-
-.modal-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(30, 27, 75, 0.6);
-    backdrop-filter: blur(4px);
-}
-
-.modal-content {
-    position: relative;
-    background: var(--white);
-    border-radius: var(--radius-xl);
-    padding: var(--space-2xl);
-    max-width: 500px;
-    width: 100%;
-    max-height: 90vh;
-    overflow-y: auto;
-    box-shadow: var(--shadow-lg);
-    transform: translateY(20px) scale(0.95);
-    transition: transform var(--transition-base);
-}
-
-.modal.active .modal-content {
-    transform: translateY(0) scale(1);
-}
-
-.modal-close {
-    position: absolute;
-    top: var(--space-md);
-    right: var(--space-md);
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: none;
-    background: var(--gray-100);
-    color: var(--gray-600);
-    font-size: 1.5rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all var(--transition-fast);
-}
-
-.modal-close:hover {
-    background: var(--gray-200);
-    color: var(--dark);
-}
-
-.modal-icon {
-    font-size: 3rem;
-    text-align: center;
-    margin-bottom: var(--space-md);
-}
-
-.modal-title {
-    font-size: 1.5rem;
-    text-align: center;
-    margin-bottom: var(--space-sm);
-}
-
-.modal-description {
-    text-align: center;
-    color: var(--gray-600);
-    margin-bottom: var(--space-xl);
-}
-
-.modal-materials {
-    background: var(--gray-100);
-    border-radius: var(--radius-md);
-    padding: var(--space-lg);
-    margin-bottom: var(--space-xl);
-}
-
-.modal-materials h3 {
-    font-size: 1rem;
-    margin-bottom: var(--space-md);
-    color: var(--dark);
-}
-
-.materials-list {
-    list-style: none;
-    display: grid;
-    gap: var(--space-sm);
-}
-
-.materials-list li {
-    display: flex;
-    align-items: center;
-    gap: var(--space-sm);
-    font-size: 0.9375rem;
-    /* Sits inside .modal-materials' --gray-100 background, where
-       --gray-600 measures 4.40:1 -- just under the 4.5:1 AA minimum for
-       text this size. */
-    color: var(--gray-800);
-}
-
-.materials-list li::before {
-    content: "•";
-    color: var(--primary);
-    font-weight: bold;
-}
-
-.modal-eyebrow {
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: var(--primary);
-    margin-bottom: var(--space-sm);
-}
-
-.modal-links {
-    border-top: 1px solid var(--gray-200);
-    padding-top: var(--space-lg);
-}
-
-.modal-links h3 {
-    font-size: 1rem;
-    margin-bottom: var(--space-md);
-    color: var(--dark);
-}
-
-.modal-links-list {
-    list-style: none;
-    display: grid;
-    gap: var(--space-sm);
-}
-
-.modal-links-list a {
-    color: var(--primary);
-    text-decoration: none;
-    font-size: 0.9375rem;
-}
-
-.modal-links-list a:hover {
-    text-decoration: underline;
-}
-
 /* Leaflet popup overrides */
 .leaflet-popup-content-wrapper {
     border-radius: var(--radius-lg) !important;
@@ -1320,8 +1238,10 @@ img {
         height: 350px;
     }
 
-    .modal-content {
-        padding: var(--space-lg);
+    .archive-summary,
+    .archive-body {
+        padding-left: var(--space-lg);
+        padding-right: var(--space-lg);
     }
 }
 
