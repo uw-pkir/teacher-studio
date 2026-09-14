@@ -632,12 +632,16 @@ img {
     margin: 0 auto;
 }
 
-/* Native <details>/<summary> -- gets expand/collapse, keyboard support,
-   and correct screen-reader state announcements for free, and the
-   name="resource-archive" attribute on each <details> (see main.js) makes
-   them an exclusive accordion in browsers that support it, degrading
-   harmlessly to independently-toggleable ones where it isn't supported. */
-.archive-item {
+/* Two-level accordion: a <details> per year (see .archive-year), each
+   holding a <details> per workshop (see .archive-item) -- keeps the
+   always-visible list to just year headers, no matter how many workshops
+   accumulate over time. Both levels use native <details>/<summary> for
+   free keyboard support and correct screen-reader state announcements,
+   and both use a name= attribute (see main.js) so opening one year/item
+   closes whichever sibling was open, in browsers that support exclusive
+   <details> groups -- degrades harmlessly to independently-toggleable
+   ones where it isn't supported. */
+.archive-year {
     background: var(--bg-primary);
     border-radius: var(--radius-lg);
     border: 2px solid transparent;
@@ -646,15 +650,56 @@ img {
     overflow: hidden;
 }
 
-.archive-item[open] {
+.archive-year[open] {
     border-color: var(--primary-light);
+}
+
+.archive-year-summary {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-lg) var(--space-xl);
+    cursor: pointer;
+    list-style: none;
+}
+
+.archive-year-summary::-webkit-details-marker {
+    display: none;
+}
+
+.archive-year-label {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: var(--dark);
+    flex-grow: 1;
+}
+
+.archive-year-count {
+    font-size: 0.8125rem;
+    color: var(--gray-600);
+}
+
+.archive-year-body {
+    border-top: 1px solid var(--gray-200);
+}
+
+/* Workshop rows nested inside an open year -- flatter than a standalone
+   card (a thin divider instead of its own shadow/background) since the
+   year container already provides that. */
+.archive-item {
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.archive-item:last-child {
+    border-bottom: none;
 }
 
 .archive-summary {
     display: flex;
     align-items: center;
     gap: var(--space-md);
-    padding: var(--space-lg) var(--space-xl);
+    padding: var(--space-md) var(--space-xl);
     cursor: pointer;
     list-style: none;
 }
@@ -666,7 +711,7 @@ img {
 }
 
 .archive-icon {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
     flex-shrink: 0;
 }
 
@@ -681,11 +726,12 @@ img {
 .archive-title {
     font-family: var(--font-display);
     font-weight: 600;
+    font-size: 0.9375rem;
     color: var(--dark);
 }
 
 .archive-date {
-    font-size: 0.8125rem;
+    font-size: 0.75rem;
     color: var(--gray-600);
 }
 
@@ -700,13 +746,14 @@ img {
     margin-top: -4px;
 }
 
-.archive-item[open] .archive-chevron {
+.archive-year[open] > .archive-year-summary .archive-chevron,
+.archive-item[open] > .archive-summary .archive-chevron {
     transform: rotate(-135deg);
     margin-top: 4px;
 }
 
 .archive-body {
-    padding: 0 var(--space-xl) var(--space-xl);
+    padding: 0 var(--space-xl) var(--space-lg);
 }
 
 .archive-description {

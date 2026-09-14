@@ -560,8 +560,11 @@ function renderSchedule(upcoming) {
 }
 
 // ===== Resources / past workshop archive =====
-// Every archived workshop, newest first, as a collapsible accordion row --
-// the whole archive is browsable at once instead of re-rolling a sample.
+// Grouped by year, newest first, as a two-level accordion -- only the
+// year headers are always visible, so the always-on-screen list stays
+// compact no matter how many workshops accumulate over time. The most
+// recent year starts open; every workshop inside it is browsable without
+// re-rolling a random sample like the old shuffle-3-cards pattern did.
 function renderResources(resources) {
     const container = document.getElementById('resources-accordion');
     if (!resources.length) {
@@ -569,10 +572,34 @@ function renderResources(resources) {
         return;
     }
 
-    const sorted = [...resources].sort((a, b) => parseLocalDate(b.date) - parseLocalDate(a.date));
+    // resources arrives already sorted newest-first (see loadAndRenderAll),
+    // so grouping by year preserves that order within each year too.
+    const byYear = new Map();
+    resources.forEach(r => {
+        const year = parseLocalDate(r.date).getFullYear();
+        if (!byYear.has(year)) byYear.set(year, []);
+        byYear.get(year).push(r);
+    });
 
-    container.innerHTML = sorted.map(r => `
-        <details class="archive-item" name="resource-archive">
+    container.innerHTML = [...byYear.entries()].map(([year, items], index) => `
+        <details class="archive-year" name="resource-archive-years"${index === 0 ? ' open' : ''}>
+            <summary class="archive-year-summary">
+                <span class="archive-year-label">${year}</span>
+                <span class="archive-year-count">${items.length} workshop${items.length === 1 ? '' : 's'}</span>
+                <span class="archive-chevron" aria-hidden="true"></span>
+            </summary>
+            <div class="archive-year-body">
+                ${items.map(renderArchiveItem).join('')}
+            </div>
+        </details>
+    `).join('');
+
+    observeFadeIn(container, '.archive-item');
+}
+
+function renderArchiveItem(r) {
+    return `
+        <details class="archive-item" name="resource-archive-item">
             <summary class="archive-summary">
                 <span class="archive-icon">${renderIcon(r.icon)}</span>
                 <span class="archive-summary-text">
@@ -587,9 +614,7 @@ function renderResources(resources) {
                 ${renderArchiveLinks(r.links)}
             </div>
         </details>
-    `).join('');
-
-    observeFadeIn(container, '.archive-item');
+    `;
 }
 
 // Same link-list shape the old modal used, just rendered inline in each
