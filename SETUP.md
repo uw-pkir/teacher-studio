@@ -8,7 +8,7 @@ The editor (Decap CMS) needs a small "OAuth proxy" to let it log in with GitHub.
 
 1. **Create a GitHub OAuth App**
    - Go to [github.com/settings/developers](https://github.com/settings/developers) → **OAuth Apps** → **New OAuth App**.
-   - Homepage URL: `https://uw-pkir.github.io/teacher-studio/`
+   - Homepage URL: `https://teacherstudio.org/`
    - Authorization callback URL: `https://<your-worker-subdomain>.workers.dev/callback` (you'll get the exact worker URL in step 2 — you can come back and edit this field after).
    - Save it, then generate a **Client Secret**. Keep the Client ID and Client Secret handy.
 
@@ -27,7 +27,7 @@ The editor (Decap CMS) needs a small "OAuth proxy" to let it log in with GitHub.
    - Commit it.
 
 4. **Try it**
-   - Visit `https://uw-pkir.github.io/teacher-studio/admin/`, click "Login with GitHub", and confirm you land in the editor.
+   - Visit `https://teacherstudio.org/admin/`, click "Login with GitHub", and confirm you land in the editor.
 
 5. **Add the second editor**
    - Repo → **Settings → Collaborators** → **Add people** → invite them by GitHub username.
@@ -77,7 +77,7 @@ The sync runs automatically every 30 minutes (`.github/workflows/sync-showcase.y
 
 **Entering a new workshop:** fill out the [Website Entry form](https://forms.gle/ST8NH8y8HczTDKbb8) (title, emoji, description, materials, and — once it's happened — resource links). That's it; no `/admin`, no git. It shows up as the Next Workshop banner automatically once its date is nearest, and moves itself into the archive once the date passes. This link, and a link to the Show & Tell approval sheet, are also shown right on the Settings page in `/admin`.
 
-**Everything else** (hub sites, organizers, every section's headline/description text, Show & Tell settings) is still edited at `https://uw-pkir.github.io/teacher-studio/admin/` — no code, no git. `/admin` has three sections:
+**Everything else** (hub sites, organizers, every section's headline/description text, Show & Tell settings) is still edited at `https://teacherstudio.org/admin/` — no code, no git. `/admin` has three sections:
 - **Hubs & Organizers** — hub sites/organizing partners, current organizers, and organizers emeriti.
 - **Update Section Text** — the headline and description at the top of each section (Hero, Schedule, Show & Tell, Past Workshops, About Us, Hubs, Organizers), one collapsible group per section, plus a Footer group (tagline, contact email) and the hero's two CTA button labels.
 - **Settings** — split into **General Settings** (registration link, workshop time, location note, Show & Tell form link — safe to change any time) and **Google Sheet Links (Advanced)** (the published-sheet URLs from sections 2–3 above — set up once, rarely touched again).

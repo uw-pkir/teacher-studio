@@ -142,7 +142,7 @@ async function resolveLinkTitle(url, cache) {
         try {
             const res = await fetch(url, {
                 signal: AbortSignal.timeout(8000),
-                headers: { 'User-Agent': 'Mozilla/5.0 (compatible; TeacherStudioBot/1.0; +https://uw-pkir.github.io/teacher-studio/)' }
+                headers: { 'User-Agent': 'Mozilla/5.0 (compatible; TeacherStudioBot/1.0; +https://teacherstudio.org/)' }
             });
             const html = await res.text();
             const titleMatch = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i);

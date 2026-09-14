@@ -18,7 +18,7 @@ const path = require('path');
 
 const HUBS_PATH = path.join(__dirname, '..', 'data', 'hubs.json');
 const CACHE_PATH = path.join(__dirname, '..', 'data', 'hub-geocode-cache.json');
-const USER_AGENT = 'TeacherStudioBot/1.0 (+https://uw-pkir.github.io/teacher-studio/)';
+const USER_AGENT = 'TeacherStudioBot/1.0 (+https://teacherstudio.org/)';
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));

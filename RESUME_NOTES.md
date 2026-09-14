@@ -16,7 +16,8 @@ project. Specifically:
 - Hub site map pins auto-geocode from a street address via a GitHub Action.
 
 **This repo's `main` branch is the live site** at
-https://uw-pkir.github.io/teacher-studio/ — every push deploys immediately.
+https://teacherstudio.org/ (served by GitHub Pages, via a custom domain
+pointed there in Cloudflare DNS) — every push deploys immediately.
 Sync bots (workshop sync, showcase sync, hub geocoding) and Decap CMS saves
 all commit directly to `main` on their own schedule, so **always
 `git pull --rebase origin main` before pushing** — expect to find bot
@@ -114,11 +115,22 @@ commits waiting fairly often.
   that page's own `<title>`/`og:title` at the source.
 - The footer no longer links to `/admin` (removed along with the rest of
   the footer links per an explicit request) — go to
-  `https://uw-pkir.github.io/teacher-studio/admin/` directly, or bookmark it.
+  `https://teacherstudio.org/admin/` directly, or bookmark it.
 
 ## Decisions made (context — don't re-litigate)
 
 - GitHub Pages + Decap CMS chosen over staying on Google Sites.
+- Custom domain `teacherstudio.org` (registered via Cloudflare) points at
+  GitHub Pages, not Cloudflare Pages -- DNS only (4 apex `A` records to
+  GitHub's Pages IPs + a `www` `CNAME` to `uw-pkir.github.io`), keeping the
+  existing GitHub Pages hosting/deploy setup unchanged. The Cloudflare
+  proxy (orange cloud) is off for these records so GitHub's own TLS cert
+  and HTTPS redirect aren't interfered with. Moving the live domain means
+  `oauth-proxy/worker.js`'s `ALLOWED_ORIGIN` had to be updated to
+  `https://teacherstudio.org` and manually redeployed to the Worker (see
+  the note below -- it doesn't auto-deploy from `git push`), or `/admin`
+  login breaks silently (the OAuth popup's `postMessage` origin check just
+  fails with no visible error).
 - OAuth via a self-hosted Cloudflare Worker (`oauth-proxy/worker.js`), not
   Netlify. Hardened (origin-checked `postMessage`, a CSRF `state` cookie)
   and redeployed/confirmed working with a real `/admin` login. Remember the

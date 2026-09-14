@@ -13,7 +13,7 @@
 // Only this origin is ever allowed to receive the finished access token,
 // and it's also the only origin /auth will accept a request from -- update
 // this if the site ever moves to a custom domain.
-const ALLOWED_ORIGIN = 'https://uw-pkir.github.io';
+const ALLOWED_ORIGIN = 'https://teacherstudio.org';
 
 function parseCookie(request, name) {
   const header = request.headers.get('Cookie') || '';

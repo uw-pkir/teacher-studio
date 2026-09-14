@@ -497,7 +497,7 @@ function renderEventStructuredData(event, settings, hubs) {
         return;
     }
 
-    const siteUrl = 'https://uw-pkir.github.io/teacher-studio/';
+    const siteUrl = 'https://teacherstudio.org/';
     const physicalHubs = (hubs || []).filter(h => h.is_hub !== false);
     const startTime = parseStartTime(settings.workshop_time);
 
