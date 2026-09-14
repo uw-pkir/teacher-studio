@@ -519,14 +519,18 @@ const NICE_TO_HAVE_LABEL = 'Nice to Have';
 
 // Shared by the spotlight and the resource-archive modal: two labeled
 // bulleted lists built from comma-separated material strings.
-function renderMaterialsBlock(item, wrapperClass) {
+// headingTag defaults to h3 (correct one level below the spotlight's own
+// h2 workshop title); the resource archive passes h5 instead, since its
+// workshop titles already sit two levels deeper (h2 Resource Archive >
+// h3 school year > h4 workshop title -- see renderArchiveItem).
+function renderMaterialsBlock(item, wrapperClass, headingTag = 'h3') {
     const hasRequired = item.required_materials && item.required_materials.length;
     const hasNice = item.nice_to_have_materials && item.nice_to_have_materials.length;
     if (!hasRequired && !hasNice) return '';
     return `
         <div class="${wrapperClass}">
-            ${hasRequired ? `<div><h3>${REQUIRED_MATERIALS_LABEL}</h3><ul>${renderBullets(item.required_materials)}</ul></div>` : ''}
-            ${hasNice ? `<div><h3>${NICE_TO_HAVE_LABEL}</h3><ul>${renderBullets(item.nice_to_have_materials)}</ul></div>` : ''}
+            ${hasRequired ? `<div><${headingTag}>${REQUIRED_MATERIALS_LABEL}</${headingTag}><ul>${renderBullets(item.required_materials)}</ul></div>` : ''}
+            ${hasNice ? `<div><${headingTag}>${NICE_TO_HAVE_LABEL}</${headingTag}><ul>${renderBullets(item.nice_to_have_materials)}</ul></div>` : ''}
         </div>
     `;
 }
@@ -589,7 +593,7 @@ function renderResources(resources) {
     container.innerHTML = [...byYear.entries()].map(([year, items], index) => `
         <details class="archive-year" name="resource-archive-years"${index === 0 ? ' open' : ''}>
             <summary class="archive-year-summary">
-                <span class="archive-year-label">${year}</span>
+                <span class="archive-year-label" role="heading" aria-level="3">${year}</span>
                 <span class="archive-year-count">${items.length} workshop${items.length === 1 ? '' : 's'}</span>
                 <span class="archive-chevron" aria-hidden="true"></span>
             </summary>
@@ -602,20 +606,29 @@ function renderResources(resources) {
     observeFadeIn(container, '.archive-item');
 }
 
+// Heading levels here nest under the school-year label above (role=heading
+// aria-level=3): the workshop title is level 4, and its own Required
+// Materials/Nice to Have/Shared Resources sub-headings are level 5 -- see
+// renderMaterialsBlock's headingTag param and renderArchiveLinks below.
+// role=heading + aria-level (rather than a real <h4> tag) is used for the
+// title because it sits inside <summary> alongside the icon/date/chevron;
+// a native heading element is only valid there if it's summary's *entire*
+// content, which would mean dropping those. This still exposes the same
+// heading semantics to screen readers.
 function renderArchiveItem(r) {
     return `
         <details class="archive-item" name="resource-archive-item">
             <summary class="archive-summary">
                 <span class="archive-icon">${renderIcon(r.icon)}</span>
                 <span class="archive-summary-text">
-                    <span class="archive-title">${escapeHTML(r.title)}</span>
+                    <span class="archive-title" role="heading" aria-level="4">${escapeHTML(r.title)}</span>
                     <span class="archive-date">${escapeHTML(formatMediumDate(r.date))}</span>
                 </span>
                 <span class="archive-chevron" aria-hidden="true"></span>
             </summary>
             <div class="archive-body">
                 ${r.description ? `<p class="archive-description">${escapeHTML(r.description)}</p>` : ''}
-                ${renderMaterialsBlock(r, 'archive-materials')}
+                ${renderMaterialsBlock(r, 'archive-materials', 'h5')}
                 ${renderArchiveLinks(r.links)}
             </div>
         </details>
@@ -623,12 +636,13 @@ function renderArchiveItem(r) {
 }
 
 // Same link-list shape the old modal used, just rendered inline in each
-// accordion row's body instead of a popup.
+// accordion row's body instead of a popup. h5 to match renderMaterialsBlock
+// above -- see the nesting comment on renderArchiveItem.
 function renderArchiveLinks(links) {
     if (!links || !links.length) return '';
     return `
         <div class="archive-links">
-            <h3>Shared Resources</h3>
+            <h5>Shared Resources</h5>
             <ul class="archive-links-list">
                 ${links.map(l => `<li><a href="${escapeHref(l.url)}" target="_blank" rel="noopener">${escapeHTML(l.label)}<span class="sr-only"> (opens in a new tab)</span></a></li>`).join('')}
             </ul>

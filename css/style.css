@@ -772,7 +772,7 @@ img {
     margin-bottom: var(--space-lg);
 }
 
-.archive-materials h3 {
+.archive-materials h5 {
     font-size: 0.9375rem;
     margin-bottom: var(--space-sm);
     color: var(--dark);
@@ -806,7 +806,7 @@ img {
     padding-top: var(--space-lg);
 }
 
-.archive-links h3 {
+.archive-links h5 {
     font-size: 0.9375rem;
     margin-bottom: var(--space-md);
     color: var(--dark);
