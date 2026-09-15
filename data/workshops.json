@@ -498,7 +498,7 @@
   },
   {
     "date": "2025-11-13",
-    "icon": "🧩",
+    "icon": "📃",
     "title": "Engineering with Paper",
     "description": "Create versatile shapes with paper and combine them to make larger structures.",
     "required_materials": [
@@ -511,10 +511,6 @@
       "using some colorful paper and masking tape can add some whimsy"
     ],
     "links": [
-      {
-        "label": "Hiner_paper_engineering.pdf - Google Drive",
-        "url": "https://drive.google.com/file/d/1NxMoCHbUyccfsldq-7MXkhYHsrF6jB-M/view"
-      },
       {
         "label": "About Engineering with Paper",
         "url": "https://www.dazzlingdiscoveries.com/ewp-about"
