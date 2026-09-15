@@ -252,30 +252,84 @@
     "links": []
   },
   {
-    "date": "2024-11-14",
-    "icon": "✨",
-    "title": "Making & Tinkering as a pathway for Ambiguity Tolerance",
-    "description": "Use your materials to create a way for your figure to get from Here to There. Your figure is “Here” and you need to get it “There.”",
+    "date": "2024-10-17",
+    "icon": "🧱",
+    "title": "Coding with 10 Blocks",
+    "description": "What can you create with only 10 Scratch Blocks? 10 Blocks is a common introduction to Scratch programming activity from the HGSE Creative Computing Lab. Let's try the activity, which will serve as an introduction to Scratch for those who haven’t tried before, and talk a little bit about what makes a good (intro) activity or prompt to a new topic.",
     "required_materials": [
-      "Paper Clips/binder clips/clothes pins",
-      "Rubberbands",
-      "Pipe cleaners",
-      "Straws",
-      "Any other craft materials you use in your space"
+      "Computer with access to the internet",
+      "Starter project: http://go.wisc.edu/10blocks"
     ],
-    "nice_to_have_materials": [
-      "Legos",
-      "Blocks",
-      "LEDs",
-      "coin cell batteries",
-      "crayons/markers",
-      "Anything that you feel sparks imagination",
-      "creativity and storytelling."
-    ],
+    "nice_to_have_materials": [],
     "links": [
       {
-        "label": "Navigating Ambiguity | Stanford d.school",
-        "url": "https://dschool.stanford.edu/shop/navigating-ambiguity"
+        "label": "Unit 1 - Exploring - 10 Blocks - Google Slides",
+        "url": "https://docs.google.com/presentation/d/e/2PACX-1vQj2y2FekPUv5EQFzwnUlvMa_s5VPTBK-AAjkmajnxpM7rQ5XhxjlWWtggejH7_hA0sSLCbP3Rk6Hzk/pub?start=false&loop=false&delayms=3000"
+      },
+      {
+        "label": "Creative Computing Curriculum | Explore",
+        "url": "https://creativecomputing.gse.harvard.edu/guide/curriculum.html"
+      }
+    ]
+  },
+  {
+    "date": "2024-11-14",
+    "icon": "🪢",
+    "title": "Tinkering with Zip ties",
+    "description": "This activity is meant to be a tinkering activity where we might learn more about how we can use zip ties. The prompt for the activity includes three criteria: Make something that is ambitious. Make something that is useful. Make something that consists mostly of zip-ties.",
+    "required_materials": [
+      "Zip ties"
+    ],
+    "nice_to_have_materials": [],
+    "links": [
+      {
+        "label": "Cable Tie Heart. : 3 Steps - Instructables",
+        "url": "https://www.instructables.com/Cable-Tie-heart/"
+      },
+      {
+        "label": "Otherworldly Zip-Tie Sculptures by Sui Park Crawl Across Galleries and Sprout in City Parks — Colossal",
+        "url": "https://www.thisiscolossal.com/2023/12/sui-park-city-ecology/"
+      },
+      {
+        "label": "bridgesatx.com",
+        "url": "https://bridgesatx.com/events/artpace-zip-ties/"
+      },
+      {
+        "label": "Zip Tie Ball : 7 Steps (with Pictures) - Instructables",
+        "url": "https://www.instructables.com/Zip-Tie-Ball/"
+      }
+    ]
+  },
+  {
+    "date": "2024-12-19",
+    "icon": "🎨",
+    "title": "Getting creative in Canva",
+    "description": "Tinkering with Canva’s free tools and exploring graphic design, How can Canva enable student to tell stories or share knowledge through design",
+    "required_materials": [
+      "Computer with access to the internet",
+      "Sign up for a free Education Account (k12 teachers) https://canva.com/education"
+    ],
+    "nice_to_have_materials": [],
+    "links": [
+      {
+        "label": "Canva",
+        "url": "https://www.canva.com/"
+      },
+      {
+        "label": "Canva",
+        "url": "https://www.canva.com/templates/?group=education&_branch_match_id=1189304969595870350&utm_source=marketing&utm_campaign=World%20Teacher%20Day%20-%20Education%20Library%20-%20EN&utm_medium=Education%20Library&_branch_referrer=H4sIAAAAAAAAAw3IMQ6AIAwF0BNVdhPj5DlMoVVIsJgPSlw8u77xxdbOOjoX2G4eDnW9IAs15RAVJPyQyhW4pWKUkwfjH5tf6KZAsn31KL0qpkV2%2FQCXcFJrTwAAAA%3D%3D"
+      },
+      {
+        "label": "Canva",
+        "url": "https://www.canva.com/designschool/"
+      },
+      {
+        "label": "Instagram post",
+        "url": "https://www.instagram.com/explore/search/keyword/?q=%23canvatipsandtricks"
+      },
+      {
+        "label": "npr.org",
+        "url": "https://www.npr.org/2019/01/24/688299882/canva-melanie-perkins"
       }
     ]
   },
@@ -317,6 +371,34 @@
       {
         "label": "What Equity Means to Me &mdash; facilitating computational tinkering",
         "url": "https://www.facilitatingcomputationaltinkering.org/equity"
+      }
+    ]
+  },
+  {
+    "date": "2025-03-20",
+    "icon": "✨",
+    "title": "Making & Tinkering as a pathway for Ambiguity Tolerance",
+    "description": "Use your materials to create a way for your figure to get from Here to There. Your figure is “Here” and you need to get it “There.”",
+    "required_materials": [
+      "Paper Clips/binder clips/clothes pins",
+      "Rubberbands",
+      "Pipe cleaners",
+      "Straws",
+      "Any other craft materials you use in your space"
+    ],
+    "nice_to_have_materials": [
+      "Legos",
+      "Blocks",
+      "LEDs",
+      "coin cell batteries",
+      "crayons/markers",
+      "Anything that you feel sparks imagination",
+      "creativity and storytelling."
+    ],
+    "links": [
+      {
+        "label": "Navigating Ambiguity | Stanford d.school",
+        "url": "https://dschool.stanford.edu/shop/navigating-ambiguity"
       }
     ]
   },
@@ -411,6 +493,31 @@
       {
         "label": "36 People Who Turned Log Piling Into An Art Form | Bored Panda",
         "url": "https://www.boredpanda.com/creative-wood-pile-stacking-art/"
+      }
+    ]
+  },
+  {
+    "date": "2025-11-13",
+    "icon": "🧩",
+    "title": "Engineering with Paper",
+    "description": "Create versatile shapes with paper and combine them to make larger structures.",
+    "required_materials": [
+      "3-6 sheets of copy paper",
+      "tape (masking tape is best but any will work)",
+      "and scissors"
+    ],
+    "nice_to_have_materials": [
+      "A pen is helpful",
+      "using some colorful paper and masking tape can add some whimsy"
+    ],
+    "links": [
+      {
+        "label": "Hiner_paper_engineering.pdf - Google Drive",
+        "url": "https://drive.google.com/file/d/1NxMoCHbUyccfsldq-7MXkhYHsrF6jB-M/view"
+      },
+      {
+        "label": "About Engineering with Paper",
+        "url": "https://www.dazzlingdiscoveries.com/ewp-about"
       }
     ]
   },
@@ -521,6 +628,70 @@
       {
         "label": "richlandlibrary.com",
         "url": "https://www.richlandlibrary.com/blog/2025-02-12/diy-magazine-beads"
+      }
+    ]
+  },
+  {
+    "date": "2026-05-15",
+    "icon": "😵‍💫",
+    "title": "Tinkering with spinning",
+    "description": "Let's explore creations that spin. We'll start making simple tops and go from there.",
+    "required_materials": [
+      "the body of the spinner (like cardboard",
+      "plastic cups",
+      "bottles",
+      "caps",
+      "etc.)",
+      "an axle (like a pencil/pen/marker",
+      "dowel",
+      "toothpick",
+      "skewer",
+      "etc.)",
+      "a weight (like binder clips",
+      "paperclips",
+      "playdough",
+      "coins",
+      "etc.)",
+      "decoration (like markers",
+      "crayons",
+      "paints",
+      "etc.)"
+    ],
+    "nice_to_have_materials": [],
+    "links": [
+      {
+        "label": "How to make a  spinning TOY TOP | PAPER CUP TOY TOP   | DIY  finger spinning top",
+        "url": "https://www.youtube.com/watch?v=sVpNU1RXjF4"
+      },
+      {
+        "label": "Human Verification",
+        "url": "https://www.exploratorium.edu/tinkering/projects/spinning-tops"
+      }
+    ]
+  },
+  {
+    "date": "2026-07-16",
+    "icon": "😃",
+    "title": "Puppets - 3 ways!",
+    "description": "This activity is inspired by Milwaukee artist Anwar Flyod Pruitt that we lost in September of this year. Anwar was a Bubbler collaborator, an artist, and a wonderful human. His work explored paper, particularly cardboard, joy and self expression. Puppets can be incredible tools for storytelling, and I love finding a new way to make one that is innovative and playful. We’ll look at a couple of different types you can make with very simple materials, but all construct and Anwar puppet that uses the physical properties of cardboard and a rubber band to work.",
+    "required_materials": [
+      "Paper",
+      "cardboard you can cut into squares - should be corrugated",
+      "a stick (skewers work best!)",
+      "straw",
+      "rubber bands.",
+      "masking tape"
+    ],
+    "nice_to_have_materials": [
+      "popsicle sticks",
+      "wacky eyes",
+      "glue sticks",
+      "markers"
+    ],
+    "links": [
+      {
+        "label": "Instagram post",
+        "url": "https://www.instagram.com/anwarfp/"
       }
     ]
   },
