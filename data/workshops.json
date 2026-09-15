@@ -252,6 +252,132 @@
     "links": []
   },
   {
+    "date": "2024-11-14",
+    "icon": "✨",
+    "title": "Making & Tinkering as a pathway for Ambiguity Tolerance",
+    "description": "Use your materials to create a way for your figure to get from Here to There. Your figure is “Here” and you need to get it “There.”",
+    "required_materials": [
+      "Paper Clips/binder clips/clothes pins",
+      "Rubberbands",
+      "Pipe cleaners",
+      "Straws",
+      "Any other craft materials you use in your space"
+    ],
+    "nice_to_have_materials": [
+      "Legos",
+      "Blocks",
+      "LEDs",
+      "coin cell batteries",
+      "crayons/markers",
+      "Anything that you feel sparks imagination",
+      "creativity and storytelling."
+    ],
+    "links": [
+      {
+        "label": "Navigating Ambiguity | Stanford d.school",
+        "url": "https://dschool.stanford.edu/shop/navigating-ambiguity"
+      }
+    ]
+  },
+  {
+    "date": "2025-02-20",
+    "icon": "📚",
+    "title": "Print & Resist Zines",
+    "description": "Exploring different formats and techniques for creating zines & mini books",
+    "required_materials": [
+      "Paper",
+      "Scissors",
+      "Favorite (ballpoint)pen"
+    ],
+    "nice_to_have_materials": [
+      "Masking tape",
+      "Washi tape",
+      "Patterned paper",
+      "Skinny markers",
+      "Papermate flair",
+      "Glue stick"
+    ],
+    "links": [
+      {
+        "label": "What is a zine? | The Bindery",
+        "url": "https://www.binderymke.com/what-is-a-zine"
+      },
+      {
+        "label": "About | Madison Print & Resist",
+        "url": "https://madisonprintandresist.wordpress.com/about/"
+      },
+      {
+        "label": "Print & Resist | Madison Public Library",
+        "url": "https://www.madisonpubliclibrary.org/impact/community/print-resist"
+      },
+      {
+        "label": "Make you own Accordion Fold Travel Journals for watercolor sketching | Citizen Sketcher",
+        "url": "https://citizensketcher.com/2016/03/14/make-you-own-accordion-fold-travel-journals-for-watercolor-sketching/"
+      },
+      {
+        "label": "What Equity Means to Me &mdash; facilitating computational tinkering",
+        "url": "https://www.facilitatingcomputationaltinkering.org/equity"
+      }
+    ]
+  },
+  {
+    "date": "2025-04-24",
+    "icon": "📖",
+    "title": "Hack a Magazine",
+    "description": "What treasures, stories, and surprises are hiding in the pages of magazines? Take a magazine and combine it with OctoStudio to create something magical. Embed your device inside a magazine to bring static pages to life. (Exploratorium)",
+    "required_materials": [
+      "A phone or tablet with Octostudio (free on iOS or Android)",
+      "A magazine or newspaper with photos or images that you can cut up",
+      "X-acto Knife (or Scissors)"
+    ],
+    "nice_to_have_materials": [
+      "Magnets"
+    ],
+    "links": [
+      {
+        "label": "Hack a Magazine [PUBLIC] - Google Slides",
+        "url": "https://docs.google.com/presentation/d/e/2PACX-1vQF2fnlFCCucnsRH1EYswA37ewpKw1CB5trvBQiTiEneAFB0Vkp0kJ3pDr8gE0ozqfW_w6eWE9oCd1e/pub?start=true&loop=true&delayms=60000#slide=id.p"
+      },
+      {
+        "label": "25_04-17 Teacher Studio - Hack a Magazine - Google Slides",
+        "url": "https://docs.google.com/presentation/d/1ADB3SOW5T-bUxv061w8JCHq2-Ly65_PNdm6nBQn2sc0/edit#slide=id.g2a467440acb_0_91"
+      }
+    ]
+  },
+  {
+    "date": "2025-05-22",
+    "icon": "🛠️",
+    "title": "Take Apart",
+    "description": "Bring a physical “system” you can take apart to look at more deeply (a flower, plant, toy, tech, book, clothing) and some tools you can use to take it apart. Bring something that you've taken apart before or try something new and possibly outlandish. Safety goggles are important.",
+    "required_materials": [
+      "Anything you want to take apart",
+      "tools that would help you take it apart"
+    ],
+    "nice_to_have_materials": [],
+    "links": [
+      {
+        "label": "Thinkery At Home: Tech Take Apart",
+        "url": "https://www.youtube.com/watch?v=MAHfvNstxnA"
+      },
+      {
+        "label": "Learning in the Making: Take Apart! (Parts, Purposes, & Complexities)",
+        "url": "https://www.youtube.com/watch?v=8lIWMnti6eU"
+      },
+      {
+        "label": "Tech Take Apart | Amazeum YOU",
+        "url": "https://www.youtube.com/watch?v=g8Ym7gSYYuk"
+      },
+      {
+        "label": "Toy Take Apart",
+        "url": "https://www.youtube.com/watch?v=GsOBVdA2fjw"
+      },
+      {
+        "label": "Things Come Apart, 50 Disassembled Objects in 21,959 Individual Parts by Todd McLellan — Colossal",
+        "url": "https://www.thisiscolossal.com/2013/05/things-come-apart-a-new-book-of-disassembled-objects-by-todd-mclellan/"
+      }
+    ]
+  },
+  {
     "date": "2025-10-16",
     "icon": "🗼",
     "title": "Stacking!",
