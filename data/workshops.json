@@ -118,9 +118,29 @@
     "icon": "🧵",
     "title": "Threads & Things",
     "description": "How can we use textiles to tell a story?",
-    "required_materials": [],
+    "required_materials": [
+      "Scrap fabric (could be tshirt or old bedding; etc)",
+      "Thread (embroidery floss/sewing thread)",
+      "sewing needle",
+      "scissors",
+      "yarn",
+      "cardboard square"
+    ],
     "nice_to_have_materials": [],
-    "links": []
+    "links": [
+      {
+        "label": "15 Basic Hand Embroidery Stitches Sampler For Absolute Beginners",
+        "url": "https://youtu.be/EU5GR4EE4XY"
+      },
+      {
+        "label": "History",
+        "url": "https://www.aidsmemorial.org/quilt-history"
+      },
+      {
+        "label": "Instagram post",
+        "url": "https://www.instagram.com/mindful_mending/"
+      }
+    ]
   },
   {
     "date": "2023-10-26",
