@@ -721,7 +721,28 @@
       "internet connection"
     ],
     "nice_to_have_materials": [],
-    "links": []
+    "links": [
+      {
+        "label": "Scratch - Imagine, Program, Share",
+        "url": "https://scratch.mit.edu"
+      },
+      {
+        "label": "Face Sensing Extension | Scratch Foundation",
+        "url": "https://www.scratchfoundation.org/learn/learning-library/face-sensing"
+      },
+      {
+        "label": "medium.com",
+        "url": "https://medium.com/scratchteam-blog/exploring-a-creative-safe-introduction-to-machine-learning-c42f1d0133e7"
+      },
+      {
+        "label": "🦙 LLM-Algorithm Arcade",
+        "url": "https://plix.mit.edu/activities/activity-guides/llm-algorithm-arcade"
+      },
+      {
+        "label": "medium.com",
+        "url": "https://medium.com/scratchteam-blog/introducing-creative-ai-at-scratch-bcdbd6c3efc9"
+      }
+    ]
   },
   {
     "date": "2026-11-19",
