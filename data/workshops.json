@@ -746,11 +746,19 @@
   },
   {
     "date": "2026-11-19",
-    "icon": "🧩",
-    "title": "Topic announced a few weeks before the gathering",
-    "description": "",
-    "required_materials": [],
-    "nice_to_have_materials": [],
+    "icon": "⛳",
+    "title": "Mini-Mini-Golf",
+    "description": "We’ll use everyday, scrappy materials to make table-top mini-golf holes. Combine your project with your friends to make an entire tiny mini-golf course!",
+    "required_materials": [
+      "Scissors",
+      "a piece of card stock or cardboard (about 8.5”x11” or 9”x12”)",
+      "assorted paper (scrapbook paper; copier paper; construction paper; ANY kind of paper)",
+      "masking tape",
+      "other scrappy materials (popsicle sticks; pipe cleaners; straws; buttons; beads; or whatever you’ve got around)"
+    ],
+    "nice_to_have_materials": [
+      "Hot glue"
+    ],
     "links": []
   },
   {
